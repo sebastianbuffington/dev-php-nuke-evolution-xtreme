@@ -1,8 +1,7 @@
 <?php
-/*=======================================================================
- Nuke-Evolution Basic: Enhanced PHP-Nuke Web Portal System
+/*======================================================================= 
+  PHP-Nuke Titanium | Nuke-Evolution Xtreme : PHP-Nuke Web Portal System
  =======================================================================*/
-
 if (realpath(__FILE__) == realpath($_SERVER['SCRIPT_FILENAME'])) {
     exit('Access Denied');
 }
@@ -26,8 +25,34 @@ class InputFilter {
     var $attrMethod;        // default = 0
 
     var $xssAuto;           // default = 1
-    var $tagBlacklist = array('applet', 'body', 'bgsound', 'base', 'basefont', 'embed', 'frame', 'frameset', 'head', 'html', 'id', 'iframe', 'ilayer', 'layer', 'link', 'meta', 'name', 'object', 'script', 'style', 'title', 'xml');
-    var $attrBlacklist = array('action', 'background', 'codebase', 'dynsrc', 'lowsrc');  // also will strip ALL event handlers
+    var $tagBlacklist = array('applet', 
+	                            'body', 
+							 'bgsound', 
+							    'base', 
+							'basefont', 
+							   'embed', 
+							   'frame', 
+							'frameset', 
+							    'head', 
+								'html', 
+								  'id', 
+							  'iframe', 
+							  'ilayer', 
+							   'layer', 
+							    'link', 
+								'meta', 
+								'name', 
+							  'object', 
+							  'script', 
+							   'style', 
+							   'title', 
+							     'xml');
+								 
+    var $attrBlacklist = array('action', 
+	                       'background', 
+						     'codebase', 
+							   'dynsrc', 
+							   'lowsrc');  // also will strip ALL event handlers
     var $current_string;
 
 /*****[BEGIN]******************************************
@@ -40,12 +65,16 @@ class InputFilter {
                         );
         if(function_exists('log_write')) {
             log_write('error', $logdata, 'Script Attack');
+			log_write('error', $logdata, 'Suck it Tonight Fargnoggel!');
         } else {
             @include_once(NUKE_INCLUDE_DIR.'log.php');
             log_write('error', $logdata, 'Script Attack');
+			log_write('error', $logdata, 'Suck it Tonight Fargnoggel!');
         }
-        echo '"' . htmlspecialchars($filtered) . '" is an XSS and was blocked in:<br />'. htmlspecialchars($source);
-        exit;
+        OpenTable();
+		echo '"' . htmlspecialchars($filtered) . '" is an XSS and was blocked in:<br />'. htmlspecialchars($source);
+        CloseTable();
+		exit;
     }
 /*****[END]********************************************
  [ Base:     Evolution Functions               v1.5.0 ]

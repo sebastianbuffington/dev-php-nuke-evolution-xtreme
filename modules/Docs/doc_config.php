@@ -1,7 +1,8 @@
 <?php
-/*=======================================================================
- Nuke-Evolution Basic: Enhanced PHP-Nuke Web Portal System
+/*======================================================================= 
+  PHP-Nuke Titanium | Nuke-Evolution Xtreme : PHP-Nuke Web Portal System
  =======================================================================*/
+
 
 /*********************************************
   CPG-NUKE: Advanced Content Management System
@@ -72,11 +73,15 @@ function ns_doc_questions() {
     }
 }
 
+// 86it: A dEVELOPER Network
 function ns_doc_links() {
     global $aboutus, $disclaimer, $privacy, $terms, $module_name;
-    echo "<center>";
+    echo "<div align='center'>";
     if ($aboutus == 1) {
-         echo "[ <a href=\"modules.php?name=$module_name&amp;file=about\">"._NSABOUTUS."</a> ]";
+		
+         $aboutus_html_string = '[ <a href=modules.php?name='.$module_name.'&amp;file=about>'._NSABOUTUS.'</a> ] - ';
+		 //$aboutus = htmlspecialchars($aboutus);
+		 echo $aboutus_html_string;
   }
     if ($aboutus == 1 && $disclaimer == 1) {
          echo " - ";
@@ -96,7 +101,7 @@ function ns_doc_links() {
     if ($terms == 1) {
          echo "[ <a href=\"modules.php?name=$module_name&amp;file=terms\">"._NSTERMS."</a> ]";
     }
-         echo "</center>";
+         echo "</div>";
          echo "<br /><br />";
 }
 

@@ -1,7 +1,8 @@
 <?php
-/*=======================================================================
- Nuke-Evolution Basic: Enhanced PHP-Nuke Web Portal System
+/*======================================================================= 
+  PHP-Nuke Titanium | Nuke-Evolution Xtreme : PHP-Nuke Web Portal System
  =======================================================================*/
+
 /***************************************************************************
  *                             (admin) index.php
  *                            -------------------
@@ -54,10 +55,7 @@ include(NUKE_BASE_DIR.'includes/functions_log.php');
 /*****[END]********************************************
  [ Mod:     Log Moderator Actions              v1.1.6 ]
  ******************************************************/
-
-// ---------------
 // Begin functions
-//
 function inarray($needle, $haystack)
 {
     for($i = 0; $i < count($haystack); $i++ )

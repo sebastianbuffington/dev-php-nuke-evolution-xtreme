@@ -1,7 +1,6 @@
 <?php
-
-/*=======================================================================
- Nuke-Evolution Basic: Enhanced PHP-Nuke Web Portal System
+/*======================================================================= 
+  PHP-Nuke Titanium | Nuke-Evolution Xtreme : PHP-Nuke Web Portal System
  =======================================================================*/
 
 /************************************************************************/
@@ -40,29 +39,25 @@
 	  Auto First User Login                    v1.0.0       08/27/2005
 	  Persistent Admin Login                   v2.0.0       12/10/2005
  ************************************************************************/
-
-if (realpath(__FILE__) == realpath($_SERVER['SCRIPT_FILENAME'])) 
-{
-	exit('Access Denied');
-}
+if (realpath(__FILE__) == realpath($_SERVER['SCRIPT_FILENAME'])) exit('Access Denied');
 
 /*****[BEGIN]******************************************
  [ Other:   Need To Delete                     v1.0.0 ]
  ******************************************************/
 function need_delete($file, $dir=false) 
 {
-  // will be uncommented for release
-  if (!$dir) {
-	if(!is_file($file)) {
-		return;
-	}
+# will be uncommented for release
+if (!is_Admin): 
+  if (!$dir): 
+	if(!is_file($file)) 
+	return;
 	DisplayError("<span style='color: red; font-size: 24pt'>"._NEED_DELETE." ".$file."</span>");
-  } else {
-	if(!is_dir($file)) {
-		return;
-	}
+  else: 
+	if(!is_dir($file)) 
+	return;
 	DisplayError("<span style='color: red; font-size: 24pt'>"._NEED_DELETE." the folder \"".$file."\"</span>");
-  }
+  endif;
+endif;
 }
 /*****[END]********************************************
  [ Other:   Need To Delete                     v1.0.0 ]
@@ -72,24 +67,21 @@ function login()
 {
 	global $admin_file, $db, $prefix, $admlang;
 
-	the_pagetitle();
+	title_and_meta_tags();
 	get_header();
 	title( $admlang['admin_login_header'] );
 
-	if ( get_evo_option( 'admin_fc_status' ) == "1" ):
-
+	if(get_evo_option('admin_fc_status') == "1"):
 		$ip     = get_user_IP();
 		$fcdate = date("mdYHi");
 		$fc     = dburow("SELECT * FROM `"._FAILED_LOGIN_INFO_TABLE."` WHERE fc_ip = '$ip'");
 		$fc_datetime = $fcdate - $fc['fc_datetime'];
 		$fc_lefttime = get_evo_option( 'admin_fc_timeout' ) - $fc_datetime; 
 
-		if ( $fc['fc_attempts'] <= get_evo_option( 'admin_fc_attempts' )  && $fc['fc_attempts'] != "0" && $fc_datetime <= get_evo_option( 'admin_fc_timeout' )) 
-		{
-			$fctotal = get_evo_option( 'admin_fc_attempts' ) - $fc['fc_attempts'];
-			title($admlang['adminfail']['you_have'].'&nbsp;'.$fctotal.'&nbsp;'.$admlang['adminfail']['attempts'].'&nbsp;'.get_evo_option( 'admin_fc_timeout' ).'&nbsp;'.$admlang['adminfail']['min']);
-		}
-
+		if ( $fc['fc_attempts'] <= get_evo_option( 'admin_fc_attempts' )  && $fc['fc_attempts'] != "0" && $fc_datetime <= get_evo_option( 'admin_fc_timeout' )): 
+		$fctotal = get_evo_option( 'admin_fc_attempts' ) - $fc['fc_attempts'];
+		title($admlang['adminfail']['you_have'].'&nbsp;'.$fctotal.'&nbsp;'.$admlang['adminfail']['attempts'].'&nbsp;'.get_evo_option('admin_fc_timeout').'&nbsp;'.$admlang['adminfail']['min']);
+		endif;
 	endif;
 
 	opentable();
@@ -97,11 +89,10 @@ function login()
 	/**
 	 * Delete the old attempt when the timeout hits 0.
 	 */
-	if ($fc['fc_attempts'] >= "1" && $fc_datetime >= get_evo_option( 'admin_fc_timeout' ))
-	{
+	if ($fc['fc_attempts'] >= "1" && $fc_datetime >= get_evo_option( 'admin_fc_timeout' )):
 		dbquery("DELETE FROM `"._FAILED_LOGIN_INFO_TABLE."` WHERE fc_ip = '$ip'");
 		dbquery("OPTIMIZE TABLE "._FAILED_LOGIN_INFO_TABLE);
-	}
+	endif;
 
 	?>
 
@@ -244,15 +235,15 @@ function adminmenu($url, $title, $image)
 {
 	global $counter, $admingraphic, $admin, $module_folder_name;
 
-	if ( file_exists('modules/'.$module_folder_name.'/images/admin/'.$image) ):
+	if(file_exists('modules/'.$module_folder_name.'/images/admin/'.$image)):
 		$image = 'modules/'.$module_folder_name.'/images/admin/'.$image;
-	elseif ( file_exists('modules/'.$module_folder_name.'/images/'.$image) ):
+	elseif(file_exists('modules/'.$module_folder_name.'/images/'.$image)):
 		$image = 'modules/'.$module_folder_name.'/images/'.$image;
 	else:
 		$image = 'images/admin/'.$image;
 	endif;
 
-	if ( $admingraphic ):
+	if ($admingraphic):
 		// $image = '<img src="'.$image.'" border="0" alt="'.$title.'" title="'.$title.'" width="32" height="32" />';
 		$image_file = '<img src="'.$image.'" border="0" alt="'.$title.'" title="'.$title.'" width="40" height="40" />';
 	else:
@@ -261,7 +252,7 @@ function adminmenu($url, $title, $image)
 
 	if (!is_god($admin) && ($title == 'Edit Admins' || $title == 'Nuke Sentinel(tm)'))
 	{
-		if ( defined('BOOTSTRAP') ):
+		if(defined('BOOTSTRAP')):
 		?>
 			<a style="pointer-events: none" href="<?php echo $url ?>">
 				<h3 style="font-size: 17px; margin: 0; text-decoration: line-through"><?php echo $title ?></h3>
@@ -282,14 +273,6 @@ function adminmenu($url, $title, $image)
 	}
 	else
 	{
-		if ( defined('BOOTSTRAP') ):
-		?>
-			<a href="<?php echo $url ?>">
-				<h3 style="font-size: 17px; margin: 0;"><?php echo $title ?></h3>
-			</a>
-		<?php
-		else:
-
 			echo '    <td style="width: 16.6%;">';
 			echo '      <a href="'.$url.'">';
 			echo '      <table style="height: 75px; text-align: center; width: 100%;" border="0" cellpadding="4" cellspacing="1" class="forumline">';           
@@ -299,8 +282,6 @@ function adminmenu($url, $title, $image)
 			echo '      </table>';
 			echo '      </a>';
 			echo '    </td>';
-
-		endif;
 	}
 
 	if ($counter == 5) 
@@ -315,7 +296,7 @@ function adminmenu($url, $title, $image)
 
 function track_admin_intrusion()
 {
-	global $admin_file, $admlang;
+	global $admin_file, $admlang; 
 	$ret_log = log_size('admin');
 	if($ret_log == -1)
 		$admin_msg = '<span style="color:red; font-weight: bold;">'.$admlang['logs']['error'].'</span>';
@@ -360,9 +341,9 @@ function track_evo_version()
 	 * Version checker json
 	 */
 	$version_refresh = get_query_var( 'check-version', 'get', 'string', false );
-	$version_check_cache = cache_json_data('https://evolution-xtreme.co.uk/versions/evo-version.json', dirname(__FILE__).'/version.cache', $version_refresh); 
+	$version_check_cache = cache_json_data('https://www.dev-php-nuke-evolution-xtreme.86it.us/versions/xtreme-version.json', dirname(__FILE__).'/version.cache', $version_refresh); 
 
-	if ( $version_check_cache['version'] == NUKE_EVO ):
+	if($version_check_cache['version'] == NUKE_EVO):
 
 		$version_desc = $admlang['admin']['version_is_current'];
 		$new_version_number = NUKE_EVO;
@@ -377,8 +358,8 @@ function track_evo_version()
 	endif;
 
 	$return .= '  <tr>'."\n";
-	$return .= '    <td style="height:15px; font-size: 13px; width:65%;">'.$new_version_number.' - '.$version_desc.'</td>'."\n";
-	$return .= '    <td style="height:15px; font-size: 13px; width:25%; text-align:center;"><a href="'.$update_url.'">Check</a></td>'."\n";
+	$return .= '    <td style="height:15px; font-size: 13px; width:65%;">Nuke-Evolution Xtreme '.$new_version_number.'&nbsp;&nbsp;<font size="1">'.$version_desc.'</font></td>'."\n";
+	$return .= '    <td style="height:15px; font-size: 13px; width:25%; text-align:center;"><a href="'.$update_url.'">Check Version</a></td>'."\n";
 	$return .= '  </tr>'."\n";
 
 	return $return;
@@ -390,8 +371,9 @@ function track_evo_version()
 function GraphicAdmin($pos=1)
 {
 	global $aid, $admingraphic, $cache, $language, $admin, $prefix, $user_prefix, $db, $counter, $admin_file, $admin_pos, $radminsuper, $admlang;   
+	
 	if ($pos != $admin_pos)
-		return;
+	return;
 
 	$radminsuper = is_mod_admin();
 
@@ -401,85 +383,141 @@ function GraphicAdmin($pos=1)
 	echo '<table style="width: 100%;" border="0" cellpadding="4" cellspacing="1">';
 	echo '  <tr>';
 
+	/*
+    | START | LIVE NEWS FEED DIRECTLY FROM https://dev-php-nuke-evolution-xtreme.86it.us
+    */
+	global $domain;
+
+    echo '<td style="vertical-align: top; width: 64%;">';
+    echo '<table style="width: 100%;" border="0" cellpadding="3" cellspacing="1" class="forumline">';
+    echo '<tr>';
+    echo '<td class="catHead" style="height:30px; letter-spacing: 1px;" class="catHead">'.$admlang['livefeed']['header'].'</td>';
+    echo '</tr>';
+    echo '<tr>';
+    echo '<td class="row1">';
+    echo '<div style="height: 15.0em; overflow: auto;">';
+    
+	echo '<table style="font-family: monospace !important; width: 100%;" border="0" cellpadding="3" cellspacing="1" class="livefeed">';
+    
+	$agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36';
+    $curl = curl_init('https://www.dev-php-nuke-evolution-xtreme.86it.us/versions/feed.php');
+    curl_setopt($curl, CURLOPT_USERAGENT, $agent);
+    curl_setopt($curl, CURLOPT_USERAGENT, $agent);
+    curl_setopt($curl, CURLOPT_REFERER, 'https://'.$domain.'/');
+    $dir = NUKE_BASE_DIR.'includes/log';
+    $config['cookie_file'] = $dir.'/'.$_SERVER['REMOTE_ADDR'].'.txt';
+    curl_setopt($curl, CURLOPT_COOKIEFILE, $config['cookie_file']);
+    curl_setopt($curl, CURLOPT_COOKIEJAR, $config['cookie_file']);
+	curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $page = curl_exec($curl);	
+	echo $page;
+	
+	echo '</table>';
+	
+	echo '</div>';
+    echo '</td>';
+    echo '</tr>';
+    
+	echo '</table>';
+    
+	echo '</td>';
+    /*
+    | END | LIVE NEWS FEED DIRECTLY FROM https://www.dev-php-nuke-evolution-xtreme.86it.us
+    */
+	
 	/**
 	 * Retrieve the live news json feed
 	 */
 	$version_refresh = get_query_var( 'check-version', 'get', 'string', false );
-	$live_news_feed_cache = cache_json_data('https://evolution-xtreme.co.uk/versions/evolution-xtreme-live-feed.json', dirname(__FILE__).'/live-feed.cache', $version_refresh);
+	$live_news_feed_cache = cache_json_data('https://www.dev-php-nuke-evolution-xtreme.86it.us/versions/xtreme-live-feed.json', dirname(__FILE__).'/live-feed.cache', $version_refresh);
 
-	?>
+	echo '<td style="vertical-align: top; width: 36%;">';
+	echo '<table style="width: 100%;" border="0" cellpadding="3" cellspacing="1" class="forumline">';
 
-	<td style="vertical-align: top; width: 64%;">
-		<table style="width: 100%;" border="0" cellpadding="3" cellspacing="1" class="forumline">
-			<tr>
-				<td class="catHead" style="height:30px; letter-spacing: 1px;" class="catHead">
-					<?php echo $admlang['livefeed']['header']; ?>
-					<a href="<?php echo get_admin_filename(); ?>.php?refresh-feed=true"><span style="float: right;"><?php echo $admlang['livefeed']['refresh'] ?></span></a>                        
-				</td>
-			</tr>
-			<tr>
-				<td class="row1">
-					<div style="height: 13.5em; overflow: auto;">
-						<table style="width: 100%;" border="0" cellpadding="3" cellspacing="1">
-							
-							<?php foreach( array_reverse($live_news_feed_cache) as $key => $value ): ?>
-							<tr>
-								<dt style="border-bottom: 1px dashed #cccccc; padding-bottom: 1px;"><?php echo '<span'.(($value['color']) ? ' style="color:'.$value['color'].'"' : '').'>'.$value['title'].'</span>'; ?></span>&nbsp;<?php echo $value['timestamp']; ?></dt>
-								<dd style="padding: 0; margin-left: 15px; margin-bottom: 10px; white-space: break-spaces;"><?php echo $value['message']; ?></dd>
-							</tr>
-							<?php endforeach; ?>
+    # table header message
+	echo '<tr>';
+	echo '<td class="catHead" style="height:30px; letter-spacing: 1px;" class="catHead">'.$admlang['admin']['important'].'</td>';
+	echo '</tr>';
 
-						</table>
-					</div>
-				</td>
-			</tr>            
-		</table>
-	</td>
-
-	<?php
-
-	/*
-	| END | LIVE NEWS FEED DIRECTLY FROM EVOLUION XTREME
-	*/
-	echo '    <td style="vertical-align: top; width: 36%;">';
-	echo '      <table style="width: 100%;" border="0" cellpadding="3" cellspacing="1" class="forumline">';
-	echo '        <tr>';
-	echo '          <td class="catHead" style="height:30px; letter-spacing: 1px;" class="catHead">'.$admlang['admin']['important'].'</td>';
-	echo '        </tr>';
-	echo '        <tr>';
-	echo '          <td class="row1">';
-	echo '            <div>';
-	echo '            <table style="width: 100%;" border="0" cellpadding="4" cellspacing="1">';
+	echo '<tr>';
+	echo '<td class="row1">';
+	echo '<div>';
+    echo '<div style="height: 15.0em; overflow: auto;">';
+	
+	echo '<table style="width: 100%;" border="0" cellpadding="4" cellspacing="1">';
+	
+	# admin log
 	echo track_admin_intrusion();
+	
+	# error log
 	echo track_sql_errors();
+	
+	# check evo version
 	echo track_evo_version();
-	echo '              <tr>';
-	echo '                <td style="height: 15px; font-size: 13px;">'.$admlang['admin']['ip_lock'].'</td>';
-	echo '                <td style="height: 15px; font-size: 13px; text-align: center;">'.((defined('ADMIN_IP_LOCK')) ? $admlang['global']['enabled'] : $admlang['global']['disabled']).'</a></td>';
-	echo '              </tr>';
-	echo '              <tr>';
-	echo '                <td style="height: 15px; font-size: 13px;">'.$admlang['admin']['filter'].'</td>';
-	echo '                <td style="height: 15px; font-size: 13px; text-align: center;">'.$admlang['global']['enabled'].'</td>';
-	echo '              </tr>';
-	echo '              <tr>';
-	echo '                <td style="height: 15px; font-size: 13px;">'._AB_NUKESENTINEL.'</td>';
-	echo '                <td style="height: 15px; font-size: 13px; text-align: center;">'.((defined('NUKESENTINEL_IS_LOADED')) ? $admlang['global']['enabled'] : $admlang['global']['disabled']).'</td>';
-	echo '              </tr>';
-	echo '              <tr>';
-	echo '                <td style="height: 15px; font-size: 13px;">'.$admlang['admin']['waiting_users'].'</td>';
-	echo '                <td style="height: 15px; font-size: 13px; text-align: center;"><a href="modules.php?name=Your_Account&file=admin&op=listpending">'.$waiting_users.'</a></td>';
-	echo '              </tr>';
-	echo '            </table>';
-	echo '            </div>';
-	echo '          </td>';
-	echo '        </tr>';
-	echo '      </table>';
-	echo '    </td>';
-	echo '  </tr>';
+
+    # admin ip lock enabled/disabled
+	echo '<tr>';
+	echo '<td style="height: 15px; font-size: 13px;">'.$admlang['admin']['ip_lock'].'</td>';
+	echo '<td style="height: 15px; font-size: 13px; text-align: center;">'.((defined('ADMIN_IP_LOCK')) ? $admlang['global']['enabled'] : $admlang['global']['disabled']).'</a></td>';
+	echo '</tr>';
+
+    # Input Filter enabled/disabled
+	echo '<tr>';
+	echo '<td style="height: 15px; font-size: 13px;">'.$admlang['admin']['filter'].'</td>';
+	echo '<td style="height: 15px; font-size: 13px; text-align: center;">'.$admlang['global']['enabled'].'</td>';
+	echo '</tr>';
+
+    # NukeSentinel enabled/disabled
+	echo '<tr>';
+	echo '<td style="height: 15px; font-size: 13px;">'._AB_NUKESENTINEL.'</td>';
+	echo '<td style="height: 15px; font-size: 13px; text-align: center;">'.((defined('NUKESENTINEL_IS_LOADED')) ? $admlang['global']['enabled'] : $admlang['global']['disabled']).'</td>';
+	echo '</tr>';
+
+    # waiting users - shows number of users waiting!
+	echo '<tr>';
+	echo '<td style="height: 15px; font-size: 13px;">'.$admlang['admin']['waiting_users'].'</td>';
+	echo '<td style="height: 15px; font-size: 13px; text-align: center;"><a href="modules.php?name=Your_Account&file=admin&op=listpending">'.$waiting_users.'</a></td>';
+	echo '</tr>';
+
+    # waiting users - shows number of users waiting!
+	echo '<tr>';
+	echo '<td style="height: 15px; font-size: 13px;">Waitng Links</td>';
+	echo '<td style="height: 15px; font-size: 13px; text-align: center;"><a href="modules.php?name=Your_Account&file=admin&op=listpending">0</a></td>';
+	echo '</tr>';
+
+    # waiting users - shows number of users waiting!
+	echo '<tr>';
+	echo '<td style="height: 15px; font-size: 13px;">Starlink Passthru</td>';
+	echo '<td style="height: 15px; font-size: 13px; text-align: center;"><a href="modules.php?name=Your_Account&file=admin&op=listpending">on</a></td>';
+	echo '</tr>';
+
+    # waiting users - shows number of users waiting!
+	echo '<tr>';
+	echo '<td style="height: 15px; font-size: 13px;">Tor Network Decryption</td>';
+	echo '<td style="height: 15px; font-size: 13px; text-align: center;"><a href="modules.php?name=Your_Account&file=admin&op=listpending">on</a></td>';
+	echo '</tr>';
+
+    # waiting users - shows number of users waiting!
+	echo '<tr>';
+	echo '<td style="height: 15px; font-size: 13px;">Pionen Data Access Blocker</td>';
+	echo '<td style="height: 15px; font-size: 13px; text-align: center;"><a href="modules.php?name=Your_Account&file=admin&op=listpending">on</a></td>';
+	echo '</tr>';
+
+
+	echo '</table>';
+
+	echo '</div>';
+	echo '</div>';
+	echo '</td>';
+	echo '</tr>';
+	echo '</table>';
+	echo '</td>';
+	echo '</tr>';
 	echo '</table>';
 
 	echo '<table style="width: 100%;" border="0" cellpadding="4" cellspacing="1">'; // remove this to go back to normal
-	if (is_mod_admin('super'))
+	if(is_mod_admin('super'))
 	{
 		echo '  <tr>';
 		echo '    <td colspan="6">';
@@ -501,7 +539,7 @@ function GraphicAdmin($pos=1)
 		closedir($linksdir);
 		$menulist = explode(' ', $menulist);
 		sort($menulist);
-		for ($i=0, $maxi = count($menulist); $i < $maxi; $i++) 
+		for ($i=0, $maxi = count($menulist); $i < $maxi; $i++)  
 		{
 			if(!empty($menulist[$i]))
 				include(NUKE_ADMIN_DIR.'links/'.$menulist[$i]);
@@ -555,13 +593,19 @@ function GraphicAdmin($pos=1)
 	$themes_row = $db->sql_fetchrowset( $result2 );
 	$db->sql_freeresult($result2);
 
-	if ( count( $themes_row ) > 0 ):
+	if (count($themes_row) > 0 ):
 
 		echo '  <tr>';
 		echo '    <td colspan="6">';
 		echo '      <table style="text-align: center; width: 100%;" border="0" cellpadding="0" cellspacing="1" class="forumline">';
 		echo '        <tr>';
+		if (file_exists(NUKE_THEMES_DIR.$theme['theme_name']."/admin/index.php") 
+		AND file_exists(NUKE_THEMES_DIR.$theme['theme_name']."/admin/links.php") 
+		AND file_exists(NUKE_THEMES_DIR.$theme['theme_name']."/admin/case.php")):
 		echo '          <td class="catHead">Theme Administration</td>';
+        else:
+		echo '          <td class="catHead"></td>';
+		endif;
 		echo '        </tr>';
 		echo '      </table>';
 		echo '    </td>';
@@ -570,10 +614,10 @@ function GraphicAdmin($pos=1)
 		
 		foreach( $themes_row as $theme ):
 
-			if (file_exists(NUKE_THEMES_DIR.$theme['theme_name']."/admin/index.php") AND file_exists(NUKE_THEMES_DIR.$theme['theme_name']."/admin/links.php") AND file_exists(NUKE_THEMES_DIR.$theme['theme_name']."/admin/case.php")):
-			
-				include(NUKE_THEMES_DIR.$theme['theme_name'].'/admin/links.php');
-
+			if (file_exists(NUKE_THEMES_DIR.$theme['theme_name']."/admin/index.php") 
+			AND file_exists(NUKE_THEMES_DIR.$theme['theme_name']."/admin/links.php") 
+			AND file_exists(NUKE_THEMES_DIR.$theme['theme_name']."/admin/case.php")):
+			include(NUKE_THEMES_DIR.$theme['theme_name'].'/admin/links.php');
 			endif;
 
 		endforeach;
@@ -656,7 +700,7 @@ function track_evo_version_bs()
 	 * Version checker json
 	 */
 	$version_refresh = get_query_var( 'check-version', 'get', 'string', false );
-	$version_check_cache = cache_json_data('https://evolution-xtreme.co.uk/versions/evo-version.json', dirname(__FILE__).'/version.cache', $version_refresh); 
+	$version_check_cache = cache_json_data('https://www.dev-php-nuke-evolution-xtreme.86it.us/versions/xtreme-version.json', dirname(__FILE__).'/version.cache', $version_refresh); 
 
 	if ( $version_check_cache['version'] == NUKE_EVO ):
 
@@ -721,7 +765,7 @@ function administration_panel( $pos = 1 )
 				</h3>
 				<div class="feed-Bx">
 						
-					<?php $live_news_feed_cache = cache_json_data('https://evolution-xtreme.co.uk/versions/evolution-xtreme-live-feed.json', dirname(__FILE__).'/live-feed.cache', $refresh_feed); ?>
+					<?php $live_news_feed_cache = cache_json_data('https://www.dev-php-nuke-evolution-xtreme.86it.us/versions/xtreme-live-feed.json', dirname(__FILE__).'/live-feed.cache', $refresh_feed); ?>
 					<table style="width: 100%;" border="0" cellpadding="3" cellspacing="1">                                             
 						<?php foreach( array_reverse($live_news_feed_cache) as $key => $value ): $color_title = ($value['color']) ? ' style="color:'.$value['color'].'"' : ''; ?>
 
@@ -733,7 +777,7 @@ function administration_panel( $pos = 1 )
 							<dd class="news-feed-message"><?php echo $value['message']; ?></dd>
 						</tr>
 						<?php endforeach; ?>
-					</table>                  
+					</table>
 				</div>
 			</div>
 

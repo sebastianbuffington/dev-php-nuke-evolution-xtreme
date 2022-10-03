@@ -32,14 +32,12 @@ class sql_db
 {
 	/*!
 	 * @public var $mysql_version
-	 *
 	 * The current MySQL server version
 	 */
 	var $mysql_version;
 
 	/*!
 	 * @public var $db_connect_id
-	 *
 	 * The unique indentifier for the current database connection
 	 */
 	var $db_connect_id;
@@ -50,7 +48,6 @@ class sql_db
 
 	/*!
 	 * @public var $num_queries
-	 *
 	 * Total number of queries that were processed by this instance of the
 	 * database connection
 	 */
@@ -58,7 +55,6 @@ class sql_db
 
 	/*!
 	 * @public var $time
-	 *
 	 * Total time in miliseconds it took to run all the queries by this instance
 	 * of the database connection
 	 */
@@ -66,14 +62,12 @@ class sql_db
 
     /*!
 	 * @public var $debug
-	 *
 	 * Can be used to check for invalid MySQL queries once they have been run
 	 */
     var $debug = 0;
 
     /*!
 	 * @public var $saved
-	 *
 	 * Storage for MySQL query debugging
 	 */
     var $saved = '';
@@ -125,6 +119,7 @@ class sql_db
 			}
 		}
 	}
+	
 	function _backtrace()
 	{
 		$this->file = 'unknown';
@@ -141,9 +136,7 @@ class sql_db
 		}
 	}
 
-	//
-	// Constructor
-	//
+	# Constructor
 	function sql_db($sqlserver, $sqluser, $sqlpassword, $database, $persistency = true)
 	{
 		$this->persistency = $persistency;
@@ -157,9 +150,10 @@ class sql_db
 
 			if ($this->db_connect_id)
 			{
-				// Determine what version we are using and if it natively supports UNICODE
+				# Determine what version we are using and if it natively supports UNICODE
 				$this->mysql_version = mysqli_get_server_info($this->db_connect_id);
 
+				# not sure why this was removed i see no explanation, Thanks Dick!
 				/*if (version_compare($this->mysql_version, '4.1.3', '>='))
 				{
 					mysqli_query("SET NAMES 'utf8'", $this->db_connect_id);
@@ -170,7 +164,6 @@ class sql_db
 			}
 			else
 			{
-				// die('Connect Error (' . mysqli_connect_errno() . ') ' . mysqli_connect_error());
 				header('Location: install.php');
 				die();
 			}
@@ -179,9 +172,7 @@ class sql_db
 		return false;
 	}
 
-	//
-	// Other base methods
-	//
+	# Other base methods
 	function sql_close()
 	{
 		if($this->db_connect_id)
@@ -198,9 +189,9 @@ class sql_db
 			return false;
 		}
 	}
+
     function check_query($query) {
         global $prefix, $cache;
-        //if(!$cache->valid) return;
         if (!stristr($query, "UPDATE") && !stristr($query, "INSERT") && !stristr($query, "DELETE")) { return; }
         $tables = array(
                       'nukeconfig' => $prefix . '_config',
@@ -210,7 +201,6 @@ class sql_db
                       'ya_config' => $prefix . '_cnbya_config',
                       'block_modules' => $prefix . '_modules',
                        );
-        // while(list($file, $table) = each($tables)) {
         foreach( $tables as $file => $table )
         {
             if (stristr($query, $table)) {
@@ -219,12 +209,13 @@ class sql_db
         }
         return;
     }
+
     function union_secure($query) {
-        // check if it is a SELECT query
+        # check if it is a SELECT query
         if (strtoupper($query[0]) == 'S') {
-            // SPLIT when theres 'UNION (ALL|DISTINT|SELECT)'
+            # SPLIT when theres 'UNION (ALL|DISTINT|SELECT)'
             $query_parts = preg_split('/(union)([\s\ \*\/]+)(all|distinct|select)/i', $query, -1, PREG_SPLIT_NO_EMPTY);
-            // and then merge the query_parts:
+            # and then merge the query_parts:
             if (count($query_parts) > 1) {
                 $query = '';
                 foreach($query_parts AS $part) {
@@ -234,9 +225,8 @@ class sql_db
             }
         }
     }
-	//
-	// Base query method
-	//
+
+	# Base query method
 	function sql_query($query = "", $transaction = FALSE)
 	{
 	    // Get time before query
@@ -379,27 +369,13 @@ class sql_db
 			$query .= " LIMIT ".$options['limit'];
 		}
 
-		// return $this->sql_query($query);
-		// $this->sql_fetchrow();
 		$query_id = $this->sql_query($query, true);
         $result = $this->sql_fetchrow($query_id, $type);
         $this->sql_freeresult($query_id);
         return $result;
 	}
 
-	/*
-	function sql_ufetchrow($query = "", $type=SQL_BOTH)
-    {
-        $query_id = $this->sql_query($query, true);
-        $result = $this->sql_fetchrow($query_id, $type);
-        $this->sql_freeresult($query_id);
-        return $result;
-    }
-	*/
-
-	//
-	// Other query methods
-	//
+	# Other query methods
 	function sql_numrows($query_id = 0)
 	{
 		if(!$query_id)
@@ -433,6 +409,7 @@ class sql_db
 			return false;
 		}
 	}
+
 	function sql_numfields($query_id = 0)
 	{
 		if(!$query_id)
@@ -449,6 +426,7 @@ class sql_db
 			return false;
 		}
 	}
+
 	function sql_fieldname($offset, $query_id = 0)
 	{
 		if(!$query_id)
@@ -465,6 +443,7 @@ class sql_db
 			return false;
 		}
 	}
+
 	function sql_fieldtype($offset, $query_id = 0)
 	{
 		if(!$query_id)
@@ -481,6 +460,7 @@ class sql_db
 			return false;
 		}
 	}
+
 	function sql_fetchrow($query_id = 0, $trash=0)
 	{
 		if(!$query_id)
@@ -499,6 +479,7 @@ class sql_db
 			return false;
 		}
 	}
+
 	function sql_fetchrowset($query_id = 0)
 	{
 	    $stime = get_microtime();
@@ -523,10 +504,12 @@ class sql_db
 			return false;
 		}
 	}
+
 	function sql_fetchfield()
     {
         return false;
     }
+
 	function sql_rowseek($rownum, $query_id = 0){
 		if(!$query_id)
 		{
@@ -542,6 +525,7 @@ class sql_db
 			return false;
 		}
 	}
+
 	function sql_nextid(){
 		if($this->db_connect_id)
 		{
@@ -550,6 +534,7 @@ class sql_db
 		}
 	    return false;
 	}
+
 	function sql_freeresult($query_id = 0){
 		if(!$query_id)
 		{
@@ -574,29 +559,33 @@ class sql_db
 			return false;
 		}
 	}
-    function sql_escapestring($string)
+    
+	function sql_escapestring($string)
     {
         return $this->sql_addq($string);
     }
-    function sql_addq($string)
+    
+	function sql_addq($string)
     {
         static $magic_quotes;
-        // if (!isset($magic_quotes)) $magic_quotes = get_magic_quotes_gpc();
         if ($magic_quotes) $string = stripslashes($string);
         return (version_compare(phpversion(), '4.3.0', '>=')) ? mysqli_real_escape_string($this->db_connect_id, $string) : mysqli_escape_string($this->db_connect_id, $string);
     }
-    function sql_error($query_id = 0)
+    
+	function sql_error($query_id = 0)
     {
         return array('message' => @mysqli_error($this->db_connect_id), 'code' => @mysqli_errno($this->db_connect_id));
     }
-    function sql_ufetchrow($query = "", $type=SQL_BOTH)
+    
+	function sql_ufetchrow($query = "", $type=SQL_BOTH)
     {
         $query_id = $this->sql_query($query, true);
         $result = $this->sql_fetchrow($query_id, $type);
         $this->sql_freeresult($query_id);
         return $result;
     }
-    function sql_optimize($table_name="")
+    
+	function sql_optimize($table_name="")
     {
         global $dbname;
         $error = false;
@@ -617,7 +606,8 @@ class sql_db
         $this->sql_freeresult($result);
 		return ((!$error) ? true : false);
     }
-    function sql_fetchtables($database="", $nuke_only=false)
+    
+	function sql_fetchtables($database="", $nuke_only=false)
     {
         global $prefix;
         $result = $this->sql_query(empty($database) ? 'SHOW TABLES' : 'SHOW TABLES FROM '.$database);
@@ -634,7 +624,8 @@ class sql_db
         $this->sql_freeresult($result);
         return $tables;
     }
-    function sql_fetchdatabases()
+    
+	function sql_fetchdatabases()
     {
         $result = $this->sql_query('SHOW DATABASES');
         $databases = array();
@@ -644,17 +635,33 @@ class sql_db
         $this->sql_freeresult($result);
         return $databases;
     }
+	
     function sql_ufetchrowset($query = '', $type=SQL_BOTH)
     {
         $query_id = $this->sql_query($query, true);
         return $this->sql_fetchrowset($query_id, $type);
     }
+   
+    # print debug
     function print_debug() {
         if ($this->debug) {
             return $this->saved;
         }
         return '';
     }
+    
+	# added by Ernest Allen Buffington 4/29/2021 Thursday 9:05pm
+    function mariadb_version()
+	{
+		if($this->db_connect_id):
+			$result  = 'Powered by Nuke-Evolution Xtreme v4.0.0b<br />';
+			$result .= 'MySQL Server Version: ';
+			$result .= @mysqli_get_server_info($this->db_connect_id);
+			return $result;
+		else:
+			return false;
+		endif;
+	}
 
 } // class sql_db
 

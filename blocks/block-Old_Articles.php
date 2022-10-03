@@ -1,7 +1,8 @@
 <?php
-/*=======================================================================
- Nuke-Evolution Basic: Enhanced PHP-Nuke Web Portal System
+/*======================================================================= 
+  PHP-Nuke Titanium | Nuke-Evolution Xtreme : PHP-Nuke Web Portal System
  =======================================================================*/
+
 
 /************************************************************************/
 /* PHP-NUKE: Web Portal System                                          */
@@ -54,7 +55,7 @@ if (isset($userinfo['storynum']) AND $user_news == 1) {
 }
 $boxstuff = "<table border=\"0\" width=\"100%\">";
 $boxTitle = _PASTARTICLES;
-$sql = "SELECT sid, title, time, comments FROM ".$prefix."_stories $querylang ORDER BY time DESC LIMIT $storynum, $oldnum";
+$sql = "SELECT sid, title, datePublished, comments FROM ".$prefix."_stories $querylang ORDER BY datePublished DESC LIMIT $storynum, $oldnum";
 $result = $db->sql_query($sql);
 $vari = 0;
 

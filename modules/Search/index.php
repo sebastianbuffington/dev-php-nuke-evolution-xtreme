@@ -1,7 +1,8 @@
 <?php
-/*=======================================================================
- Nuke-Evolution Basic: Enhanced PHP-Nuke Web Portal System
+/*======================================================================= 
+  PHP-Nuke Titanium | Nuke-Evolution Xtreme : PHP-Nuke Web Portal System
  =======================================================================*/
+
 
 /************************************************************************/
 /* PHP-NUKE: Web Portal System                                          */
@@ -56,44 +57,60 @@ switch($op) {
         $max = intval($max);
         $pagetitle = "- "._SEARCH."";
         include_once(NUKE_BASE_DIR.'header.php');
-        $topic = intval($topic);
+        title($sitename.' '._SEARCH);
+		$topic = intval($topic);
         if ($topic>0) {
             $result = $db->sql_query("SELECT `topicimage`, `topictext` FROM `".$prefix."_topics` WHERE `topicid`='$topic'");
             $row = $db->sql_fetchrow($result);
             $topicimage = stripslashes($row['topicimage']);
             $topictext = stripslashes(check_html($row['topictext'], "nohtml"));
-            if (file_exists("themes/$ThemeSel/images/topics/$topicimage")) {
-                $topicimage = "themes/$ThemeSel/images/topics/$topicimage";
-            } else {
+            
+			if (file_exists("themes/$ThemeSel/modules/images/topics/$topicimage")) 
+			{
+                $topicimage = "themes/$ThemeSel/modules/images/topics/$topicimage";
+            } 
+			else 
+			{
                 $topicimage = $tipath.$topicimage;
             }
-        } else {
+        } 
+		else 
+		{
             $topictext = _ALLTOPICS;
-            if (file_exists("themes/$ThemeSel/images/topics/AllTopics.gif")) {
-                $topicimage = "themes/$ThemeSel/images/topics/AllTopics.gif";
-            } else {
-                $topicimage = $tipath.'AllTopics.gif';
+        
+		    if (file_exists("themes/$ThemeSel/modules/images/topics/AllTopics.png")) 
+			{
+                $topicimage = "themes/$ThemeSel/modules/images/topics/AllTopics.png";
+            } 
+			else 
+			{
+                $topicimage = $tipath.'AllTopics.png';
             }
         }
-        if (file_exists("themes/$ThemeSel/images/topics/AllTopics.gif")) {
-            $alltop = "themes/$ThemeSel/images/topics/AllTopics.gif";
-        } else {
-            $alltop = $tipath.'AllTopics.gif';
+        
+		if (file_exists("themes/$ThemeSel/modules/images/topics/AllTopics.png")) 
+		{
+            $alltop = "themes/$ThemeSel/modules/images/topics/AllTopics.png";
+        } 
+		else 
+		{
+            $alltop = $tipath.'AllTopics.png';
         }
-        OpenTable();
+        
+		OpenTable();
         if ($type == 'users') {
-            echo "<center><span class=\"title\"><strong>"._SEARCHUSERS."</strong></span></center><br />\n";
+            echo "<div align=\"center\"><span class=\"title\"><strong>"._SEARCHUSERS."</strong></span></div><br />\n";
         } elseif ($type == 'reviews') {
-            echo "<center><span class=\"title\"><strong>"._SEARCHREVIEWS."</strong></span></center><br />\n";
+            echo "<div align=\"center\"><span class=\"title\"><strong>"._SEARCHREVIEWS."</strong></span></div><br />\n";
         } elseif ($type == 'comments' AND isset($sid)) {
             $res = $db->sql_query("SELECT `title` FROM ".$prefix."_stories WHERE `sid`='$sid'");
             list($st_title) = $db->sql_fetchrow($res);
             $db->sql_freeresult($res);
             $st_title = stripslashes(check_html($st_title, "nohtml"));
             $instory = "AND sid='$sid'";
-            echo "<center><span class=\"title\"><strong>"._SEARCHINSTORY." $st_title</strong></span></center><br />\n";
+            echo "<div align=\"center\"><span class=\"title\"><strong>"._SEARCHINSTORY." $st_title</strong></span></div><br />\n";
         } else {
-            echo "<center><span class=\"title\"><strong>"._SEARCHIN." $topictext</strong></span></center><br />\n";
+            echo "<div align=\"center\"><span class=\"title\"><strong>"._SEARCHIN." $topictext</strong></span></div><br />\n";
         }
 
         echo "<table width=\"100%\" border=\"0\"><TR><TD>";
@@ -184,18 +201,28 @@ switch($op) {
                 } else {
                     $categ = '';
                 }
-                $q = "SELECT s.sid, s.aid, s.informant, s.title, s.time, s.hometext, s.bodytext, a.url, s.comments, s.topic FROM ".$prefix."_stories s, ".$prefix."_authors a WHERE s.aid=a.aid $queryalang $categ";
-                if (isset($query)) $q .= "AND (s.title LIKE '%$query%' OR s.hometext LIKE '%$query%' OR s.bodytext LIKE '%$query%' OR s.notes LIKE '%$query%') ";
+                $q = "SELECT s.sid, 
+				             s.aid, 
+					   s.informant, 
+					       s.title, 
+				   s.datePublished, 
+				        s.hometext, 
+						s.bodytext, 
+						     a.url, 
+						s.comments, 
+						   s.topic FROM ".$prefix."_stories s, ".$prefix."_authors a WHERE s.aid=a.aid $queryalang $categ";
+                
+				if (isset($query)) $q .= "AND (s.title LIKE '%$query%' OR s.hometext LIKE '%$query%' OR s.bodytext LIKE '%$query%' OR s.notes LIKE '%$query%') ";
                 if (!empty($author)) $q .= "AND s.aid='".Fix_Quotes($author)."' ";
                 if (!empty($topic)) $q .= "AND s.topic='".Fix_Quotes($topic)."' ";
-                if (!empty($days) && $days!=0) $q .= "AND TO_DAYS(NOW()) - TO_DAYS(time) <= '".Fix_Quotes($days)."' ";
-                $q .= " ORDER BY s.time DESC LIMIT $min,$offset";
+                if (!empty($days) && $days!=0) $q .= "AND TO_DAYS(NOW()) - TO_DAYS(datePublished) <= '".Fix_Quotes($days)."' ";
+                $q .= " ORDER BY s.datePublished DESC LIMIT $min,$offset";
                 $t = $topic;
                 $result5 = $db->sql_query($q);
                 $nrows = $db->sql_numrows($result5);
                 $x=0;
                 if (!empty($query)) {
-                    echo "<br /><hr noshade size=\"1\"><center><strong>"._SEARCHRESULTS."</strong></center><br /><br />";
+                    echo "<br /><hr noshade size=\"1\"><div align=\"center\"><strong>"._SEARCHRESULTS."</strong></div><br /><br />";
                     echo "<table width=\"99%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n";
                     if ($nrows>0) {
                         while($row5 = $db->sql_fetchrow($result5)) {
@@ -203,7 +230,7 @@ switch($op) {
                             $aid = stripslashes($row5['aid']);
                             $informant = stripslashes($row5['informant']);
                             $title = stripslashes(check_html($row5['title'], "nohtml"));
-                            $time = $row5['time'];
+                            $time = $row5['datePublished'];
                             $hometext = stripslashes($row5['hometext']);
                             $bodytext = stripslashes($row5['bodytext']);
                             $url = stripslashes($row5['url']);
@@ -212,7 +239,7 @@ switch($op) {
                             $row6 = $db->sql_fetchrow($db->sql_query("SELECT `topictext` FROM `".$prefix."_topics` WHERE `topicid`='$topic'"));
                             $topictext = stripslashes(check_html($row6['topictext'], "nohtml"));
 
-                            $furl = "modules.php?name=News&amp;file=article&amp;sid=$sid";
+                            $furl = "modules.php?name=Blog&amp;file=article&amp;sid=$sid";
                             $datetime = formatTimestamp($time);
                             $query = stripslashes(htmlentities($query, ENT_QUOTES));
                             if (empty($informant)) {
@@ -264,29 +291,29 @@ switch($op) {
                         $db->sql_freeresult($result5);
                         echo "</table>\n";
                     } else {
-                        echo "<tr><td><center><span class=\"option\"><strong>"._NOMATCHES."</strong></span></center><br /><br />";
+                        echo "<tr><td><div align=\"center\"><span class=\"option\"><strong>"._NOMATCHES."</strong></span></div><br /><br />";
                         echo "</td></tr></table>\n";
                     }
 
                     $prev = $min-$offset;
                     if ($prev>=0) {
-                        print "<br /><br /><center><a href=\"modules.php?name=$module_name&amp;author=$author&amp;topic=$t&amp;min=$prev&amp;query=$query&amp;type=$type&amp;category=$category\">";
-                        print "<strong>$min "._PREVMATCHES."</strong></a></center>";
+                        print "<br /><br /><div align=\"center\"><a href=\"modules.php?name=$module_name&amp;author=$author&amp;topic=$t&amp;min=$prev&amp;query=$query&amp;type=$type&amp;category=$category\">";
+                        print "<strong>$min "._PREVMATCHES."</strong></a></div>";
                     }
 
                     $next = $min+$offset;
                     if ($x>=9) {
-                        print "<br /><br /><center><a href=\"modules.php?name=$module_name&amp;author=$author&amp;topic=$t&amp;min=$max&amp;query=$query&amp;type=$type&amp;category=$category\">";
-                        print "<strong>"._NEXTMATCHES."</strong></a></center>";
+                        print "<br /><br /><div align=\"center\"><a href=\"modules.php?name=$module_name&amp;author=$author&amp;topic=$t&amp;min=$max&amp;query=$query&amp;type=$type&amp;category=$category\">";
+                        print "<strong>"._NEXTMATCHES."</strong></a></div>";
                     }
                 }
 
             } elseif ($type == 'comments') {
-                $result8 = $db->sql_query("SELECT `tid`, `sid`, `subject`, `date`, `name` FROM `".$prefix."_comments` WHERE (`subject` LIKE '%$query%' OR `comment` LIKE '%$query%') ORDER BY `date` DESC LIMIT $min,$offset");
+                $result8 = $db->sql_query("SELECT `tid`, `sid`, `subject`, `datePublished`, `name` FROM `".$prefix."_comments` WHERE (`subject` LIKE '%$query%' OR `comment` LIKE '%$query%') ORDER BY `datePublished` DESC LIMIT $min,$offset");
                 $nrows = $db->sql_numrows($result8);
                 $x=0;
                 if (!empty($query)) {
-                    echo "<br /><hr noshade size=\"1\"><center><strong>"._SEARCHRESULTS."</strong></center><br /><br />";
+                    echo "<br /><hr noshade size=\"1\"><div align=\"center\"><strong>"._SEARCHRESULTS."</strong></div><br /><br />";
                     echo "<table width=\"99%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n";
                     if ($nrows>0) {
                         while($row8 = $db->sql_fetchrow($result8)) {
@@ -298,7 +325,7 @@ switch($op) {
                             $row_res = $db->sql_fetchrow($db->sql_query("SELECT `title` FROM `".$prefix."_stories` WHERE `sid`='$sid'"));
                             $title = stripslashes(check_html($row_res['title'], "nohtml"));
                             $reply = $db->sql_numrows($db->sql_query("SELECT * FROM ".$prefix."_comments WHERE pid='$tid'"));
-                            $furl = "modules.php?name=News&amp;file=article&amp;thold=-1&amp;mode=flat&amp;order=1&amp;sid=$sid#$tid";
+                            $furl = "modules.php?name=Blog&amp;file=article&amp;thold=-1&amp;mode=flat&amp;order=1&amp;sid=$sid#$tid";
                             if(!$name) {
                                 $name = $anonymous;
                             } else {
@@ -326,20 +353,20 @@ switch($op) {
                         $db->sql_freeresult($result8);
                         echo "</table>";
                     } else {
-                        echo "<tr><td><center><span class=\"option\"><strong>"._NOMATCHES."</strong></span></center><br /><br />";
+                        echo "<tr><td><div align=\"center\"><span class=\"option\"><strong>"._NOMATCHES."</strong></span></div><br /><br />";
                         echo "</td></tr></table>";
                     }
 
                     $prev = $min-$offset;
                     if ($prev>=0) {
-                        print "<br /><br /><center><a href=\"modules.php?name=$module_name&amp;author=$author&amp;topic=$topic&amp;min=$prev&amp;query=$query&amp;type=$type\">";
-                        print "<strong>$min "._PREVMATCHES."</strong></a></center>";
+                        print "<br /><br /><div align=\"center\"><a href=\"modules.php?name=$module_name&amp;author=$author&amp;topic=$topic&amp;min=$prev&amp;query=$query&amp;type=$type\">";
+                        print "<strong>$min "._PREVMATCHES."</strong></a></div>";
                     }
 
                     $next = $min+$offset;
                     if ($x>=9) {
-                        print "<br /><br /><center><a href=\"modules.php?name=$module_name&amp;author=$author&amp;topic=$topic&amp;min=$max&amp;query=$query&amp;type=$type\">";
-                        print "<strong>"._NEXTMATCHES."</strong></a></center>";
+                        print "<br /><br /><div align=\"center\"><a href=\"modules.php?name=$module_name&amp;author=$author&amp;topic=$topic&amp;min=$max&amp;query=$query&amp;type=$type\">";
+                        print "<strong>"._NEXTMATCHES."</strong></a></div>";
                     }
                 }
             } elseif ($type == 'reviews') {
@@ -347,7 +374,7 @@ switch($op) {
                 $nrows = $db->sql_numrows($res_n);
                 $x=0;
                 if (!empty($query)) {
-                    echo "<br /><hr noshade size=\"1\"><center><strong>"._SEARCHRESULTS."</strong></center><br /><br />";
+                    echo "<br /><hr noshade size=\"1\"><div align=\"center\"><strong>"._SEARCHRESULTS."</strong></div><br /><br />";
                     echo "<table width=\"99%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n";
                     if ($nrows > 0) {
                         while($rown = $db->sql_fetchrow($res_n)) {
@@ -375,20 +402,20 @@ switch($op) {
                         $db->sql_freeresult($res_n);
                         echo "</table>\n";
                     } else {
-                        echo "<tr><td><center><span class=\"option\"><strong>"._NOMATCHES."</strong></span></center><br /><br />";
+                        echo "<tr><td><div align=\"center\"><span class=\"option\"><strong>"._NOMATCHES."</strong></span></div><br /><br />";
                         echo "</td></tr></table>\n";
                     }
 
                     $prev = $min-$offset;
                     if ($prev >= 0) {
-                        print "<br /><br /><center><a href=\"modules.php?name=$module_name&amp;author=$author&amp;topic=$t&amp;min=$prev&amp;query=$query&amp;type=$type\">";
-                        print "<strong>$min "._PREVMATCHES."</strong></a></center>";
+                        print "<br /><br /><div align=\"center\"><a href=\"modules.php?name=$module_name&amp;author=$author&amp;topic=$t&amp;min=$prev&amp;query=$query&amp;type=$type\">";
+                        print "<strong>$min "._PREVMATCHES."</strong></a></div>";
                     }
 
                     $next=$min+$offset;
                     if ($x >= 9) {
-                        print "<br /><br /><center><a href=\"modules.php?name=$module_name&amp;author=$author&amp;topic=$t&amp;min=$max&amp;query=$query&amp;type=$type\">";
-                        print "<strong>"._NEXTMATCHES."</strong></a></center>";
+                        print "<br /><br /><div align=\"center\"><a href=\"modules.php?name=$module_name&amp;author=$author&amp;topic=$t&amp;min=$max&amp;query=$query&amp;type=$type\">";
+                        print "<strong>"._NEXTMATCHES."</strong></a></div>";
                     }
                 }
             } elseif ($type == 'users') {
@@ -396,7 +423,7 @@ switch($op) {
                 $nrows = $db->sql_numrows($res_n3);
                 $x=0;
                 if (!empty($query)) {
-                    echo "<br /><hr noshade size=\"1\"><center><strong>"._SEARCHRESULTS."</strong></center><br /><br />";
+                    echo "<br /><hr noshade size=\"1\"><div align=\"center\"><strong>"._SEARCHRESULTS."</strong></div><br /><br />";
                     echo "<table width=\"99%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n";
                     if ($nrows > 0) {
                         while($rown3 = $db->sql_fetchrow($res_n3)) {
@@ -417,27 +444,26 @@ switch($op) {
                         $db->sql_freeresult($res_n3);
                         echo "</table>\n";
                     } else {
-                        echo "<tr><td><center><span class=\"option\"><strong>"._NOMATCHES."</strong></span></center><br /><br />";
+                        echo "<tr><td><div align=\"center\"><span class=\"option\"><strong>"._NOMATCHES."</strong></span></div><br /><br />";
                         echo "</td></tr></table>\n";
                     }
 
                     $prev = $min-$offset;
                     if ($prev >= 0) {
-                        print "<br /><br /><center><a href=\"modules.php?name=$module_name&amp;author=$author&amp;topic=$t&amp;min=$prev&amp;query=$query&amp;type=$type\">";
-                        print "<strong>$min "._PREVMATCHES."</strong></a></center>";
+                        print "<br /><br /><div align=\"center\"><a href=\"modules.php?name=$module_name&amp;author=$author&amp;topic=$t&amp;min=$prev&amp;query=$query&amp;type=$type\">";
+                        print "<strong>$min "._PREVMATCHES."</strong></a></div>";
                     }
 
                     $next = $min+$offset;
                     if ($x >= 9) {
-                        print "<br /><br /><center><a href=\"modules.php?name=$module_name&amp;author=$author&amp;topic=$t&amp;min=$max&amp;query=$query&amp;type=$type\">";
-                        print "<strong>"._NEXTMATCHES."</strong></a></center>";
+                        print "<br /><br /><div align=\"center\"><a href=\"modules.php?name=$module_name&amp;author=$author&amp;topic=$t&amp;min=$max&amp;query=$query&amp;type=$type\">";
+                        print "<strong>"._NEXTMATCHES."</strong></a></div>";
                     }
                 }
             }
             CloseTable();
             $mod1 = $mod2 = $mod3 = '';
             if (isset($query) AND !empty($query)) {
-                echo "<br />";
                 if (is_active('Downloads')) {
                     $dcnt = $db->sql_numrows($db->sql_query("SELECT * FROM `".$prefix."_downloads_downloads` WHERE `title` LIKE '%$query%' OR `description` LIKE '%$query%'"));
                     $mod1 = "<li> <a href=\"modules.php?name=Downloads&amp;d_op=search&amp;query=$query\">"._DOWNLOADS."</a> ($dcnt "._SEARCHRESULTS.")";

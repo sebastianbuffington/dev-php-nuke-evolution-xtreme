@@ -1,7 +1,8 @@
 <?php
-/*=======================================================================
- Nuke-Evolution Basic: Enhanced PHP-Nuke Web Portal System
+/*======================================================================= 
+  PHP-Nuke Titanium | Nuke-Evolution Xtreme : PHP-Nuke Web Portal System
  =======================================================================*/
+
 
 /***************************************************************************
  *                            admin_ug_auth.php
@@ -620,7 +621,7 @@ if ( isset($_POST['submit']) && ( ( $mode == 'user' && $user_id ) || ( $mode == 
             GROUP BY ug.user_id";
         if ( !($result = $db->sql_query($sql)) )
         {
-            message_die(GENERAL_ERROR, 'Could not obtain moderator status', '', __LINE__, __FILE__, $sql);
+            message_die(GENERAL_ERROR, 'Please add someone to this group, we could not obtain moderator status', '', __LINE__, __FILE__, $sql);
         }
 
         while ($row = $db->sql_fetchrow($result))

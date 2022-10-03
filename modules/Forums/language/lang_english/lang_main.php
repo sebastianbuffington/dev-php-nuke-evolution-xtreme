@@ -1,6 +1,6 @@
 <?php
-/*=======================================================================
- Nuke-Evolution Basic: Enhanced PHP-Nuke Web Portal System
+/*======================================================================= 
+  PHP-Nuke Titanium | Nuke-Evolution Xtreme : PHP-Nuke Web Portal System
  =======================================================================*/
 
 /***************************************************************************
@@ -11,16 +11,13 @@
  *     email                : support@phpbb.com
  *
  *     $Id: lang_main.php,v 1.1 2005/05/09 17:44:47 chatserv Exp $
- *
  ****************************************************************************/
 
 /***************************************************************************
- *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- *
  ***************************************************************************/
 
 /*****[CHANGES]**********************************************************
@@ -78,7 +75,7 @@
 	  Admin User Notes                         v1.0.0       05/28/2009
 	  Related Topics                           v0.1.2       05/28/2009
 	  Arcade                                   v3.0.2       05/29/2009
-        Who viewed a topic                       v1.0.3
+      Who viewed a topic                       v1.0.3
  ************************************************************************/
 
 //
@@ -139,7 +136,7 @@ $lang['Views'] = 'Views';
 $lang['Post'] = 'Post';
 $lang['Posts'] = 'Posts';
 $lang['Posted'] = 'Posted';
-$lang['Username'] = 'Username';
+$lang['Username'] = 'Nickname/Callsign';
 $lang['Password'] = 'Password';
 $lang['Email'] = 'Email';
 $lang['Poster'] = 'Poster';
@@ -286,8 +283,8 @@ $lang['Last_Post'] = 'Last Post';
 /*****[END]********************************************
  [ Mod:     Resize Posted Images               v2.4.5 ]
  ******************************************************/
-$lang['Moderator'] = 'Moderator';
-$lang['Moderators'] = 'Moderators';
+$lang['Moderator'] = 'Mod Group:';
+$lang['Moderators'] = 'Mod Groups:';
 
 //
 // Stats block text
@@ -651,7 +648,7 @@ $lang['User_post_pct_stats'] = '%.2f%% of total posts'; // 1.25% of total
 $lang['User_post_day_stats'] = '%.2f per day'; // 1.5 posts per day
 $lang['Search_user_posts'] = 'Find all posts by %s'; // Find all posts by username
 
-$lang['No_user_id_specified'] = 'Sorry, but that user does not exist.';
+$lang['No_user_id_specified'] = 'The user you are looking for is in Ghost Mode!<br />- THIS USER DOES NOT WANT TO BE FOUND -';
 $lang['Wrong_Profile'] = 'You cannot modify a profile that is not your own.';
 
 $lang['Only_one_avatar'] = 'Only one type of avatar can be specified';
@@ -737,7 +734,7 @@ $lang['Current_Image'] = 'Current Image';
 $lang['Notify_on_privmsg'] = 'Notify on new Private Message';
 $lang['Popup_on_privmsg'] = 'Pop up window on new Private Message';
 $lang['Popup_on_privmsg_explain'] = 'Some templates may open a new window to inform you when new private messages arrive.';
-$lang['Hide_user'] = 'Hide your online status';
+$lang['Hide_user'] = 'Ghost Mode (Hide your membership and online status)';
 
 $lang['Profile_updated'] = 'Your profile has been updated';
 $lang['Profile_updated_inactive'] = 'Your profile has been updated. However, you have changed vital details, thus your account is now inactive. Check your e-mail to find out how to reactivate your account, or if admin activation is required, wait for the administrator to reactivate it.';
@@ -883,7 +880,7 @@ $lang['Add_member'] = 'Add Member';
 $lang['Not_group_moderator'] = 'You are not this group\'s moderator, therefore you cannot perform that action.';
 
 $lang['Login_to_join'] = 'Log in to join or manage group memberships';
-$lang['This_open_group'] = 'This is an open group: click to request membership';
+$lang['This_open_group'] = '';
 /*****[BEGIN]******************************************
  [ Mod:    Auto Group                          v1.2.2 ]
  ******************************************************/
@@ -995,7 +992,8 @@ $lang['Online_explain'] = 'Based on users active over the past ' . ( ($board_con
 
 $lang['Forum_Location'] = 'Forum Location';
 $lang['Last_updated'] = 'Last Updated';
-
+$lang['Group_List_Info'] = 'Group Information';
+$lang['Group_List_Title'] = '<h1>Available Member Groups</h1>';
 $lang['Forum_index'] = 'Forum index';
 $lang['Logging_on'] = 'Logging on';
 $lang['Posting_message'] = 'Posting a message';
@@ -1833,6 +1831,8 @@ $lang['Related_topics'] = 'Related topics';
 /*****[START]******************************************
  [ Base:    Who viewed a topic                 v1.0.3 ]
  ******************************************************/
+$lang['WhoIsViewingThisTopic'] = 'Who viewed <i class="fas fa-arrow-right" style="font-size: 12px;"></i>';
+$lang['WhoViewedMemberlist'] = 'Who Has Viewed This Topic?';  
 $lang['Topic_view_users'] = 'List users that have viewed this topic';
 $lang['Topic_time'] = 'Last viewed';
 $lang['Topic_count'] = 'View count';

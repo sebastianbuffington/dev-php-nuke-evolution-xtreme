@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 /*=======================================================================
  Nuke-Evolution Xtreme: Enhanced PHP-Nuke Web Portal System
@@ -25,7 +25,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Evolution (Xtreme) Installer</title>
+<title>Nuke-Evolution Xtreme (US Version) Installer</title>
 <link rel="stylesheet" type="text/css" href="install/style.css" />
 </head>
 
@@ -39,7 +39,7 @@
     </div>
     <div class="top_wrap">
       <div id="logo_left"></div>
-      <div id="logo_content_bg">
+      <div id="logo_content_bg"><br />
 <div id="logo"></div>
   </div>
 </div>

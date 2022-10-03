@@ -1,17 +1,47 @@
---
--- Table structure for table `nuke_admin_fc`
---
+CREATE TABLE `network_cemetery` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `name` varchar(256) NOT NULL,
+  `category_id` int(11) NOT NULL DEFAULT 0,
+  `url` varchar(256) NOT NULL,
+  `description` varchar(256) DEFAULT NULL,
+  `mod_date` date NOT NULL DEFAULT '0000-00-00',
+  `popup` tinyint(3) UNSIGNED NOT NULL DEFAULT 1
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `network_cemetery_cat` (
+  `category_id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `name` varchar(256) NOT NULL,
+  `description` varchar(256) NOT NULL,
+  `mod_date` date NOT NULL DEFAULT '0000-00-00'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `network_bookmarks` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `name` varchar(256) NOT NULL,
+  `category_id` int(11) NOT NULL DEFAULT 0,
+  `url` varchar(256) NOT NULL,
+  `description` varchar(256) DEFAULT NULL,
+  `mod_date` date NOT NULL DEFAULT '0000-00-00',
+  `popup` tinyint(3) UNSIGNED NOT NULL DEFAULT 1
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `network_bookmarks_cat` (
+  `category_id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `name` varchar(256) NOT NULL,
+  `description` varchar(256) NOT NULL,
+  `mod_date` date NOT NULL DEFAULT '0000-00-00'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `nuke_admin_fc` (
   `fc_datetime` varchar(25) NOT NULL DEFAULT '',
   `fc_ip` varchar(255) NOT NULL DEFAULT '',
-  `fc_attempts` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`fc_attempts`)
+  `fc_attempts` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `nuke_authors`
---
 
 CREATE TABLE `nuke_authors` (
   `aid` varchar(25) NOT NULL DEFAULT '',
@@ -19,184 +49,117 @@ CREATE TABLE `nuke_authors` (
   `url` varchar(255) NOT NULL DEFAULT '',
   `email` varchar(255) NOT NULL DEFAULT '',
   `pwd` varchar(40) DEFAULT NULL,
-  `counter` int(11) NOT NULL DEFAULT '0',
-  `radminsuper` tinyint(1) NOT NULL DEFAULT '1',
-  `admlanguage` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`aid`)
+  `counter` int(11) NOT NULL DEFAULT 0,
+  `radminsuper` tinyint(1) NOT NULL DEFAULT 1,
+  `admlanguage` varchar(30) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_autonews`
---
-
 CREATE TABLE `nuke_autonews` (
-  `anid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `catid` int(11) NOT NULL DEFAULT '0',
+  `anid` int(10) UNSIGNED NOT NULL,
+  `catid` int(11) NOT NULL DEFAULT 0,
   `aid` varchar(30) NOT NULL,
   `title` varchar(80) NOT NULL,
-  `time` varchar(19) NOT NULL DEFAULT '',
+  `datePublished` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `dateModified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `hometext` text NOT NULL,
   `bodytext` text NOT NULL,
-  `topic` int(11) NOT NULL DEFAULT '1',
+  `topic` int(11) NOT NULL DEFAULT 1,
   `informant` varchar(40) NOT NULL,
   `notes` text NOT NULL,
-  `ihome` tinyint(4) NOT NULL DEFAULT '0',
+  `ihome` tinyint(4) NOT NULL DEFAULT 0,
   `alanguage` varchar(30) NOT NULL,
-  `acomm` tinyint(4) NOT NULL DEFAULT '0',
+  `acomm` tinyint(4) NOT NULL DEFAULT 0,
   `associated` text NOT NULL,
-  `ticon` tinyint(1) NOT NULL DEFAULT '0',
-  `writes` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`anid`),
-  UNIQUE KEY `anid` (`anid`)
+  `ticon` tinyint(1) NOT NULL DEFAULT 0,
+  `writes` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_banner`
---
-
 CREATE TABLE `nuke_banner` (
-  `bid` int(11) NOT NULL AUTO_INCREMENT,
-  `cid` int(11) NOT NULL DEFAULT '0',
+  `bid` int(11) NOT NULL,
+  `cid` int(11) NOT NULL DEFAULT 0,
   `name` varchar(50) NOT NULL DEFAULT '',
-  `imptotal` int(11) NOT NULL DEFAULT '0',
-  `impmade` int(11) NOT NULL DEFAULT '0',
-  `clicks` int(11) NOT NULL DEFAULT '0',
+  `imptotal` int(11) NOT NULL DEFAULT 0,
+  `impmade` int(11) NOT NULL DEFAULT 0,
+  `clicks` int(11) NOT NULL DEFAULT 0,
   `imageurl` varchar(100) NOT NULL DEFAULT '',
   `clickurl` varchar(200) NOT NULL DEFAULT '',
   `alttext` varchar(255) NOT NULL DEFAULT '',
   `date` datetime DEFAULT NULL,
   `dateend` datetime DEFAULT NULL,
-  `position` int(10) NOT NULL DEFAULT '0',
-  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `position` int(11) NOT NULL DEFAULT 0,
+  `active` tinyint(1) NOT NULL DEFAULT 1,
   `ad_class` varchar(5) NOT NULL DEFAULT '',
   `ad_code` text NOT NULL,
-  `ad_width` int(4) DEFAULT '0',
-  `ad_height` int(4) DEFAULT '0',
-  `type` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`bid`),
-  KEY `cid` (`cid`)
+  `ad_width` int(11) DEFAULT 0,
+  `ad_height` int(11) DEFAULT 0,
+  `type` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_banner_clients`
---
+INSERT INTO `nuke_banner` (`bid`, `cid`, `name`, `imptotal`, `impmade`, `clicks`, `imageurl`, `clickurl`, `alttext`, `date`, `dateend`, `position`, `active`, `ad_class`, `ad_code`, `ad_width`, `ad_height`, `type`) VALUES
+(4, 1, '86it', 0, 515357, 614, 'https://www.dev-php-nuke-evolution-xtreme.86it.us/images/banners/10.png', 'index.php', 'Nuke-Evolution Xtreme 4.0.0b', '2019-09-17 17:36:30', '0000-00-00 00:00:00', 0, 1, 'image', '', 472, 79, ''),
+(5, 1, 'Xtreme', 0, 4532, 54, 'https://dev-php-nuke-evolution-xtreme.86it.us/themes/Xtreme_Core/images/HEADER/banner_02.png', 'index.php', 'PHP-Nuke Evolution Xtreme', '2021-05-28 02:54:43', '0000-00-00 00:00:00', 0, 0, 'image', '', 484, 79, '');
 
 CREATE TABLE `nuke_banner_clients` (
-  `cid` int(11) NOT NULL AUTO_INCREMENT,
+  `cid` int(11) NOT NULL,
   `name` varchar(60) NOT NULL DEFAULT '',
   `contact` varchar(60) NOT NULL DEFAULT '',
   `email` varchar(60) NOT NULL DEFAULT '',
   `login` varchar(10) NOT NULL DEFAULT '',
   `passwd` varchar(10) NOT NULL DEFAULT '',
-  `extrainfo` text NOT NULL,
-  PRIMARY KEY (`cid`)
+  `extrainfo` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_banner_plans`
---
+INSERT INTO `nuke_banner_clients` (`cid`, `name`, `contact`, `email`, `login`, `passwd`, `extrainfo`) VALUES
+(1, 'TheGhost', 'Ernest Buffington', 'ernest.buffington@gmail.com', 'TheGhost', '28up4meoru', '');
 
 CREATE TABLE `nuke_banner_plans` (
-  `pid` int(10) NOT NULL AUTO_INCREMENT,
-  `active` tinyint(1) NOT NULL DEFAULT '0',
+  `pid` int(10) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 0,
   `name` varchar(255) NOT NULL DEFAULT '',
   `description` text NOT NULL,
   `delivery` varchar(10) NOT NULL DEFAULT '',
   `delivery_type` varchar(25) NOT NULL DEFAULT '',
   `price` varchar(25) NOT NULL DEFAULT '0',
-  `buy_links` text NOT NULL,
-  PRIMARY KEY (`pid`)
+  `buy_links` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_banner_positions`
---
-
 CREATE TABLE `nuke_banner_positions` (
-  `apid` int(10) NOT NULL AUTO_INCREMENT,
-  `position_number` int(5) NOT NULL DEFAULT '0',
-  `position_name` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`apid`),
-  KEY `position_number` (`position_number`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_banner_positions`
---
+  `apid` int(10) NOT NULL,
+  `position_number` int(5) NOT NULL DEFAULT 0,
+  `position_name` varchar(255) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_banner_positions` (`apid`, `position_number`, `position_name`) VALUES
 (1, 0, 'Page Top'),
 (2, 1, 'Left Block'),
 (3, 2, 'Page Bottom');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_banner_terms`
---
-
 CREATE TABLE `nuke_banner_terms` (
   `terms_body` text NOT NULL,
   `country` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_banner_terms`
---
-
 INSERT INTO `nuke_banner_terms` (`terms_body`, `country`) VALUES
 ('<div align=\"justify\"><strong>Introduction:</strong> This Agreement between you and&nbsp;[sitename] consists of these Terms and Conditions. &quot;You&quot; or &quot;Advertiser&quot; means the entity identified in this enrollment form, and/or any agency acting on its behalf, which shall also be bound by the terms of this Agreement. Please read very carefully these Terms and Conditions.<br /><strong><br />Uses:</strong> You agree that your ads may be placed on (i) [sitename] web site and (ii) Any ads may be modified without your consent to comply with any policy of [sitename]. [sitename] reserves the right to, and in its sole discretion may, at any time review, reject, modify, or remove any ad. No liability of [sitename] and/or its owner(s) shall result from any such decision.<br /><br /></div><div align=\"justify\"><strong>Parties\' Responsibilities:</strong> You are responsible of your own site and/or service advertised in [sitename] web site. You are solely responsible for the advertising image creation, advertising text and for the content of your ads, including URL links. [sitename] is not responsible for anything regarding your Web site(s) including, but not limited to, maintenance of your Web site(s), order entry, customer service, payment processing, shipping, cancellations or returns.<br /><br /></div><div align=\"justify\"><strong>Impressions Count:</strong> Any hit to [sitename] web site is counted as an impression. Due to our advertising price we don\'t discriminate from users or automated robots. Even if you access to [sitename] web site and see your own banner ad it will be counted as a valid impression. Only in the case of [sitename] web site administrator, the impressions will not be counted.<br /><br /></div><div align=\"justify\"><strong>Termination, Cancellation:</strong> [sitename] may at any time, in its sole discretion, terminate the Campaign, terminate this Agreement, or cancel any ad(s) or your use of any Target. [sitename] will notify you via email of any such termination or cancellation, which shall be effective immediately. No refund will be made for any reason. Remaining impressions will be stored in a database and you\'ll be able to request another campaign to complete your inventory. You may cancel any ad and/or terminate this Agreement with or without cause at any time. Termination of your account shall be effective when [sitename] receives your notice via email. No refund will be made for any reason. Remaining impressions will be stored in a database for future uses by you and/or your company.<br /><br /></div><div align=\"justify\"><strong>Content:</strong> [sitename] web site doesn\'t accepts advertising that contains: (i) pornography, (ii) explicit adult content, (iii) moral questionable content, (iv) illegal content of any kind, (v) illegal drugs promotion, (vi) racism, (vii) politics content, (viii) religious content, and/or (ix) fraudulent suspicious content. If your advertising and/or target web site has any of this content and you purchased an advertising package, you\'ll not receive refund of any kind but your banners ads impressions will be stored for future use.<br /><br /></div><div align=\"justify\"><strong>Confidentiality:</strong> Each party agrees not to disclose Confidential Information of the other party without prior written consent except as provided herein. &quot;Confidential Information&quot; includes (i) ads, prior to publication, (ii) submissions or modifications relating to any advertising campaign, (iii) clickthrough rates or other statistics (except in an aggregated form that includes no identifiable information about you), and (iv) any other information designated in writing as &quot;Confidential.&quot; It does not include information that has become publicly known through no breach by a party, or has been (i) independently developed without access to the other party\'s Confidential Information; (ii) rightfully received from a third party; or (iii) required to be disclosed by law or by a governmental authority.<br /><br /></div><div align=\"justify\"><strong>No Guarantee:</strong> [sitename] makes no guarantee regarding the levels of clicks for any ad on its site. [sitename] may offer the same Target to more than one advertiser. You may not receive exclusivity unless special private contract between [sitename] and you.<br /><br /></div><div align=\"justify\"><strong>No Warranty:</strong> [sitename] MAKES NO WARRANTY, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION WITH RESPECT TO ADVERTISING AND OTHER SERVICES, AND EXPRESSLY DISCLAIMS THE WARRANTIES OR CONDITIONS OF NONINFRINGEMENT, MERCHANTABILITY AND FITNESS FOR ANY PARTICULAR PURPOSE.<br /><br /></div><div align=\"justify\"><strong>Limitations of Liability:</strong> In no event shall [sitename] be liable for any act or omission, or any event directly or indirectly resulting from any act or omission of Advertiser, Partner, or any third parties (if any). EXCEPT FOR THE PARTIES\' INDEMNIFICATION AND CONFIDENTIALITY OBLIGATIONS HEREUNDER, (i) IN NO EVENT SHALL EITHER PARTY BE LIABLE UNDER THIS AGREEMENT FOR ANY CONSEQUENTIAL, SPECIAL, INDIRECT, EXEMPLARY, PUNITIVE, OR OTHER DAMAGES WHETHER IN CONTRACT, TORT OR ANY OTHER LEGAL THEORY, EVEN IF SUCH PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES AND NOTWITHSTANDING ANY FAILURE OF ESSENTIAL PURPOSE OF ANY LIMITED REMEDY AND (ii) [sitename] AGGREGATE LIABILITY TO ADVERTISER UNDER THIS AGREEMENT FOR ANY CLAIM IS LIMITED TO THE AMOUNT PAID TO [sitename] BY ADVERTISER FOR THE AD GIVING RISE TO THE CLAIM. Each party acknowledges that the other party has entered into this Agreement relying on the limitations of liability stated herein and that those limitations are an essential basis of the bargain between the parties. Without limiting the foregoing and except for payment obligations, neither party shall have any liability for any failure or delay resulting from any condition beyond the reasonable control of such party, including but not limited to governmental action or acts of terrorism, earthquake or other acts of God, labor conditions, and power failures.<br /><br /></div><div align=\"justify\"><strong>Payment:</strong> You agree to pay in advance the cost of the advertising. [sitename] will not setup any banner ads campaign(s) unless the payment process is complete. [sitename] may change its pricing at any time without prior notice. If you have an advertising campaign running and/or impressions stored for future use for any mentioned cause and [sitename] changes its pricing, you\'ll not need to pay any difference. Your purchased banners fee will remain the same. Charges shall be calculated solely based on records maintained by [sitename]. No other measurements or statistics of any kind shall be accepted by [sitename] or have any effect under this Agreement.<br /><br /></div><div align=\"justify\"><strong>Representations and Warranties:</strong> You represent and warrant that (a) all of the information provided by you to [sitename] to enroll in the Advertising Campaign is correct and current; (b) you hold all rights to permit [sitename] and any Partner(s) to use, reproduce, display, transmit and distribute your ad(s); and (c) [sitename] and any Partner(s) Use, your Target(s), and any site(s) linked to, and products or services to which users are directed, will not, in any state or country where the ad is displayed (i) violate any criminal laws or third party rights giving rise to civil liability, including but not limited to trademark rights or rights relating to the performance of music; or (ii) encourage conduct that would violate any criminal or civil law. You further represent and warrant that any Web site linked to your ad(s) (i) complies with all laws and regulations in any state or country where the ad is displayed; (ii) does not breach and has not breached any duty toward or rights of any person or entity including, without limitation, rights of publicity or privacy, or rights or duties under consumer protection, product liability, tort, or contract theories; and (iii) is not false, misleading, defamatory, libelous, slanderous or threatening.<br /><br /></div><div align=\"justify\"><strong>Your Obligation to Indemnify:</strong> You agree to indemnify, defend and hold [sitename], its agents, affiliates, subsidiaries, directors, officers, employees, and applicable third parties (e.g., all relevant Partner(s), licensors, licensees, consultants and contractors) (&quot;Indemnified Person(s)&quot;) harmless from and against any and all third party claims, liability, loss, and expense (including damage awards, settlement amounts, and reasonable legal fees), brought against any Indemnified Person(s), arising out of, related to or which may arise from your use of the Advertising Program, your Web site, and/or your breach of any term of this Agreement. Customer understands and agrees that each Partner, as defined herein, has the right to assert and enforce its rights under this Section directly on its own behalf as a third party beneficiary.<br /><br /></div><div align=\"justify\"><strong>Information Rights:</strong> [sitename] may retain and use for its own purposes all information you provide, including but not limited to Targets, URLs, the content of ads, and contact and billing information. [sitename] may share this information about you with business partners and/or sponsors. [sitename] will not sell your information. Your name, web site\'s URL and related graphics shall be used by [sitename] in its own web site at any time as a sample to the public, even if your Advertising Campaign has been finished.<br /><br /></div><div align=\"justify\"><strong>Miscellaneous:</strong> Any decision made by [sitename] under this Agreement shall be final. [sitename] shall have no liability for any such decision. You will be responsible for all reasonable expenses (including attorneys\' fees) incurred by [sitename] in collecting unpaid amounts under this Agreement. This Agreement shall be governed by the laws of [country]. Any dispute or claim arising out of or in connection with this Agreement shall be adjudicated in [country]. This constitutes the entire agreement between the parties with respect to the subject matter hereof. Advertiser may not resell, assign, or transfer any of its rights hereunder. Any such attempt may result in termination of this Agreement, without liability to [sitename] and without any refund. The relationship(s) between [sitename] and the &quot;Partners&quot; is not one of a legal partnership relationship, but is one of independent contractors. This Agreement shall be construed as if both parties jointly wrote it.</div>', 'Canada');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbadvanced_username_color`
---
-
 CREATE TABLE `nuke_bbadvanced_username_color` (
-  `group_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `group_id` int(10) UNSIGNED NOT NULL,
   `group_name` varchar(255) NOT NULL DEFAULT '',
   `group_color` varchar(6) NOT NULL DEFAULT '',
-  `group_weight` smallint(2) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`group_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbadvanced_username_color`
---
+  `group_weight` smallint(2) NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_bbadvanced_username_color` (`group_id`, `group_name`, `group_color`, `group_weight`) VALUES
-(1, 'Administrators', 'd12727', 1),
-(2, 'Moderators', 'd38d01', 2),
-(3, 'VIP', '00aa00', 3),
-(4, 'Member', '00b3ff', 4);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbarcade`
---
+(1, 'Portal Admins', 'ff632a', 1),
+(2, 'Portal Moderators', 'd38d01', 2),
+(3, 'VIP Members', '00aa00', 3),
+(4, 'Portal Members', '00b3ff', 4),
+(5, 'CKEditor 4 Access', 'bf0000', 5);
 
 CREATE TABLE `nuke_bbarcade` (
   `arcade_name` varchar(255) NOT NULL DEFAULT '',
-  `arcade_value` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`arcade_name`)
+  `arcade_value` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbarcade`
---
 
 INSERT INTO `nuke_bbarcade` (`arcade_name`, `arcade_value`) VALUES
 ('use_category_mod', '1'),
@@ -215,102 +178,54 @@ INSERT INTO `nuke_bbarcade` (`arcade_name`, `arcade_value`) VALUES
 ('use_fav_category', '1'),
 ('arcade_announcement', 'Welcome to the Arcade!<br />Enjoy!');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbarcade_categories`
---
-
 CREATE TABLE `nuke_bbarcade_categories` (
-  `arcade_catid` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `arcade_catid` mediumint(8) UNSIGNED NOT NULL,
   `arcade_cattitle` varchar(100) NOT NULL DEFAULT '',
-  `arcade_nbelmt` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `arcade_catorder` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `arcade_catauth` tinyint(2) NOT NULL,
-  KEY `arcade_catid` (`arcade_catid`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbarcade_categories`
---
+  `arcade_nbelmt` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `arcade_catorder` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `arcade_catauth` tinyint(2) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_bbarcade_categories` (`arcade_catid`, `arcade_cattitle`, `arcade_nbelmt`, `arcade_catorder`, `arcade_catauth`) VALUES
 (1, 'Arcade', 1, 1, 0);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbarcade_comments`
---
-
 CREATE TABLE `nuke_bbarcade_comments` (
-  `game_id` mediumint(8) NOT NULL DEFAULT '0',
+  `game_id` mediumint(8) NOT NULL DEFAULT 0,
   `comments_value` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbarcade_comments`
---
 
 INSERT INTO `nuke_bbarcade_comments` (`game_id`, `comments_value`) VALUES
 (1, '');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbarcade_fav`
---
-
 CREATE TABLE `nuke_bbarcade_fav` (
-  `order` mediumint(8) NOT NULL DEFAULT '0',
-  `user_id` mediumint(8) NOT NULL DEFAULT '0',
-  `game_id` mediumint(8) NOT NULL DEFAULT '0'
+  `order` mediumint(8) NOT NULL DEFAULT 0,
+  `user_id` mediumint(8) NOT NULL DEFAULT 0,
+  `game_id` mediumint(8) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbattachments`
---
 
 CREATE TABLE `nuke_bbattachments` (
-  `attach_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `privmsgs_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `user_id_1` mediumint(8) NOT NULL DEFAULT '0',
-  `user_id_2` mediumint(8) NOT NULL DEFAULT '0',
-  KEY `attach_id_post_id` (`attach_id`,`post_id`),
-  KEY `attach_id_privmsgs_id` (`attach_id`,`privmsgs_id`),
-  KEY `post_id` (`post_id`),
-  KEY `privmsgs_id` (`privmsgs_id`)
+  `attach_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `privmsgs_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `user_id_1` mediumint(8) NOT NULL DEFAULT 0,
+  `user_id_2` mediumint(8) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbattachments_config`
---
 
 CREATE TABLE `nuke_bbattachments_config` (
   `config_name` varchar(255) NOT NULL DEFAULT '',
-  `config_value` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`config_name`)
+  `config_value` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbattachments_config`
---
 
 INSERT INTO `nuke_bbattachments_config` (`config_name`, `config_value`) VALUES
 ('upload_dir', 'modules/Forums/files'),
 ('upload_img', 'modules/Forums/images/attachment-download.png'),
 ('topic_icon', 'modules/Forums/images/attachment.png'),
 ('display_order', '0'),
-('max_filesize', '262144'),
-('attachment_quota', '52428800'),
-('max_filesize_pm', '262144'),
-('max_attachments', '3'),
-('max_attachments_pm', '1'),
+('max_filesize', '104857600'),
+('attachment_quota', '1048576000'),
+('max_filesize_pm', '1024000'),
+('max_attachments', '10'),
+('max_attachments_pm', '10'),
 ('disable_mod', '0'),
 ('allow_pm_attach', '1'),
 ('attachment_topic_review', '1'),
@@ -337,159 +252,91 @@ INSERT INTO `nuke_bbattachments_config` (`config_name`, `config_value`) VALUES
 ('wma_autoplay', '0'),
 ('flash_autoplay', '0');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbattachments_desc`
---
-
 CREATE TABLE `nuke_bbattachments_desc` (
-  `attach_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `attach_id` mediumint(8) UNSIGNED NOT NULL,
   `physical_filename` varchar(255) NOT NULL DEFAULT '',
   `real_filename` varchar(255) NOT NULL DEFAULT '',
-  `download_count` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `download_count` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `comment` varchar(255) DEFAULT NULL,
   `extension` varchar(100) DEFAULT NULL,
   `mimetype` varchar(100) DEFAULT NULL,
-  `filesize` int(20) NOT NULL DEFAULT '0',
-  `filetime` int(11) NOT NULL DEFAULT '0',
-  `thumbnail` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`attach_id`),
-  KEY `filetime` (`filetime`),
-  KEY `physical_filename` (`physical_filename`(10)),
-  KEY `filesize` (`filesize`)
+  `filesize` int(20) NOT NULL DEFAULT 0,
+  `filetime` int(11) NOT NULL DEFAULT 0,
+  `thumbnail` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbattach_quota`
---
 
 CREATE TABLE `nuke_bbattach_quota` (
-  `user_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `group_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `quota_type` smallint(2) NOT NULL DEFAULT '0',
-  `quota_limit_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  KEY `quota_type` (`quota_type`)
+  `user_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `group_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `quota_type` smallint(2) NOT NULL DEFAULT 0,
+  `quota_limit_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbauth_access`
---
 
 CREATE TABLE `nuke_bbauth_access` (
-  `group_id` mediumint(8) NOT NULL DEFAULT '0',
-  `forum_id` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `auth_view` tinyint(1) NOT NULL DEFAULT '0',
-  `auth_read` tinyint(1) NOT NULL DEFAULT '0',
-  `auth_post` tinyint(1) NOT NULL DEFAULT '0',
-  `auth_reply` tinyint(1) NOT NULL DEFAULT '0',
-  `auth_edit` tinyint(1) NOT NULL DEFAULT '0',
-  `auth_delete` tinyint(1) NOT NULL DEFAULT '0',
-  `auth_sticky` tinyint(1) NOT NULL DEFAULT '0',
-  `auth_announce` tinyint(1) NOT NULL DEFAULT '0',
-  `auth_globalannounce` tinyint(1) NOT NULL DEFAULT '0',
-  `auth_vote` tinyint(1) NOT NULL DEFAULT '0',
-  `auth_pollcreate` tinyint(1) NOT NULL DEFAULT '0',
-  `auth_attachments` tinyint(1) NOT NULL DEFAULT '0',
-  `auth_mod` tinyint(1) NOT NULL DEFAULT '0',
-  `auth_download` tinyint(1) NOT NULL DEFAULT '0',
-  KEY `group_id` (`group_id`),
-  KEY `forum_id` (`forum_id`)
+  `group_id` mediumint(8) NOT NULL DEFAULT 0,
+  `forum_id` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `auth_view` tinyint(1) NOT NULL DEFAULT 0,
+  `auth_read` tinyint(1) NOT NULL DEFAULT 0,
+  `auth_post` tinyint(1) NOT NULL DEFAULT 0,
+  `auth_reply` tinyint(1) NOT NULL DEFAULT 0,
+  `auth_edit` tinyint(1) NOT NULL DEFAULT 0,
+  `auth_delete` tinyint(1) NOT NULL DEFAULT 0,
+  `auth_sticky` tinyint(1) NOT NULL DEFAULT 0,
+  `auth_announce` tinyint(1) NOT NULL DEFAULT 0,
+  `auth_globalannounce` tinyint(1) NOT NULL DEFAULT 0,
+  `auth_vote` tinyint(1) NOT NULL DEFAULT 0,
+  `auth_pollcreate` tinyint(1) NOT NULL DEFAULT 0,
+  `auth_attachments` tinyint(1) NOT NULL DEFAULT 0,
+  `auth_mod` tinyint(1) NOT NULL DEFAULT 0,
+  `auth_download` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbauth_arcade_access`
---
 
 CREATE TABLE `nuke_bbauth_arcade_access` (
-  `group_id` mediumint(8) NOT NULL DEFAULT '0',
-  `arcade_catid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  KEY `group_id` (`group_id`),
-  KEY `arcade_catid` (`arcade_catid`)
+  `group_id` mediumint(8) NOT NULL DEFAULT 0,
+  `arcade_catid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbbanlist`
---
 
 CREATE TABLE `nuke_bbbanlist` (
-  `ban_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `ban_userid` mediumint(8) NOT NULL DEFAULT '0',
+  `ban_id` mediumint(8) UNSIGNED NOT NULL,
+  `ban_userid` mediumint(8) NOT NULL DEFAULT 0,
   `ban_ip` varchar(8) NOT NULL DEFAULT '',
   `ban_email` varchar(255) DEFAULT NULL,
-  `ban_time` int(11) DEFAULT NULL,
-  PRIMARY KEY (`ban_id`),
-  KEY `ban_ip_user_id` (`ban_ip`,`ban_userid`)
+  `ban_time` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbcategories`
---
-
 CREATE TABLE `nuke_bbcategories` (
-  `cat_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `cat_id` mediumint(8) UNSIGNED NOT NULL,
   `cat_title` varchar(100) DEFAULT NULL,
-  `cat_order` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  PRIMARY KEY (`cat_id`),
-  KEY `cat_order` (`cat_order`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbcategories`
---
-
-INSERT INTO `nuke_bbcategories` (`cat_id`, `cat_title`, `cat_order`) VALUES
-(1, 'General', 10);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbconfig`
---
+  `cat_order` mediumint(8) UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `nuke_bbconfig` (
   `config_name` varchar(255) NOT NULL DEFAULT '',
-  `config_value` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`config_name`)
+  `config_value` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbconfig`
---
 
 INSERT INTO `nuke_bbconfig` (`config_name`, `config_value`) VALUES
 ('config_id', '1'),
 ('board_disable', '0'),
 ('board_disable_adminview', '1'),
 ('board_disable_msg', 'The board is currently disabled...'),
-('sitename', 'My Site'),
-('site_desc', ''),
-('cookie_name', 'nukeevo'),
+('sitename', 'http://yourdomainname.com'),
+('site_desc', 'Your Forum Dezscription'),
+('cookie_name', 'titanium'),
 ('cookie_path', '/'),
-('cookie_domain', 'MySite.com'),
+('cookie_domain', 'yourdomainname.com'),
 ('cookie_secure', '0'),
 ('session_length', '3600'),
 ('allow_html', '1'),
-('allow_html_tags', 'b,i,u,pre'),
+('allow_html_tags', 'a,abbr,address,area,article,aside,audio,b,base,bdi,bdo,blockquote,br,button,canvas,caption,cite,code,col,colgroup,data,datalist,dd,del,em,strong,embed,fieldset,figure,footer,form,h1,h2,h3,h4,h5,h6,hgroup,hr,i,iframe,img,input,ins,kbd,keygen,label,legend,li,link,main,map,mark,menu,menuitem,meter,nav,noscript,object,ol,optgroup,option,output,p,param,pre,progress,1,rb,rt,rtc,ruby,s,samp,script,section,select,small,source,span,strong,style,sub,summary,sup,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,u,ul,var,video,wbr,b,p'),
 ('allow_bbcode', '1'),
 ('allow_smilies', '1'),
 ('allow_sig', '1'),
-('allow_namechange', '0'),
+('allow_namechange', '1'),
 ('allow_theme_create', '0'),
 ('allow_avatar_local', '1'),
-('allow_avatar_remote', '0'),
-('allow_avatar_upload', '0'),
+('allow_avatar_remote', '1'),
+('allow_avatar_upload', '1'),
 ('override_user_style', '1'),
 ('posts_per_page', '15'),
 ('topics_per_page', '50'),
@@ -497,26 +344,26 @@ INSERT INTO `nuke_bbconfig` (`config_name`, `config_value`) VALUES
 ('max_poll_options', '10'),
 ('max_sig_chars', '255'),
 ('max_smilies', '15'),
-('max_inbox_privmsgs', '100'),
-('max_sentbox_privmsgs', '100'),
-('max_savebox_privmsgs', '100'),
-('board_email_sig', 'Thanks, Webmaster@MySite.com'),
-('board_email', 'Webmaster@MySite.com'),
+('max_inbox_privmsgs', '1000'),
+('max_sentbox_privmsgs', '1000'),
+('max_savebox_privmsgs', '1000'),
+('board_email_sig', 'Thanks, webmaster@yourdomain.com'),
+('board_email', 'webmaster@yourdomain.com'),
 ('smtp_delivery', '0'),
 ('smtp_host', ''),
 ('require_activation', '0'),
 ('flood_interval', '15'),
 ('search_flood_interval', '15'),
 ('board_email_form', '0'),
-('avatar_filesize', '6144'),
-('avatar_max_width', '80'),
-('avatar_max_height', '80'),
+('avatar_filesize', '980000'),
+('avatar_max_width', '200'),
+('avatar_max_height', '200'),
 ('avatar_path', 'modules/Forums/images/avatars'),
 ('avatar_gallery_path', 'modules/Forums/images/avatars'),
 ('smilies_path', 'modules/Forums/images/smiles'),
 ('default_style', '1'),
 ('default_dateformat', 'D M d, Y g:i a'),
-('board_timezone', '10'),
+('board_timezone', '-5'),
 ('prune_enable', '0'),
 ('privmsg_disable', '0'),
 ('gzip_compress', '0'),
@@ -526,9 +373,9 @@ INSERT INTO `nuke_bbconfig` (`config_name`, `config_value`) VALUES
 ('default_lang', 'english'),
 ('smtp_username', ''),
 ('smtp_password', ''),
-('record_online_users', '2'),
-('record_online_date', '1034668530'),
-('server_name', 'MySite.com'),
+('record_online_users', ''),
+('record_online_date', '1620385879'),
+('server_name', 'yourdomain.com'),
 ('server_port', '80'),
 ('script_path', '/modules/Forums/'),
 ('version', '.0.23'),
@@ -557,18 +404,18 @@ INSERT INTO `nuke_bbconfig` (`config_name`, `config_value`) VALUES
 ('sig_exotic_bbcodes_disallowed', ''),
 ('sig_allow_smilies', '1'),
 ('report_email', '1'),
-('ropm_quick_reply', '1'),
+('ropm_quick_reply', '0'),
 ('ropm_quick_reply_bbc', '1'),
 ('ropm_quick_reply_smilies', '22'),
 ('wrap_enable', '1'),
 ('wrap_min', '50'),
 ('wrap_max', '99'),
 ('wrap_def', '70'),
-('allow_quickreply', '1'),
+('allow_quickreply', '0'),
 ('anonymous_show_sqr', '0'),
-('anonymous_sqr_mode', '0'),
+('anonymous_sqr_mode', '1'),
 ('quick_search_enable', '1'),
-('sig_line', '<hr>'),
+('sig_line', ''),
 ('default_avatar_guests_url', 'modules/Forums/images/avatars/blank.png'),
 ('default_avatar_users_url', 'modules/Forums/images/avatars/blank.png'),
 ('default_avatar_set', '2'),
@@ -585,10 +432,10 @@ INSERT INTO `nuke_bbconfig` (`config_name`, `config_value`) VALUES
 ('glance_table_width', '100%'),
 ('glance_auth_read', '1'),
 ('glance_topic_length', '0'),
-('online_time', '300'),
+('online_time', '600'),
 ('display_users_today', '0'),
-('locked_view_open', 'Locked: <strike>'),
-('locked_view_close', '</strike>'),
+('locked_view_open', 'Locked:'),
+('locked_view_close', ''),
 ('global_view_open', 'Global Announcement:'),
 ('global_view_close', ''),
 ('announce_view_open', 'Announcement:'),
@@ -615,8 +462,8 @@ INSERT INTO `nuke_bbconfig` (`config_name`, `config_value`) VALUES
 ('aprvmView', '0'),
 ('aprvmRows', '25'),
 ('aprvmIP', '1'),
-('image_resize_width', '400'),
-('image_resize_height', '400'),
+('image_resize_width', '640'),
+('image_resize_height', '480'),
 ('use_theme_style', '1'),
 ('allow_autologin', '1'),
 ('max_autologin_time', '0'),
@@ -626,14 +473,14 @@ INSERT INTO `nuke_bbconfig` (`config_name`, `config_value`) VALUES
 ('show_avatar_once', '0'),
 ('show_rank_once', '0'),
 ('loginpage', '1'),
-('rand_seed', '0'),
+('rand_seed', '0acdc9ed02fbae0fe28408329ffb7c9d'),
 ('ftr_msg', 'Sorry *u*, you need to read our topic: \"*t*\" for new users. <br> After you read it, you can proceed to browse our posts normally. <br><br> Please click *l* to view the post.'),
 ('ftr_topic', '3'),
 ('ftr_active', '0'),
 ('ftr_who', '2'),
 ('ftr_installed', '1241642769'),
-('global_title', 'Nuke-Evolution Xtreme!'),
-('global_announcement', 'Evolution Xtreme brings you a fully loaded version of Nuke-Evolution.'),
+('global_title', 'yourdomain.com'),
+('global_announcement', 'PHP-Nuke Titanium brings you a 30 year old CMS revived!'),
 ('global_enable', '1'),
 ('marquee_disable', '0'),
 ('version_check_delay', '1241641548'),
@@ -641,11 +488,11 @@ INSERT INTO `nuke_bbconfig` (`config_name`, `config_value`) VALUES
 ('bday_require', '0'),
 ('bday_year', '0'),
 ('bday_lock', '0'),
-('bday_lookahead', '7'),
-('bday_max', '100'),
+('bday_lookahead', '30'),
+('bday_max', '150'),
 ('bday_min', '5'),
 ('bday_hide', '0'),
-('bday_greeting', '0'),
+('bday_greeting', '3'),
 ('icon_per_row', '10'),
 ('ad_after_post', ''),
 ('ad_post_threshold', '1'),
@@ -683,35 +530,17 @@ INSERT INTO `nuke_bbconfig` (`config_name`, `config_value`) VALUES
 ('smtp_port', ''),
 ('smtp_auth', '0');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbdisallow`
---
-
 CREATE TABLE `nuke_bbdisallow` (
-  `disallow_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `disallow_username` varchar(25) DEFAULT NULL,
-  PRIMARY KEY (`disallow_id`)
+  `disallow_id` mediumint(8) UNSIGNED NOT NULL,
+  `disallow_username` varchar(25) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbextensions`
---
-
 CREATE TABLE `nuke_bbextensions` (
-  `ext_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `group_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `ext_id` mediumint(8) UNSIGNED NOT NULL,
+  `group_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `extension` varchar(100) NOT NULL DEFAULT '',
-  `comment` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`ext_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbextensions`
---
+  `comment` varchar(100) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_bbextensions` (`ext_id`, `group_id`, `extension`, `comment`) VALUES
 (1, 1, 'gif', ''),
@@ -741,51 +570,34 @@ INSERT INTO `nuke_bbextensions` (`ext_id`, `group_id`, `extension`, `comment`) V
 (25, 4, 'ppt', ''),
 (26, 5, 'rm', ''),
 (27, 6, 'wma', ''),
-(28, 7, 'swf', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbextension_groups`
---
+(28, 7, 'swf', ''),
+(29, 2, 'iso', '');
 
 CREATE TABLE `nuke_bbextension_groups` (
-  `group_id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `group_id` mediumint(8) NOT NULL,
   `group_name` varchar(20) NOT NULL DEFAULT '',
-  `cat_id` tinyint(2) NOT NULL DEFAULT '0',
-  `allow_group` tinyint(1) NOT NULL DEFAULT '0',
-  `download_mode` tinyint(1) UNSIGNED NOT NULL DEFAULT '1',
+  `cat_id` tinyint(2) NOT NULL DEFAULT 0,
+  `allow_group` tinyint(1) NOT NULL DEFAULT 0,
+  `download_mode` tinyint(1) UNSIGNED NOT NULL DEFAULT 1,
   `upload_icon` varchar(100) DEFAULT '',
-  `max_filesize` int(20) NOT NULL DEFAULT '0',
-  `forum_permissions` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`group_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbextension_groups`
---
+  `max_filesize` int(20) NOT NULL DEFAULT 0,
+  `forum_permissions` varchar(255) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_bbextension_groups` (`group_id`, `group_name`, `cat_id`, `allow_group`, `download_mode`, `upload_icon`, `max_filesize`, `forum_permissions`) VALUES
-(1, 'Images', 1, 1, 2, '', 262144, ''),
-(2, 'Archives', 0, 1, 2, '', 262144, ''),
-(3, 'Plain Text', 0, 0, 2, '', 262144, ''),
-(4, 'Documents', 0, 0, 2, '', 262144, ''),
-(5, 'Real Media', 0, 0, 2, '', 262144, ''),
-(6, 'Streams', 2, 0, 2, '', 262144, ''),
-(7, 'Flash Files', 3, 0, 2, '', 262144, '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbflags`
---
+(1, 'Images', 1, 1, 2, '', 104857600, ''),
+(2, 'Archives', 0, 1, 2, '', 104857600, ''),
+(3, 'Plain Text', 0, 0, 2, '', 104857600, ''),
+(4, 'Documents', 0, 0, 2, '', 104857600, ''),
+(5, 'Real Media', 0, 0, 2, '', 104857600, ''),
+(6, 'Streams', 2, 0, 2, '', 104857600, ''),
+(7, 'Flash Files', 3, 0, 2, '', 104857600, '');
 
 CREATE TABLE `nuke_bbflags` (
   `flag_id` int(10) NOT NULL,
   `flag_name` varchar(50) DEFAULT NULL,
-  `flag_image` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`flag_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=173;
+  `flag_image` varchar(50) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 INSERT INTO `nuke_bbflags` (`flag_id`, `flag_name`, `flag_image`) VALUES
 (1, 'usa', 'usa.png'),
@@ -845,7 +657,6 @@ INSERT INTO `nuke_bbflags` (`flag_id`, `flag_name`, `flag_image`) VALUES
 (55, 'finland', 'finland.png'),
 (56, 'france', 'france.png'),
 (57, 'gabon', 'gabon.png'),
-
 (58, 'gambia', 'gambia.png'),
 (59, 'georgia', 'georgia.png'),
 (60, 'germany', 'germany.png'),
@@ -962,21 +773,10 @@ INSERT INTO `nuke_bbflags` (`flag_id`, `flag_name`, `flag_image`) VALUES
 (171, 'zambia', 'zambia.png'),
 (172, 'zimbabwe', 'zimbabwe.png');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbforbidden_extensions`
---
-
 CREATE TABLE `nuke_bbforbidden_extensions` (
-  `ext_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `extension` varchar(100) NOT NULL DEFAULT '',
-  PRIMARY KEY (`ext_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbforbidden_extensions`
---
+  `ext_id` mediumint(8) UNSIGNED NOT NULL,
+  `extension` varchar(100) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_bbforbidden_extensions` (`ext_id`, `extension`) VALUES
 (1, 'php'),
@@ -990,83 +790,51 @@ INSERT INTO `nuke_bbforbidden_extensions` (`ext_id`, `extension`) VALUES
 (9, 'bat'),
 (10, 'scr');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbforums`
---
-
 CREATE TABLE `nuke_bbforums` (
-  `forum_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `cat_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `forum_id` smallint(5) UNSIGNED NOT NULL,
+  `cat_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `forum_name` varchar(150) DEFAULT NULL,
-  `forum_desc` text,
-  `forum_status` tinyint(4) NOT NULL DEFAULT '0',
-  `forum_order` mediumint(8) UNSIGNED NOT NULL DEFAULT '1',
-  `forum_posts` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `forum_topics` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `forum_last_post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `forum_desc` text DEFAULT NULL,
+  `forum_status` tinyint(4) NOT NULL DEFAULT 0,
+  `forum_order` mediumint(8) UNSIGNED NOT NULL DEFAULT 1,
+  `forum_posts` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `forum_topics` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `forum_last_post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `prune_next` int(11) DEFAULT NULL,
-  `prune_enable` tinyint(1) NOT NULL DEFAULT '1',
-  `auth_view` tinyint(2) NOT NULL DEFAULT '0',
-  `auth_read` tinyint(2) NOT NULL DEFAULT '0',
-  `auth_post` tinyint(2) NOT NULL DEFAULT '0',
-  `auth_reply` tinyint(2) NOT NULL DEFAULT '0',
-  `auth_edit` tinyint(2) NOT NULL DEFAULT '0',
-  `auth_delete` tinyint(2) NOT NULL DEFAULT '0',
-  `auth_sticky` tinyint(2) NOT NULL DEFAULT '0',
-  `auth_announce` tinyint(2) NOT NULL DEFAULT '0',
-  `auth_globalannounce` tinyint(2) NOT NULL DEFAULT '3',
-  `auth_vote` tinyint(2) NOT NULL DEFAULT '0',
-  `auth_pollcreate` tinyint(2) NOT NULL DEFAULT '0',
-  `auth_attachments` tinyint(2) NOT NULL DEFAULT '0',
-  `forum_display_sort` tinyint(1) NOT NULL DEFAULT '0',
-  `forum_display_order` tinyint(1) NOT NULL DEFAULT '0',
-  `auth_download` tinyint(2) NOT NULL DEFAULT '0',
-  `forum_parent` int(11) NOT NULL DEFAULT '0',
+  `prune_enable` tinyint(1) NOT NULL DEFAULT 1,
+  `auth_view` tinyint(2) NOT NULL DEFAULT 0,
+  `auth_read` tinyint(2) NOT NULL DEFAULT 0,
+  `auth_post` tinyint(2) NOT NULL DEFAULT 0,
+  `auth_reply` tinyint(2) NOT NULL DEFAULT 0,
+  `auth_edit` tinyint(2) NOT NULL DEFAULT 0,
+  `auth_delete` tinyint(2) NOT NULL DEFAULT 0,
+  `auth_sticky` tinyint(2) NOT NULL DEFAULT 0,
+  `auth_announce` tinyint(2) NOT NULL DEFAULT 0,
+  `auth_globalannounce` tinyint(2) NOT NULL DEFAULT 3,
+  `auth_vote` tinyint(2) NOT NULL DEFAULT 0,
+  `auth_pollcreate` tinyint(2) NOT NULL DEFAULT 0,
+  `auth_attachments` tinyint(2) NOT NULL DEFAULT 0,
+  `forum_display_sort` tinyint(1) NOT NULL DEFAULT 0,
+  `forum_display_order` tinyint(1) NOT NULL DEFAULT 0,
+  `auth_download` tinyint(2) NOT NULL DEFAULT 0,
+  `forum_parent` int(11) NOT NULL DEFAULT 0,
   `forum_color` varchar(6) NOT NULL DEFAULT '',
-  `title_is_link` tinyint(1) NOT NULL DEFAULT '0',
+  `title_is_link` tinyint(1) NOT NULL DEFAULT 0,
   `weblink` varchar(200) NOT NULL,
   `forum_link_icon` varchar(200) NOT NULL,
-  `forum_link_count` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `forum_link_target` tinyint(1) NOT NULL DEFAULT '0',
+  `forum_link_count` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `forum_link_target` tinyint(1) NOT NULL DEFAULT 0,
   `forum_icon` varchar(255) DEFAULT NULL,
-  `forum_thank` tinyint(1) NOT NULL DEFAULT '0',
-  `forum_password` varchar(20) NOT NULL DEFAULT '',
-  PRIMARY KEY (`forum_id`),
-  KEY `forums_order` (`forum_order`),
-  KEY `cat_id` (`cat_id`),
-  KEY `forum_last_post_id` (`forum_last_post_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbforums`
---
-
-INSERT INTO `nuke_bbforums` (`forum_id`, `cat_id`, `forum_name`, `forum_desc`, `forum_status`, `forum_order`, `forum_posts`, `forum_topics`, `forum_last_post_id`, `prune_next`, `prune_enable`, `auth_view`, `auth_read`, `auth_post`, `auth_reply`, `auth_edit`, `auth_delete`, `auth_sticky`, `auth_announce`, `auth_globalannounce`, `auth_vote`, `auth_pollcreate`, `auth_attachments`, `forum_display_sort`, `forum_display_order`, `auth_download`, `forum_parent`, `forum_color`, `title_is_link`, `weblink`, `forum_link_icon`, `forum_link_count`, `forum_link_target`, `forum_icon`, `forum_thank`, `forum_password`) VALUES
-(1, 1, 'Site', '', 0, 10, 1, 1, 2, NULL, 0, 0, 0, 1, 1, 1, 1, 3, 3, 3, 1, 1, 1, 0, 0, 1, 0, 'd40000', 0, 'http://', '', 0, 0, 'images/forum_icons/general.png', 1, '');
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbforum_prune`
---
-
-CREATE TABLE `nuke_bbforum_prune` (
-  `prune_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `forum_id` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `prune_days` tinyint(4) UNSIGNED NOT NULL DEFAULT '0',
-  `prune_freq` tinyint(4) UNSIGNED NOT NULL DEFAULT '0',
-  PRIMARY KEY (`prune_id`),
-  KEY `forum_id` (`forum_id`)
+  `forum_thank` tinyint(1) NOT NULL DEFAULT 0,
+  `forum_password` varchar(20) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbgamehash`
---
+CREATE TABLE `nuke_bbforum_prune` (
+  `prune_id` mediumint(8) UNSIGNED NOT NULL,
+  `forum_id` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `prune_days` tinyint(4) UNSIGNED NOT NULL DEFAULT 0,
+  `prune_freq` tinyint(4) UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `nuke_bbgamehash` (
   `gamehash_id` char(32) NOT NULL,
@@ -1075,98 +843,57 @@ CREATE TABLE `nuke_bbgamehash` (
   `hash_date` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_bbgamehash`
---
-
-INSERT INTO `nuke_bbgamehash` (`gamehash_id`, `game_id`, `user_id`, `hash_date`) VALUES
-('2831531a4b315cface4aa7b4b407737e', 1, 14, 1243799167),
-('af91f2f362cf263b05d87c969560e6ed', 1, 14, 1243798783),
-('bc45ca43ec051ff1c3e81aa0f7853397', 1, 14, 1243798574),
-('aa63eacff0b985227853ebbab58a3d2f', 1, 14, 1243798654),
-('d5daabfb1c1cf7ac3533114a5c26c2f5', 1, 14, 1243798569),
-('c5176e5b8e7f3c711d91ab608885f6f2', 1, 14, 1243799172),
-('04887b4f7591c9d5a755d073e488fd09', 1, 26, 1243869607),
-('e1a8c5aaf0a057af8884d3db957a773b', 1, 26, 1243869608),
-('c93c35ada756d320067e4e81692aed00', 1, 26, 1243869608),
-('5b6258ef67e44bfdf399861be8a511e5', 1, 26, 1243869797),
-('183552c7d3a11a68211e89f6199f3cb2', 1, 26, 1243869797);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbgames`
---
-
 CREATE TABLE `nuke_bbgames` (
-  `game_id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `game_id` mediumint(8) NOT NULL,
   `game_pic` varchar(50) NOT NULL DEFAULT '',
   `game_desc` varchar(255) NOT NULL DEFAULT '',
-  `game_highscore` int(11) NOT NULL DEFAULT '0',
-  `game_highdate` int(11) NOT NULL DEFAULT '0',
-  `game_highuser` mediumint(8) NOT NULL DEFAULT '0',
+  `game_highscore` int(11) NOT NULL DEFAULT 0,
+  `game_highdate` int(11) NOT NULL DEFAULT 0,
+  `game_highuser` mediumint(8) NOT NULL DEFAULT 0,
   `game_name` varchar(50) NOT NULL DEFAULT '',
   `game_swf` varchar(50) NOT NULL DEFAULT '',
   `game_scorevar` varchar(50) NOT NULL DEFAULT '',
-  `game_type` tinyint(4) NOT NULL DEFAULT '0',
-  `game_width` mediumint(5) NOT NULL DEFAULT '550',
+  `game_type` tinyint(4) NOT NULL DEFAULT 0,
+  `game_width` mediumint(5) NOT NULL DEFAULT 550,
   `game_height` varchar(5) NOT NULL DEFAULT '380',
-  `game_order` mediumint(8) NOT NULL DEFAULT '0',
-  `game_set` mediumint(8) NOT NULL DEFAULT '0',
-  `arcade_catid` mediumint(8) NOT NULL DEFAULT '1',
-  KEY `game_id` (`game_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbgames`
---
-
-INSERT INTO `nuke_bbgames` (`game_id`, `game_pic`, `game_desc`, `game_highscore`, `game_highdate`, `game_highuser`, `game_name`, `game_swf`, `game_scorevar`, `game_type`, `game_width`, `game_height`, `game_order`, `game_set`, `arcade_catid`) VALUES
-(1, 'airport1.gif', '', 0, 0, 0, 'airport', 'airport.swf', 'airport', 3, 550, '380', 10, 0, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbgroups`
---
+  `game_order` mediumint(8) NOT NULL DEFAULT 0,
+  `game_set` mediumint(8) NOT NULL DEFAULT 0,
+  `arcade_catid` mediumint(8) NOT NULL DEFAULT 1
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `nuke_bbgroups` (
-  `group_id` mediumint(8) NOT NULL AUTO_INCREMENT,
-  `group_type` tinyint(4) NOT NULL DEFAULT '1',
+  `group_id` mediumint(8) NOT NULL,
+  `group_type` tinyint(4) NOT NULL DEFAULT 1,
   `group_name` varchar(40) NOT NULL DEFAULT '',
   `group_description` varchar(255) NOT NULL DEFAULT '',
-  `group_moderator` mediumint(8) NOT NULL DEFAULT '0',
-  `group_single_user` tinyint(1) NOT NULL DEFAULT '1',
-  `group_allow_pm` tinyint(2) NOT NULL DEFAULT '5',
+  `group_moderator` mediumint(8) NOT NULL DEFAULT 0,
+  `group_single_user` tinyint(1) NOT NULL DEFAULT 1,
+  `group_allow_pm` tinyint(2) NOT NULL DEFAULT 5,
   `group_color` varchar(15) NOT NULL DEFAULT '',
   `group_rank` varchar(5) NOT NULL DEFAULT '0',
-  `max_inbox` mediumint(10) NOT NULL DEFAULT '100',
-  `max_sentbox` mediumint(10) NOT NULL DEFAULT '100',
-  `max_savebox` mediumint(10) NOT NULL DEFAULT '100',
-  `override_max_inbox` tinyint(1) NOT NULL DEFAULT '0',
-  `override_max_sentbox` tinyint(1) NOT NULL DEFAULT '0',
-  `override_max_savebox` tinyint(1) NOT NULL DEFAULT '0',
-  `group_count` int(4) UNSIGNED DEFAULT '99999999',
-  `group_count_max` int(4) UNSIGNED DEFAULT '99999999',
-  `group_count_enable` smallint(2) UNSIGNED DEFAULT '0',
-  PRIMARY KEY (`group_id`),
-  KEY `group_single_user` (`group_single_user`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbgroups`
---
+  `max_inbox` mediumint(10) NOT NULL DEFAULT 100,
+  `max_sentbox` mediumint(10) NOT NULL DEFAULT 100,
+  `max_savebox` mediumint(10) NOT NULL DEFAULT 100,
+  `override_max_inbox` tinyint(1) NOT NULL DEFAULT 0,
+  `override_max_sentbox` tinyint(1) NOT NULL DEFAULT 0,
+  `override_max_savebox` tinyint(1) NOT NULL DEFAULT 0,
+  `group_count` int(4) UNSIGNED DEFAULT 99999999,
+  `group_count_max` int(4) UNSIGNED DEFAULT 99999999,
+  `group_count_enable` smallint(2) UNSIGNED DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_bbgroups` (`group_id`, `group_type`, `group_name`, `group_description`, `group_moderator`, `group_single_user`, `group_allow_pm`, `group_color`, `group_rank`, `max_inbox`, `max_sentbox`, `max_savebox`, `override_max_inbox`, `override_max_sentbox`, `override_max_savebox`, `group_count`, `group_count_max`, `group_count_enable`) VALUES
 (1, 1, 'Anonymous', 'Personal User', 0, 1, 0, '', '', 0, 0, 0, 0, 0, 0, 99999999, 99999999, 0),
-(2, 2, 'Moderators', 'Moderators of this Forum', 2, 0, 5, '', 2, 0, 0, 0, 0, 0, 0, 99999999, 99999999, 0),
-(3, 0, 'Users', 'Default Usergroup', 2, 0, 5, '', 3, 0, 0, 0, 0, 0, 0, 99999999, 99999999, 0);
+(2, 2, 'Portal Moderators', 'Portal Moderators', 2, 0, 5, '2', '2', 0, 0, 0, 0, 0, 0, 99999999, 99999999, 0),
+(3, 0, 'Portal Members', 'Default Portal Usergroup', 2, 0, 5, '4', '6', 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(4, 0, 'VIP Members', 'VIP Portal Members', 2, 0, 5, '3', '7', 100000, 100000, 100000, 0, 0, 0, 99999999, 99999999, 0),
+(5, 0, 'Portal Admins', 'Portal Admins', 2, 0, 5, '1', '4', 100000, 100000, 100000, 1, 1, 1, 99999999, 99999999, 0),
+(25, 0, 'CKEditor 4 Access', 'CKEditor 4 Access', 2, 0, 5, '5', '0', 1000, 1000, 1000, 0, 0, 0, 99999999, 99999999, 0),
+(26, 1, '', 'Personal User', 0, 1, 5, '', '0', 100, 100, 100, 0, 0, 0, 99999999, 99999999, 0),
+(27, 1, '', 'Personal User', 0, 1, 5, '', '0', 100, 100, 100, 0, 0, 0, 99999999, 99999999, 0),
+(28, 1, '', 'Personal User', 0, 1, 5, '', '0', 100, 100, 100, 0, 0, 0, 99999999, 99999999, 0),
+(29, 1, '', 'Personal User', 0, 1, 5, '', '0', 100, 100, 100, 0, 0, 0, 99999999, 99999999, 0);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbhackgame`
---
 
 CREATE TABLE `nuke_bbhackgame` (
   `user_id` mediumint(8) NOT NULL,
@@ -1174,296 +901,156 @@ CREATE TABLE `nuke_bbhackgame` (
   `date_hack` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbinline_ads`
---
-
 CREATE TABLE `nuke_bbinline_ads` (
-  `ad_id` tinyint(5) NOT NULL AUTO_INCREMENT,
+  `ad_id` tinyint(5) NOT NULL,
   `ad_code` text NOT NULL,
-  `ad_name` char(25) NOT NULL,
-  PRIMARY KEY (`ad_id`)
+  `ad_name` char(25) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bblogs`
---
 
 CREATE TABLE `nuke_bblogs` (
-  `log_id` mediumint(10) NOT NULL AUTO_INCREMENT,
+  `log_id` mediumint(10) NOT NULL,
   `mode` varchar(50) DEFAULT '',
-  `topic_id` mediumint(10) DEFAULT '0',
-  `user_id` mediumint(8) DEFAULT '0',
+  `topic_id` mediumint(10) DEFAULT 0,
+  `user_id` mediumint(8) DEFAULT 0,
   `username` varchar(255) DEFAULT '',
   `user_ip` varchar(8) NOT NULL DEFAULT '0',
-  `time` int(11) DEFAULT '0',
-  `new_topic_id` mediumint(10) NOT NULL DEFAULT '0',
-  `forum_id` mediumint(10) NOT NULL DEFAULT '0',
-  `new_forum_id` mediumint(10) NOT NULL DEFAULT '0',
-  `last_post_id` mediumint(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`log_id`)
+  `time` int(11) DEFAULT 0,
+  `new_topic_id` mediumint(10) NOT NULL DEFAULT 0,
+  `forum_id` mediumint(10) NOT NULL DEFAULT 0,
+  `new_forum_id` mediumint(10) NOT NULL DEFAULT 0,
+  `last_post_id` mediumint(10) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bblogs_config`
---
 
 CREATE TABLE `nuke_bblogs_config` (
   `config_name` varchar(255) NOT NULL DEFAULT '',
-  `config_value` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`config_name`)
+  `config_value` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bblogs_config`
---
 
 INSERT INTO `nuke_bblogs_config` (`config_name`, `config_value`) VALUES
 ('all_admin', '0');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbposts`
---
-
 CREATE TABLE `nuke_bbposts` (
-  `post_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `topic_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `forum_id` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `poster_id` mediumint(8) NOT NULL DEFAULT '0',
-  `post_time` int(11) NOT NULL DEFAULT '0',
+  `post_id` mediumint(8) UNSIGNED NOT NULL,
+  `topic_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `forum_id` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `poster_id` mediumint(8) NOT NULL DEFAULT 0,
+  `post_time` int(11) NOT NULL DEFAULT 0,
   `poster_ip` varchar(8) NOT NULL DEFAULT '',
   `post_username` varchar(25) DEFAULT NULL,
-  `enable_bbcode` tinyint(1) NOT NULL DEFAULT '1',
-  `enable_html` tinyint(1) NOT NULL DEFAULT '0',
-  `enable_smilies` tinyint(1) NOT NULL DEFAULT '1',
-  `enable_sig` tinyint(1) NOT NULL DEFAULT '1',
+  `enable_bbcode` tinyint(1) NOT NULL DEFAULT 1,
+  `enable_html` tinyint(1) NOT NULL DEFAULT 0,
+  `enable_smilies` tinyint(1) NOT NULL DEFAULT 1,
+  `enable_sig` tinyint(1) NOT NULL DEFAULT 1,
   `post_edit_time` int(11) DEFAULT NULL,
-  `post_edit_count` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `post_attachment` tinyint(1) NOT NULL DEFAULT '0',
-  `post_move` tinyint(1) NOT NULL DEFAULT '0',
-  `post_icon` tinyint(2) DEFAULT NULL,
-  PRIMARY KEY (`post_id`),
-  KEY `forum_id` (`forum_id`),
-  KEY `topic_id` (`topic_id`),
-  KEY `poster_id` (`poster_id`),
-  KEY `post_time` (`post_time`),
-  KEY `post_icon` (`post_icon`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbposts`
---
-
-INSERT INTO `nuke_bbposts` (`post_id`, `topic_id`, `forum_id`, `poster_id`, `post_time`, `poster_ip`, `post_username`, `enable_bbcode`, `enable_html`, `enable_smilies`, `enable_sig`, `post_edit_time`, `post_edit_count`, `post_attachment`, `post_move`, `post_icon`) VALUES
-(2, 2, 1, 2, 1247494961, '4434c95e', '', 1, 1, 1, 0, 1533995627, 0, 0, 0, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbposts_text`
---
+  `post_edit_count` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `post_attachment` tinyint(1) NOT NULL DEFAULT 0,
+  `post_move` tinyint(1) NOT NULL DEFAULT 0,
+  `post_icon` tinyint(2) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `nuke_bbposts_text` (
-  `post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `bbcode_uid` varchar(10) NOT NULL DEFAULT '',
   `post_subject` varchar(60) DEFAULT NULL,
-  `post_text` text,
-  PRIMARY KEY (`post_id`)
+  `post_text` text DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbposts_text`
---
-
-INSERT INTO `nuke_bbposts_text` (`post_id`, `bbcode_uid`, `post_subject`, `post_text`) VALUES
-(2, '635640fe4f', 'Welcome to Nuke-Evolution Xtreme!', 'Thanks for installing Nuke-Evolution Xtreme Edition. The Evo Xtreme Team has put a lot of hard work into this release to make it the fastest, most functional and most secure version of PHP-Nuke ever. We encourage you to read through all of the included documentation so you fully understand the power within Evo.\n\nInside the original archive you downloaded you will find several folders containing helpful information.\n\nThe first is the &quot;Install&quot; folder which we hope you are already familiar with. This folder contains three documents which help you properly install and configure your new Evo site. If you haven\'t fully gone through these already please do it now!\n\nThe second is the &quot;Help&quot; folder. Inside this folder you will find some very helpful documents that our team has put together to explain some of the features inside Evo. You will also find some documents that will help resolve a few errors you may run in to due to browser settings or improperly setup software.\n\nThe third is the &quot;Theme Edits&quot; folder. If you would like to convert a PHP-Nuke theme to work with Evo you must follow the provided instructions within this folder.\n\nWe trust that Evo will be the best Nuke software you have ever run. Enjoy and be sure to stop by www.evolution-xtreme.com for support, updates or just to say hi!\n\n- The Nuke-Evolution Team');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbpost_reports`
---
 
 CREATE TABLE `nuke_bbpost_reports` (
-  `report_id` mediumint(8) NOT NULL AUTO_INCREMENT,
-  `post_id` mediumint(8) NOT NULL DEFAULT '0',
-  `reporter_id` mediumint(8) NOT NULL DEFAULT '0',
-  `report_status` tinyint(1) NOT NULL DEFAULT '0',
-  `report_time` int(11) NOT NULL DEFAULT '0',
-  `report_comments` text,
-  `last_action_user_id` mediumint(8) DEFAULT '0',
-  `last_action_time` int(11) NOT NULL DEFAULT '0',
-  `last_action_comments` text,
-  PRIMARY KEY (`report_id`)
+  `report_id` mediumint(8) NOT NULL,
+  `post_id` mediumint(8) NOT NULL DEFAULT 0,
+  `reporter_id` mediumint(8) NOT NULL DEFAULT 0,
+  `report_status` tinyint(1) NOT NULL DEFAULT 0,
+  `report_time` int(11) NOT NULL DEFAULT 0,
+  `report_comments` text DEFAULT NULL,
+  `last_action_user_id` mediumint(8) DEFAULT 0,
+  `last_action_time` int(11) NOT NULL DEFAULT 0,
+  `last_action_comments` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbprivmsgs`
---
-
 CREATE TABLE `nuke_bbprivmsgs` (
-  `privmsgs_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `privmsgs_type` tinyint(4) NOT NULL DEFAULT '0',
+  `privmsgs_id` mediumint(8) UNSIGNED NOT NULL,
+  `privmsgs_type` tinyint(4) NOT NULL DEFAULT 0,
   `privmsgs_subject` varchar(255) NOT NULL DEFAULT '0',
-  `privmsgs_from_userid` mediumint(8) NOT NULL DEFAULT '0',
-  `privmsgs_to_userid` mediumint(8) NOT NULL DEFAULT '0',
-  `privmsgs_date` int(11) NOT NULL DEFAULT '0',
+  `privmsgs_from_userid` mediumint(8) NOT NULL DEFAULT 0,
+  `privmsgs_to_userid` mediumint(8) NOT NULL DEFAULT 0,
+  `privmsgs_date` int(11) NOT NULL DEFAULT 0,
   `privmsgs_ip` varchar(8) NOT NULL DEFAULT '',
-  `privmsgs_enable_bbcode` tinyint(1) NOT NULL DEFAULT '1',
-  `privmsgs_enable_html` tinyint(1) NOT NULL DEFAULT '0',
-  `privmsgs_enable_smilies` tinyint(1) NOT NULL DEFAULT '1',
-  `privmsgs_attach_sig` tinyint(1) NOT NULL DEFAULT '1',
-  `privmsgs_attachment` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`privmsgs_id`),
-  KEY `privmsgs_from_userid` (`privmsgs_from_userid`),
-  KEY `privmsgs_to_userid` (`privmsgs_to_userid`)
+  `privmsgs_enable_bbcode` tinyint(1) NOT NULL DEFAULT 1,
+  `privmsgs_enable_html` tinyint(1) NOT NULL DEFAULT 0,
+  `privmsgs_enable_smilies` tinyint(1) NOT NULL DEFAULT 1,
+  `privmsgs_attach_sig` tinyint(1) NOT NULL DEFAULT 1,
+  `privmsgs_attachment` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbprivmsgs_archive`
---
 
 CREATE TABLE `nuke_bbprivmsgs_archive` (
-  `privmsgs_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `privmsgs_type` tinyint(4) NOT NULL DEFAULT '0',
+  `privmsgs_id` mediumint(8) UNSIGNED NOT NULL,
+  `privmsgs_type` tinyint(4) NOT NULL DEFAULT 0,
   `privmsgs_subject` varchar(255) NOT NULL DEFAULT '0',
-  `privmsgs_from_userid` mediumint(8) NOT NULL DEFAULT '0',
-  `privmsgs_to_userid` mediumint(8) NOT NULL DEFAULT '0',
-  `privmsgs_date` int(11) NOT NULL DEFAULT '0',
+  `privmsgs_from_userid` mediumint(8) NOT NULL DEFAULT 0,
+  `privmsgs_to_userid` mediumint(8) NOT NULL DEFAULT 0,
+  `privmsgs_date` int(11) NOT NULL DEFAULT 0,
   `privmsgs_ip` varchar(8) NOT NULL DEFAULT '',
-  `privmsgs_enable_bbcode` tinyint(1) NOT NULL DEFAULT '1',
-  `privmsgs_enable_html` tinyint(1) NOT NULL DEFAULT '0',
-  `privmsgs_enable_smilies` tinyint(1) NOT NULL DEFAULT '1',
-  `privmsgs_attach_sig` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`privmsgs_id`),
-  KEY `privmsgs_from_userid` (`privmsgs_from_userid`),
-  KEY `privmsgs_to_userid` (`privmsgs_to_userid`)
+  `privmsgs_enable_bbcode` tinyint(1) NOT NULL DEFAULT 1,
+  `privmsgs_enable_html` tinyint(1) NOT NULL DEFAULT 0,
+  `privmsgs_enable_smilies` tinyint(1) NOT NULL DEFAULT 1,
+  `privmsgs_attach_sig` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbprivmsgs_text`
---
 
 CREATE TABLE `nuke_bbprivmsgs_text` (
-  `privmsgs_text_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `privmsgs_text_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `privmsgs_bbcode_uid` varchar(10) NOT NULL DEFAULT '0',
-  `privmsgs_text` text,
-  PRIMARY KEY (`privmsgs_text_id`)
+  `privmsgs_text` text DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbquicksearch`
---
-
 CREATE TABLE `nuke_bbquicksearch` (
-  `search_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `search_id` mediumint(8) UNSIGNED NOT NULL,
   `search_name` varchar(255) NOT NULL DEFAULT '',
   `search_url1` varchar(255) NOT NULL DEFAULT '',
-  `search_url2` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`search_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbquicksearch`
---
+  `search_url2` varchar(255) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_bbquicksearch` (`search_id`, `search_name`, `search_url1`, `search_url2`) VALUES
 (1, 'Google', 'http://www.google.com/search?hl=en&ie=UTF-8&oe=UTF-8&q=', '');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbquota_limits`
---
-
 CREATE TABLE `nuke_bbquota_limits` (
-  `quota_limit_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `quota_limit_id` mediumint(8) UNSIGNED NOT NULL,
   `quota_desc` varchar(20) NOT NULL DEFAULT '',
-  `quota_limit` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  PRIMARY KEY (`quota_limit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbquota_limits`
---
+  `quota_limit` bigint(20) UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_bbquota_limits` (`quota_limit_id`, `quota_desc`, `quota_limit`) VALUES
 (1, 'Low', 262144),
 (2, 'Medium', 2097152),
 (3, 'High', 5242880);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbranks`
---
-
 CREATE TABLE `nuke_bbranks` (
-  `rank_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `rank_id` smallint(5) UNSIGNED NOT NULL,
   `rank_title` varchar(100) NOT NULL DEFAULT '',
-  `rank_min` mediumint(8) NOT NULL DEFAULT '0',
-  `rank_special` tinyint(1) DEFAULT '0',
-  `rank_image` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`rank_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbranks`
---
-
-INSERT INTO `nuke_bbranks` (`rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`) VALUES
-(1, 'Site Admin', -1, 1, 'images/ranks/administrator.png'),
-(2, 'Moderator', -1, 1, 'images/ranks/moderator.png'),
-(3, 'Member', -1, 1, 'images/ranks/regular-member.png');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbreputation`
---
-
-CREATE TABLE `nuke_bbreputation` (
-  `user_id` mediumint(8) NOT NULL DEFAULT '0',
-  `user_id_2` mediumint(8) NOT NULL DEFAULT '0',
-  `post_id` mediumint(8) NOT NULL DEFAULT '0',
-  `rep_sum` float NOT NULL DEFAULT '0',
-  `rep_neg` tinyint(1) NOT NULL DEFAULT '0',
-  `rep_comment` varchar(200) NOT NULL DEFAULT '',
-  `rep_time` int(11) NOT NULL DEFAULT '0',
-  KEY `user_id` (`user_id`)
+  `rank_min` mediumint(8) NOT NULL DEFAULT 0,
+  `rank_special` tinyint(1) DEFAULT 0,
+  `rank_image` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
+INSERT INTO `nuke_bbranks` (`rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`) VALUES
+(4, 'Administrator', -1, 1, 'images/ranks/administrator.png'),
+(5, 'Developer', -1, 1, 'images/ranks/developer.png'),
+(6, 'Portal Member', -1, 1, 'images/ranks/regular-member.png'),
+(7, 'VIP Member', -1, 1, 'images/ranks/vip.png');
 
---
--- Table structure for table `nuke_bbreputation_config`
---
+CREATE TABLE `nuke_bbreputation` (
+  `user_id` mediumint(8) NOT NULL DEFAULT 0,
+  `user_id_2` mediumint(8) NOT NULL DEFAULT 0,
+  `post_id` mediumint(8) NOT NULL DEFAULT 0,
+  `rep_sum` float NOT NULL DEFAULT 0,
+  `rep_neg` tinyint(1) NOT NULL DEFAULT 0,
+  `rep_comment` varchar(200) NOT NULL DEFAULT '',
+  `rep_time` int(11) NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `nuke_bbreputation_config` (
   `config_name` varchar(255) NOT NULL,
   `config_value` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbreputation_config`
---
 
 INSERT INTO `nuke_bbreputation_config` (`config_name`, `config_value`) VALUES
 ('posts_to_earn', '5'),
@@ -1481,317 +1068,80 @@ INSERT INTO `nuke_bbreputation_config` (`config_name`, `config_value`) VALUES
 ('pm_notify', '0'),
 ('default_amount', '0');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbscores`
---
-
 CREATE TABLE `nuke_bbscores` (
-  `game_id` mediumint(8) NOT NULL DEFAULT '0',
-  `user_id` mediumint(8) NOT NULL DEFAULT '0',
-  `score_game` int(11) NOT NULL DEFAULT '0',
-  `score_date` int(11) NOT NULL DEFAULT '0',
-  `score_time` int(11) NOT NULL DEFAULT '0',
-  `score_set` mediumint(8) NOT NULL DEFAULT '0',
-  KEY `game_id` (`game_id`),
-  KEY `user_id` (`user_id`)
+  `game_id` mediumint(8) NOT NULL DEFAULT 0,
+  `user_id` mediumint(8) NOT NULL DEFAULT 0,
+  `score_game` int(11) NOT NULL DEFAULT 0,
+  `score_date` int(11) NOT NULL DEFAULT 0,
+  `score_time` int(11) NOT NULL DEFAULT 0,
+  `score_set` mediumint(8) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbsearch_rebuild`
---
 
 CREATE TABLE `nuke_bbsearch_rebuild` (
-  `rebuild_session_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `start_post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `end_post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `start_time` int(11) NOT NULL DEFAULT '0',
-  `end_time` int(11) NOT NULL DEFAULT '0',
-  `last_cycle_time` int(11) NOT NULL DEFAULT '0',
-  `session_time` int(11) NOT NULL DEFAULT '0',
-  `session_posts` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `session_cycles` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `search_size` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `rebuild_session_status` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`rebuild_session_id`),
-  KEY `end_post_id` (`end_post_id`)
+  `rebuild_session_id` mediumint(8) UNSIGNED NOT NULL,
+  `start_post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `end_post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `start_time` int(11) NOT NULL DEFAULT 0,
+  `end_time` int(11) NOT NULL DEFAULT 0,
+  `last_cycle_time` int(11) NOT NULL DEFAULT 0,
+  `session_time` int(11) NOT NULL DEFAULT 0,
+  `session_posts` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `session_cycles` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `search_size` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `rebuild_session_status` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbsearch_results`
---
 
 CREATE TABLE `nuke_bbsearch_results` (
-  `search_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `search_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
   `session_id` varchar(32) NOT NULL DEFAULT '',
   `search_array` text NOT NULL,
-  `search_time` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`search_id`),
-  KEY `session_id` (`session_id`)
+  `search_time` int(11) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbsearch_wordlist`
---
+INSERT INTO `nuke_bbsearch_results` (`search_id`, `session_id`, `search_array`, `search_time`) VALUES
+(1740340759, '26589137fb7fab02a0b32bc95be6281d', 'a:7:{s:14:\"search_results\";N;s:17:\"total_match_count\";N;s:12:\"split_search\";N;s:7:\"sort_by\";N;s:8:\"sort_dir\";N;s:12:\"show_results\";N;s:12:\"return_chars\";N;}', 1620660088);
 
 CREATE TABLE `nuke_bbsearch_wordlist` (
   `word_text` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `word_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `word_common` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  PRIMARY KEY (`word_text`),
-  KEY `word_id` (`word_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbsearch_wordlist`
---
-
-INSERT INTO `nuke_bbsearch_wordlist` (`word_text`, `word_id`, `word_common`, `post_id`) VALUES
-('already', 32, 0, 0),
-('archive', 33, 0, 0),
-('browser', 34, 0, 0),
-('com', 35, 0, 0),
-('configure', 36, 0, 0),
-('containing', 37, 0, 0),
-('contains', 38, 0, 0),
-('convert', 39, 0, 0),
-('documentation', 40, 0, 0),
-('documents', 41, 0, 0),
-('downloaded', 42, 0, 0),
-('due', 43, 0, 0),
-('edited', 27, 0, 0),
-('edition', 44, 0, 0),
-('edits', 45, 0, 0),
-('encourage', 46, 0, 0),
-('enjoy', 47, 0, 0),
-('errors', 48, 0, 0),
-('evo', 49, 0, 0),
-('evolutionxtreme', 50, 0, 0),
-('explain', 51, 0, 0),
-('familiar', 52, 0, 0),
-('fastest', 53, 0, 0),
-('features', 54, 0, 0),
-('few', 55, 0, 0),
-('first', 56, 0, 0),
-('folder', 57, 0, 0),
-('folders', 58, 0, 0),
-('follow', 59, 0, 0),
-('fully', 60, 0, 0),
-('functional', 61, 0, 0),
-('hard', 62, 0, 0),
-('help', 63, 0, 0),
-('helpful', 64, 0, 0),
-('hope', 65, 0, 0),
-('improperly', 66, 0, 0),
-('included', 67, 0, 0),
-('information', 68, 0, 0),
-('inside', 69, 0, 0),
-('install', 70, 0, 0),
-('installing', 71, 0, 0),
-('instructions', 72, 0, 0),
-('make', 73, 0, 0),
-('may', 74, 0, 0),
-('nuke', 75, 0, 0),
-('nukeevolution', 28, 0, 0),
-('one', 76, 0, 0),
-('original', 77, 0, 0),
-('phpnuke', 78, 0, 0),
-('power', 79, 0, 0),
-('properly', 80, 0, 0),
-('provided', 81, 0, 0),
-('quot', 82, 0, 0),
-('read', 83, 0, 0),
-('release', 84, 0, 0),
-('resolve', 85, 0, 0),
-('run', 86, 0, 0),
-('second', 87, 0, 0),
-('secure', 88, 0, 0),
-('settings', 89, 0, 0),
-('setup', 90, 0, 0),
-('several', 91, 0, 0),
-('site', 92, 0, 0),
-('software', 93, 0, 0),
-('stop', 94, 0, 0),
-('support', 95, 0, 0),
-('sure', 96, 0, 0),
-('team', 97, 0, 0),
-('thanks', 98, 0, 0),
-('theme', 99, 0, 0),
-('third', 100, 0, 0),
-('three', 101, 0, 0),
-('together', 102, 0, 0),
-('trust', 103, 0, 0),
-('understand', 104, 0, 0),
-('updates', 105, 0, 0),
-('welcome', 30, 0, 0),
-('work', 106, 0, 0),
-('xtreme', 31, 0, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbsearch_wordmatch`
---
+  `word_id` mediumint(8) UNSIGNED NOT NULL,
+  `word_common` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `nuke_bbsearch_wordmatch` (
-  `post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `word_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `title_match` tinyint(1) NOT NULL DEFAULT '0',
-  KEY `post_id` (`post_id`),
-  KEY `word_id` (`word_id`)
+  `post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `word_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `title_match` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbsearch_wordmatch`
---
-
-INSERT INTO `nuke_bbsearch_wordmatch` (`post_id`, `word_id`, `title_match`) VALUES
-(2, 32, 0),
-(2, 33, 0),
-(2, 34, 0),
-(2, 35, 0),
-(2, 36, 0),
-(2, 37, 0),
-(2, 38, 0),
-(2, 39, 0),
-(2, 40, 0),
-(2, 41, 0),
-(2, 42, 0),
-(2, 43, 0),
-(2, 27, 0),
-(2, 44, 0),
-(2, 45, 0),
-(2, 46, 0),
-(2, 47, 0),
-(2, 48, 0),
-(2, 49, 0),
-(2, 50, 0),
-(2, 51, 0),
-(2, 52, 0),
-(2, 53, 0),
-(2, 54, 0),
-(2, 55, 0),
-(2, 56, 0),
-(2, 57, 0),
-(2, 58, 0),
-(2, 59, 0),
-(2, 60, 0),
-(2, 61, 0),
-(2, 62, 0),
-(2, 63, 0),
-(2, 64, 0),
-(2, 65, 0),
-(2, 66, 0),
-(2, 67, 0),
-(2, 68, 0),
-(2, 69, 0),
-(2, 70, 0),
-(2, 71, 0),
-(2, 72, 0),
-(2, 73, 0),
-(2, 74, 0),
-(2, 75, 0),
-(2, 28, 0),
-(2, 76, 0),
-(2, 77, 0),
-(2, 78, 0),
-(2, 79, 0),
-(2, 80, 0),
-(2, 81, 0),
-(2, 82, 0),
-(2, 83, 0),
-(2, 84, 0),
-(2, 85, 0),
-(2, 86, 0),
-(2, 87, 0),
-(2, 88, 0),
-(2, 89, 0),
-(2, 90, 0),
-(2, 91, 0),
-(2, 92, 0),
-(2, 93, 0),
-(2, 94, 0),
-(2, 95, 0),
-(2, 96, 0),
-(2, 97, 0),
-(2, 98, 0),
-(2, 99, 0),
-(2, 100, 0),
-(2, 101, 0),
-(2, 102, 0),
-(2, 103, 0),
-(2, 104, 0),
-(2, 105, 0),
-(2, 106, 0),
-(2, 31, 0),
-(2, 28, 1),
-(2, 30, 1),
-(2, 31, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbsessions`
---
 
 CREATE TABLE `nuke_bbsessions` (
   `session_id` varchar(32) NOT NULL DEFAULT '',
-  `session_user_id` mediumint(8) NOT NULL DEFAULT '0',
-  `session_start` int(11) NOT NULL DEFAULT '0',
-  `session_time` int(11) NOT NULL DEFAULT '0',
+  `session_user_id` mediumint(8) NOT NULL DEFAULT 0,
+  `session_start` int(11) NOT NULL DEFAULT 0,
+  `session_time` int(11) NOT NULL DEFAULT 0,
   `session_ip` varchar(8) NOT NULL DEFAULT '0',
-  `session_page` int(11) NOT NULL DEFAULT '0',
-  `session_logged_in` tinyint(1) NOT NULL DEFAULT '0',
-  `session_admin` tinyint(2) NOT NULL DEFAULT '0',
+  `session_page` int(11) NOT NULL DEFAULT 0,
+  `session_logged_in` tinyint(1) NOT NULL DEFAULT 0,
+  `session_admin` tinyint(2) NOT NULL DEFAULT 0,
   `session_url_qs` varchar(255) NOT NULL DEFAULT '',
   `session_url_ps` varchar(255) NOT NULL DEFAULT '',
-  `session_url_specific` int(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`session_id`),
-  KEY `session_user_id` (`session_user_id`),
-  KEY `session_id_ip_user_id` (`session_id`,`session_ip`,`session_user_id`)
+  `session_url_specific` int(10) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbsessions_keys`
---
 
 CREATE TABLE `nuke_bbsessions_keys` (
   `key_id` varchar(32) NOT NULL DEFAULT '0',
-  `user_id` mediumint(8) NOT NULL DEFAULT '0',
+  `user_id` mediumint(8) NOT NULL DEFAULT 0,
   `last_ip` varchar(8) NOT NULL DEFAULT '0',
-  `last_login` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`key_id`,`user_id`),
-  KEY `last_login` (`last_login`)
+  `last_login` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbsmilies`
---
-
 CREATE TABLE `nuke_bbsmilies` (
-  `smilies_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `smilies_id` smallint(5) UNSIGNED NOT NULL,
   `code` varchar(50) DEFAULT NULL,
   `smile_url` varchar(100) DEFAULT NULL,
   `emoticon` varchar(75) DEFAULT NULL,
-  `smile_stat` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  PRIMARY KEY (`smilies_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbsmilies`
---
+  `smile_stat` mediumint(8) UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_bbsmilies` (`smilies_id`, `code`, `smile_url`, `emoticon`, `smile_stat`) VALUES
 (1, ':D', 'bigsmile.png', 'Very Happy', 0),
@@ -1831,50 +1181,28 @@ INSERT INTO `nuke_bbsmilies` (`smilies_id`, `code`, `smile_url`, `emoticon`, `sm
 (35, ';)', 'wink.png', 'Wink', 0),
 (36, ';-)', 'wink.png', 'Wink', 0);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbstats_config`
---
-
 CREATE TABLE `nuke_bbstats_config` (
   `config_name` varchar(100) NOT NULL DEFAULT '',
-  `config_value` varchar(100) NOT NULL DEFAULT '',
-  PRIMARY KEY (`config_name`)
+  `config_value` varchar(100) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbstats_config`
---
 
 INSERT INTO `nuke_bbstats_config` (`config_name`, `config_value`) VALUES
 ('install_date', '0'),
 ('return_limit', '10'),
 ('version', '3.0.0'),
-('page_views', '17');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbstats_modules`
---
+('page_views', '36');
 
 CREATE TABLE `nuke_bbstats_modules` (
-  `module_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `module_id` mediumint(8) UNSIGNED NOT NULL,
   `short_name` varchar(100) DEFAULT NULL,
-  `update_time` mediumint(8) NOT NULL DEFAULT '0',
-  `module_order` mediumint(8) NOT NULL DEFAULT '0',
-  `active` tinyint(2) NOT NULL DEFAULT '0',
-  `perm_all` tinyint(2) UNSIGNED NOT NULL DEFAULT '1',
-  `perm_reg` tinyint(2) UNSIGNED NOT NULL DEFAULT '1',
-  `perm_mod` tinyint(2) UNSIGNED NOT NULL DEFAULT '1',
-  `perm_admin` tinyint(2) UNSIGNED NOT NULL DEFAULT '1',
-  PRIMARY KEY (`module_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbstats_modules`
---
+  `update_time` mediumint(8) NOT NULL DEFAULT 0,
+  `module_order` mediumint(8) NOT NULL DEFAULT 0,
+  `active` tinyint(2) NOT NULL DEFAULT 0,
+  `perm_all` tinyint(2) UNSIGNED NOT NULL DEFAULT 1,
+  `perm_reg` tinyint(2) UNSIGNED NOT NULL DEFAULT 1,
+  `perm_mod` tinyint(2) UNSIGNED NOT NULL DEFAULT 1,
+  `perm_admin` tinyint(2) UNSIGNED NOT NULL DEFAULT 1
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_bbstats_modules` (`module_id`, `short_name`, `update_time`, `module_order`, `active`, `perm_all`, `perm_reg`, `perm_mod`, `perm_admin`) VALUES
 (1, 'stats_overview', 360, 10, 1, 1, 1, 1, 1),
@@ -1894,78 +1222,42 @@ INSERT INTO `nuke_bbstats_modules` (`module_id`, `short_name`, `update_time`, `m
 (15, 'top_attachments', 360, 160, 1, 1, 1, 1, 1),
 (16, 'most_active_topics', 360, 70, 1, 1, 1, 1, 1);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbstats_module_admin_panel`
---
-
 CREATE TABLE `nuke_bbstats_module_admin_panel` (
-  `module_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `module_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `config_name` varchar(255) NOT NULL DEFAULT '',
   `config_value` varchar(255) NOT NULL DEFAULT '',
   `config_type` varchar(20) NOT NULL DEFAULT '',
   `config_title` varchar(100) NOT NULL DEFAULT '',
   `config_explain` varchar(100) DEFAULT NULL,
-  `config_trigger` varchar(20) NOT NULL DEFAULT '',
-  PRIMARY KEY (`module_id`)
+  `config_trigger` varchar(20) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbstats_module_admin_panel`
---
 
 INSERT INTO `nuke_bbstats_module_admin_panel` (`module_id`, `config_name`, `config_value`, `config_type`, `config_title`, `config_explain`, `config_trigger`) VALUES
 (1, 'num_columns', '2', 'number', 'num_columns_title', 'num_columns_explain', 'integer'),
 (15, 'exclude_images', '0', 'number', 'exclude_images_title', 'exclude_images_explain', 'enum');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbstats_module_cache`
---
-
 CREATE TABLE `nuke_bbstats_module_cache` (
-  `module_id` mediumint(8) NOT NULL DEFAULT '0',
-  `module_cache_time` int(12) NOT NULL DEFAULT '0',
+  `module_id` mediumint(8) NOT NULL DEFAULT 0,
+  `module_cache_time` int(12) NOT NULL DEFAULT 0,
   `db_cache` text NOT NULL,
-  `priority` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  PRIMARY KEY (`module_id`)
+  `priority` mediumint(8) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbstats_module_group_auth`
---
 
 CREATE TABLE `nuke_bbstats_module_group_auth` (
-  `module_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `group_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  PRIMARY KEY (`module_id`)
+  `module_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `group_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbstats_module_info`
---
-
 CREATE TABLE `nuke_bbstats_module_info` (
-  `module_id` mediumint(8) NOT NULL DEFAULT '0',
+  `module_id` mediumint(8) NOT NULL DEFAULT 0,
   `long_name` varchar(100) NOT NULL DEFAULT '',
   `author` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `url` varchar(100) DEFAULT NULL,
   `version` varchar(10) NOT NULL DEFAULT '',
   `update_site` varchar(100) DEFAULT NULL,
-  `extra_info` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`module_id`)
+  `extra_info` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbstats_module_info`
---
 
 INSERT INTO `nuke_bbstats_module_info` (`module_id`, `long_name`, `author`, `email`, `url`, `version`, `update_site`, `extra_info`) VALUES
 (1, 'Statistics Overview Section', 'Acyd Burn', 'acyd.burn@gmx.de', 'http://www.opentools.de', '3.0.0', 'http://www.opentools.de/board/show_modules.php', 'This Module will print out a link Block with Links to the current Module at the Statistics Site.\nYou are able to define the number of columns displayed for this Module within the Administration Panel -&gt; Edit Module.'),
@@ -1985,44 +1277,20 @@ INSERT INTO `nuke_bbstats_module_info` (`module_id`, `long_name`, `author`, `ema
 (15, 'Top Downloaded Attachments', 'Acyd Burn', 'acyd.burn@gmx.de', 'http://www.opentools.de', '3.0.0', 'http://www.opentools.de/board/show_modules.php', 'This Module will print out the most downloaded Files.\nThe Attachment Mod Version 2.3.x have to be installed in order to let this Module work.\nYou are able to exclude Images from the statistic too.'),
 (16, 'Most active Topics', 'Acyd Burn', 'acyd.burn@gmx.de', 'http://www.opentools.de', '3.0.0', 'http://www.opentools.de/board/show_modules.php', 'This Module displays the most active topics at your board.');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbstats_smilies_index`
---
-
 CREATE TABLE `nuke_bbstats_smilies_index` (
   `code` varchar(50) NOT NULL DEFAULT '',
   `smile_url` varchar(100) DEFAULT NULL,
-  `smile_count` mediumint(8) DEFAULT '0',
-  PRIMARY KEY (`code`)
+  `smile_count` mediumint(8) DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbstats_smilies_info`
---
 
 CREATE TABLE `nuke_bbstats_smilies_info` (
-  `last_post_id` mediumint(8) NOT NULL DEFAULT '0',
-  `last_update_time` int(12) NOT NULL DEFAULT '0',
-  `update_time` mediumint(8) NOT NULL DEFAULT '10080',
-  PRIMARY KEY (`last_post_id`)
+  `last_post_id` mediumint(8) NOT NULL DEFAULT 0,
+  `last_update_time` int(12) NOT NULL DEFAULT 0,
+  `update_time` mediumint(8) NOT NULL DEFAULT 10080
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_bbstats_smilies_info`
---
-
 INSERT INTO `nuke_bbstats_smilies_info` (`last_post_id`, `last_update_time`, `update_time`) VALUES
-(0, 0, 10080);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbthanks`
---
+(7, 1619840967, 10080);
 
 CREATE TABLE `nuke_bbthanks` (
   `topic_id` mediumint(8) NOT NULL,
@@ -2030,14 +1298,8 @@ CREATE TABLE `nuke_bbthanks` (
   `thanks_time` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbthemes`
---
-
 CREATE TABLE `nuke_bbthemes` (
-  `themes_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `themes_id` mediumint(8) UNSIGNED NOT NULL,
   `template_name` varchar(30) NOT NULL DEFAULT '',
   `style_name` varchar(30) NOT NULL DEFAULT '',
   `head_stylesheet` varchar(100) DEFAULT NULL,
@@ -2082,25 +1344,14 @@ CREATE TABLE `nuke_bbthemes` (
   `img_size_privmsg` smallint(5) UNSIGNED DEFAULT NULL,
   `online_color` varchar(6) NOT NULL DEFAULT '',
   `offline_color` varchar(6) NOT NULL DEFAULT '',
-  `hidden_color` varchar(6) NOT NULL DEFAULT '',
-  PRIMARY KEY (`themes_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbthemes`
---
+  `hidden_color` varchar(6) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_bbthemes` (`themes_id`, `template_name`, `style_name`, `head_stylesheet`, `body_background`, `body_bgcolor`, `body_text`, `body_link`, `body_vlink`, `body_alink`, `body_hlink`, `tr_color1`, `tr_color2`, `tr_color3`, `tr_class1`, `tr_class2`, `tr_class3`, `th_color1`, `th_color2`, `th_color3`, `th_class1`, `th_class2`, `th_class3`, `td_color1`, `td_color2`, `td_color3`, `td_class1`, `td_class2`, `td_class3`, `fontface1`, `fontface2`, `fontface3`, `fontsize1`, `fontsize2`, `fontsize3`, `fontcolor1`, `fontcolor2`, `fontcolor3`, `span_class1`, `span_class2`, `span_class3`, `img_size_poll`, `img_size_privmsg`, `online_color`, `offline_color`, `hidden_color`) VALUES
 (1, 'subSilver', 'subSilver', 'subSilver.css', '', '0E3259', '000000', '006699', '5493B4', '', 'DD6900', 'EFEFEF', 'DEE3E7', 'D1D7DC', '', '', '', '98AAB1', '006699', 'FFFFFF', 'cellpic1.gif', 'cellpic3.gif', 'cellpic2.jpg', 'FAFAFA', 'FFFFFF', '', 'row1', 'row2', '', 'Verdana, Arial, Helvetica, sans-serif', 'Trebuchet MS', 'Courier, \'Courier New\', sans-serif', 10, 11, 12, '444444', '006600', 'FFA34F', '', '', '', NULL, NULL, '008500', 'DF0000', 'EBD400');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbthemes_name`
---
-
 CREATE TABLE `nuke_bbthemes_name` (
-  `themes_id` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `themes_id` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `tr_color1_name` char(50) DEFAULT NULL,
   `tr_color2_name` char(50) DEFAULT NULL,
   `tr_color3_name` char(50) DEFAULT NULL,
@@ -2130,73 +1381,31 @@ CREATE TABLE `nuke_bbthemes_name` (
   `fontcolor3_name` char(50) DEFAULT NULL,
   `span_class1_name` char(50) DEFAULT NULL,
   `span_class2_name` char(50) DEFAULT NULL,
-  `span_class3_name` char(50) DEFAULT NULL,
-  PRIMARY KEY (`themes_id`)
+  `span_class3_name` char(50) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbthemes_name`
---
 
 INSERT INTO `nuke_bbthemes_name` (`themes_id`, `tr_color1_name`, `tr_color2_name`, `tr_color3_name`, `tr_class1_name`, `tr_class2_name`, `tr_class3_name`, `th_color1_name`, `th_color2_name`, `th_color3_name`, `th_class1_name`, `th_class2_name`, `th_class3_name`, `td_color1_name`, `td_color2_name`, `td_color3_name`, `td_class1_name`, `td_class2_name`, `td_class3_name`, `fontface1_name`, `fontface2_name`, `fontface3_name`, `fontsize1_name`, `fontsize2_name`, `fontsize3_name`, `fontcolor1_name`, `fontcolor2_name`, `fontcolor3_name`, `span_class1_name`, `span_class2_name`, `span_class3_name`) VALUES
 (1, 'The lightest row colour', 'The medium row color', 'The darkest row colour', '', '', '', 'Border round the whole page', 'Outer table border', 'Inner table border', 'Silver gradient picture', 'Blue gradient picture', 'Fade-out gradient on index', 'Background for quote boxes', 'All white areas', '', 'Background for topic posts', '2nd background for topic posts', '', 'Main fonts', 'Additional topic title font', 'Form fonts', 'Smallest font size', 'Medium font size', 'Normal font size (post body etc)', 'Quote & copyright text', 'Code text colour', 'Main table header text colour', '', '', '');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbtopics`
---
-
 CREATE TABLE `nuke_bbtopics` (
-  `topic_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `forum_id` smallint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `topic_id` mediumint(8) UNSIGNED NOT NULL,
+  `forum_id` smallint(8) UNSIGNED NOT NULL DEFAULT 0,
   `topic_title` char(60) NOT NULL DEFAULT '',
-  `topic_poster` mediumint(8) NOT NULL DEFAULT '0',
-  `topic_time` int(11) NOT NULL DEFAULT '0',
-  `topic_views` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `topic_replies` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `topic_status` tinyint(3) NOT NULL DEFAULT '0',
-  `topic_vote` tinyint(1) NOT NULL DEFAULT '0',
-  `topic_type` tinyint(3) NOT NULL DEFAULT '0',
-  `topic_last_post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `topic_first_post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `topic_moved_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `topic_priority` smallint(6) NOT NULL DEFAULT '0',
-  `topic_attachment` tinyint(1) NOT NULL DEFAULT '0',
-  `topic_glance_priority` smallint(6) NOT NULL DEFAULT '0',
-  `topic_icon` tinyint(2) DEFAULT NULL,
-  PRIMARY KEY (`topic_id`),
-  KEY `forum_id` (`forum_id`),
-  KEY `topic_moved_id` (`topic_moved_id`),
-  KEY `topic_status` (`topic_status`),
-  KEY `topic_type` (`topic_type`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbtopics`
---
-
-INSERT INTO `nuke_bbtopics` (`topic_id`, `forum_id`, `topic_title`, `topic_poster`, `topic_time`, `topic_views`, `topic_replies`, `topic_status`, `topic_vote`, `topic_type`, `topic_last_post_id`, `topic_first_post_id`, `topic_moved_id`, `topic_priority`, `topic_attachment`, `topic_glance_priority`, `topic_icon`) VALUES
-(2, 1, 'Welcome to Nuke-Evolution Xtreme!', 2, 1247494961, 1, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbtopic_view`
---
-
-CREATE TABLE `nuke_bbtopic_view` (
-  `topic_id` mediumint(8) NOT NULL,
-  `user_id` mediumint(8) NOT NULL,
-  `view_time` int(11) NOT NULL,
-  `view_count` int(11) NOT NULL
+  `topic_poster` mediumint(8) NOT NULL DEFAULT 0,
+  `topic_time` int(11) NOT NULL DEFAULT 0,
+  `topic_views` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `topic_replies` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `topic_status` tinyint(3) NOT NULL DEFAULT 0,
+  `topic_vote` tinyint(1) NOT NULL DEFAULT 0,
+  `topic_type` tinyint(3) NOT NULL DEFAULT 0,
+  `topic_last_post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `topic_first_post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `topic_moved_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `topic_priority` smallint(6) NOT NULL DEFAULT 0,
+  `topic_attachment` tinyint(1) NOT NULL DEFAULT 0,
+  `topic_glance_priority` smallint(6) NOT NULL DEFAULT 0,
+  `topic_icon` tinyint(2) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbtopics_email`
---
 
 CREATE TABLE `nuke_bbtopics_email` (
   `user_id` mediumint(8) NOT NULL,
@@ -2207,131 +1416,130 @@ CREATE TABLE `nuke_bbtopics_email` (
   `time` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbtopics_watch`
---
-
 CREATE TABLE `nuke_bbtopics_watch` (
-  `topic_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `user_id` mediumint(8) NOT NULL DEFAULT '0',
-  `notify_status` tinyint(1) NOT NULL DEFAULT '0',
-  KEY `topic_id` (`topic_id`),
-  KEY `user_id` (`user_id`),
-  KEY `notify_status` (`notify_status`)
+  `topic_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `user_id` mediumint(8) NOT NULL DEFAULT 0,
+  `notify_status` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbtopic_moved`
---
 
 CREATE TABLE `nuke_bbtopic_moved` (
-  `moved_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `moved_topic_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `moved_oldtopic_id` mediumint(8) UNSIGNED DEFAULT '0',
+  `moved_id` mediumint(8) UNSIGNED NOT NULL,
+  `moved_topic_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `moved_oldtopic_id` mediumint(8) UNSIGNED DEFAULT 0,
   `moved_type` varchar(8) NOT NULL DEFAULT '0',
-  `moved_parent` mediumint(8) UNSIGNED DEFAULT '0',
-  `moved_target` mediumint(8) UNSIGNED DEFAULT '0',
-  `moved_mod` mediumint(8) NOT NULL DEFAULT '0',
-  `moved_time` int(11) NOT NULL DEFAULT '0',
-  `last_post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  PRIMARY KEY (`moved_id`)
+  `moved_parent` mediumint(8) UNSIGNED DEFAULT 0,
+  `moved_target` mediumint(8) UNSIGNED DEFAULT 0,
+  `moved_mod` mediumint(8) NOT NULL DEFAULT 0,
+  `moved_time` int(11) NOT NULL DEFAULT 0,
+  `last_post_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbuser_group`
---
+CREATE TABLE `nuke_bbtopic_view` (
+  `topic_id` mediumint(8) NOT NULL,
+  `user_id` mediumint(8) NOT NULL,
+  `view_time` int(11) NOT NULL,
+  `view_count` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `nuke_bbuser_group` (
-  `group_id` mediumint(8) NOT NULL DEFAULT '0',
-  `user_id` mediumint(8) NOT NULL DEFAULT '0',
-  `user_pending` tinyint(1) DEFAULT NULL,
-  KEY `group_id` (`group_id`),
-  KEY `user_id` (`user_id`)
+  `group_id` mediumint(8) NOT NULL DEFAULT 0,
+  `user_id` mediumint(8) NOT NULL DEFAULT 0,
+  `user_pending` tinyint(1) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbuser_group`
---
 
 INSERT INTO `nuke_bbuser_group` (`group_id`, `user_id`, `user_pending`) VALUES
 (1, -1, 0),
 (3, 2, 0),
 (5, 2, 0),
-(5, 3, 0);
+(5, 4, 0),
+(3, 4, 0),
+(6, 5, 0),
+(3, 5, 0),
+(7, 2, 0),
+(8, 2, 0),
+(7, 4, 0),
+(9, 6, 0),
+(3, 6, 0),
+(7, 6, 0),
+(7, 3, 0),
+(7, 5, 0),
+(10, 7, 0),
+(3, 7, 0),
+(11, 8, 0),
+(3, 8, 0),
+(12, 9, 0),
+(3, 9, 0),
+(13, 10, 0),
+(3, 10, 0),
+(14, 11, 0),
+(3, 11, 0),
+(15, 12, 0),
+(3, 12, 0),
+(16, 13, 0),
+(3, 13, 0),
+(17, 14, 0),
+(3, 14, 0),
+(18, 15, 0),
+(3, 15, 0),
+(19, 16, 0),
+(3, 16, 0),
+(20, 17, 0),
+(3, 17, 0),
+(21, 18, 0),
+(3, 18, 0),
+(22, 19, 0),
+(3, 19, 0),
+(23, 20, 0),
+(3, 20, 0),
+(7, 20, 0),
+(24, 21, 0),
+(3, 21, 0),
+(7, 11, 1),
+(4, 2, 0),
+(25, 2, 0),
+(26, 3, 0),
+(3, 3, 0),
+(25, 3, 0),
+(5, 3, 0),
+(4, 3, 0),
+(27, 1, 0),
+(28, 2, 0),
+(29, 4, 0),
+(4, 4, 0);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbvote_desc`
---
 
 CREATE TABLE `nuke_bbvote_desc` (
-  `vote_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `topic_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `vote_id` mediumint(8) UNSIGNED NOT NULL,
+  `topic_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `vote_text` text NOT NULL,
-  `vote_start` int(11) NOT NULL DEFAULT '0',
-  `vote_length` int(11) NOT NULL DEFAULT '0',
-  `poll_view_toggle` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`vote_id`),
-  KEY `topic_id` (`topic_id`)
+  `vote_start` int(11) NOT NULL DEFAULT 0,
+  `vote_length` int(11) NOT NULL DEFAULT 0,
+  `poll_view_toggle` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbvote_results`
---
 
 CREATE TABLE `nuke_bbvote_results` (
-  `vote_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `vote_option_id` tinyint(4) UNSIGNED NOT NULL DEFAULT '0',
+  `vote_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `vote_option_id` tinyint(4) UNSIGNED NOT NULL DEFAULT 0,
   `vote_option_text` varchar(255) NOT NULL DEFAULT '',
-  `vote_result` int(11) NOT NULL DEFAULT '0',
-  KEY `vote_option_id` (`vote_option_id`),
-  KEY `vote_id` (`vote_id`)
+  `vote_result` int(11) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbvote_voters`
---
 
 CREATE TABLE `nuke_bbvote_voters` (
-  `vote_id` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `vote_user_id` mediumint(8) NOT NULL DEFAULT '0',
+  `vote_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `vote_user_id` mediumint(8) NOT NULL DEFAULT 0,
   `vote_user_ip` char(8) NOT NULL DEFAULT '',
-  `vote_cast` tinyint(4) UNSIGNED NOT NULL DEFAULT '0',
-  KEY `vote_id` (`vote_id`),
-  KEY `vote_user_id` (`vote_user_id`),
-  KEY `vote_user_ip` (`vote_user_ip`),
-  KEY `vote_cast` (`vote_cast`)
+  `vote_cast` tinyint(4) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbwords`
---
 
 CREATE TABLE `nuke_bbwords` (
-  `word_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `word_id` mediumint(8) UNSIGNED NOT NULL,
   `word` char(100) NOT NULL DEFAULT '',
-  `replacement` char(100) NOT NULL DEFAULT '',
-  PRIMARY KEY (`word_id`)
+  `replacement` char(100) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbxdata_auth`
---
+INSERT INTO `nuke_bbwords` (`word_id`, `word`, `replacement`) VALUES
+(1, 'cunt', 'fargnoggle');
 
 CREATE TABLE `nuke_bbxdata_auth` (
   `field_id` smallint(5) UNSIGNED NOT NULL,
@@ -2339,52 +1547,34 @@ CREATE TABLE `nuke_bbxdata_auth` (
   `auth_value` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbxdata_data`
---
-
 CREATE TABLE `nuke_bbxdata_data` (
   `field_id` smallint(5) UNSIGNED NOT NULL,
   `user_id` mediumint(8) UNSIGNED NOT NULL,
   `xdata_value` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_bbxdata_fields`
---
-
 CREATE TABLE `nuke_bbxdata_fields` (
   `field_id` smallint(5) UNSIGNED NOT NULL,
   `field_name` varchar(255) NOT NULL DEFAULT '',
   `field_desc` text NOT NULL,
   `field_type` varchar(255) NOT NULL DEFAULT '',
-  `field_order` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `field_order` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `code_name` varchar(255) NOT NULL DEFAULT '',
-  `field_length` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `field_length` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `field_values` text NOT NULL,
   `field_regexp` text NOT NULL,
-  `manditory` tinyint(1) NOT NULL DEFAULT '0',
-  `default_auth` tinyint(1) NOT NULL DEFAULT '1',
-  `display_register` tinyint(1) NOT NULL DEFAULT '1',
-  `display_viewprofile` tinyint(1) NOT NULL DEFAULT '0',
-  `display_posting` tinyint(1) NOT NULL DEFAULT '0',
-  `handle_input` tinyint(1) NOT NULL DEFAULT '0',
-  `allow_html` tinyint(1) NOT NULL DEFAULT '0',
-  `allow_bbcode` tinyint(1) NOT NULL DEFAULT '0',
-  `allow_smilies` tinyint(1) NOT NULL DEFAULT '0',
-  `viewtopic` tinyint(1) NOT NULL DEFAULT '0',
-  `signup` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`field_id`),
-  UNIQUE KEY `code_name` (`code_name`)
+  `manditory` tinyint(1) NOT NULL DEFAULT 0,
+  `default_auth` tinyint(1) NOT NULL DEFAULT 1,
+  `display_register` tinyint(1) NOT NULL DEFAULT 1,
+  `display_viewprofile` tinyint(1) NOT NULL DEFAULT 0,
+  `display_posting` tinyint(1) NOT NULL DEFAULT 0,
+  `handle_input` tinyint(1) NOT NULL DEFAULT 0,
+  `allow_html` tinyint(1) NOT NULL DEFAULT 0,
+  `allow_bbcode` tinyint(1) NOT NULL DEFAULT 0,
+  `allow_smilies` tinyint(1) NOT NULL DEFAULT 0,
+  `viewtopic` tinyint(1) NOT NULL DEFAULT 0,
+  `signup` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_bbxdata_fields`
---
 
 INSERT INTO `nuke_bbxdata_fields` (`field_id`, `field_name`, `field_desc`, `field_type`, `field_order`, `code_name`, `field_length`, `field_values`, `field_regexp`, `manditory`, `default_auth`, `display_register`, `display_viewprofile`, `display_posting`, `handle_input`, `allow_html`, `allow_bbcode`, `allow_smilies`, `viewtopic`, `signup`) VALUES
 (5, 'Website', '', 'special', 5, 'website', 0, '', '', 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -2393,78 +1583,60 @@ INSERT INTO `nuke_bbxdata_fields` (`field_id`, `field_name`, `field_desc`, `fiel
 (8, 'Interests', '', 'special', 8, 'interests', 0, '', '', 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0),
 (9, 'Signature', '', 'special', 9, 'signature', 0, '', '', 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_blocks`
---
-
 CREATE TABLE `nuke_blocks` (
-  `bid` int(10) NOT NULL AUTO_INCREMENT,
+  `bid` int(11) NOT NULL,
   `bkey` varchar(15) NOT NULL DEFAULT '',
   `title` varchar(60) NOT NULL DEFAULT '',
   `content` text NOT NULL,
   `url` varchar(200) NOT NULL DEFAULT '',
   `bposition` char(1) NOT NULL DEFAULT '',
-  `weight` int(10) NOT NULL DEFAULT '1',
-  `active` int(1) NOT NULL DEFAULT '1',
-  `refresh` int(10) NOT NULL DEFAULT '0',
+  `weight` int(11) NOT NULL DEFAULT 1,
+  `active` int(11) NOT NULL DEFAULT 1,
+  `refresh` int(11) NOT NULL DEFAULT 0,
   `time` varchar(14) NOT NULL DEFAULT '0',
   `blanguage` varchar(30) NOT NULL DEFAULT '',
   `blockfile` varchar(255) NOT NULL DEFAULT '',
-  `view` varchar(50) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`bid`),
-  KEY `title` (`title`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+  `view` varchar(50) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_blocks`
---
-
-INSERT INTO `nuke_blocks` VALUES(1, '', 'Main Menu', '', '', 'l', 1, 1, 1800, '0', '', 'block-Modules.php', '1');
-INSERT INTO `nuke_blocks` VALUES(2, '', 'Search', '', '', 'l', 4, 1, 3600, '', '', 'block-Search.php', '0');
-INSERT INTO `nuke_blocks` VALUES(3, '', 'Survey', '', '', 'r', 4, 0, 3600, '', '', 'block-Survey.php', '0');
-INSERT INTO `nuke_blocks` VALUES(4, '', 'Information', '<br /><center><span class="content">\r\n<a href="http://phpnuke.org"><img src="images/powered/powered8.jpg" border="0" alt="Powered by PHP-Nuke" title="Powered by PHP-Nuke" width="88" height="31" /></a>\r\n<br /><br />\r\n<a href="http://validator.w3.org/check/referer"><img src="images/html401.gif" width="88" height="31" alt="Valid HTML 4.01!" title="Valid HTML 4.01!" border="0" /></a>\r\n<br /><br />\r\n<a href="http://jigsaw.w3.org/css-validator"><img src="images/css.gif" width="88" height="31" alt="Valid CSS!" title="Valid CSS!" border="0" /></a></span></center><br />', '', 'r', 5, 1, 0, '', '', '', '0');
-INSERT INTO `nuke_blocks` VALUES(5, '', 'User Info', '', '', 'r', 0, 1, 0, '', '', 'block-Evo_User_Info.php', '0');
-INSERT INTO `nuke_blocks` VALUES(6, '', 'Nuke-Evolution', '', '', 'c', 1, 0, 0, '', '', 'block-Nuke-Evolution.php', '0');
-INSERT INTO `nuke_blocks` VALUES(8, '', 'Top 10 Links', '', '', 'r', 7, 0, 3600, '', '', 'block-Top10_Links.php', '0');
-INSERT INTO `nuke_blocks` VALUES(9, '', 'Forums', '', '', 'c', 0, 1, 3600, '', '', 'block-Forums.php', '0');
-INSERT INTO `nuke_blocks` VALUES(10, '', 'Submissions', '', '', 'l', 2, 0, 0, '', '', 'block-Submissions.php', '4');
-INSERT INTO `nuke_blocks` VALUES(11, '', 'Link-us', '', '', 'r', 2, 0, 3600, '0', '', 'block-Link-us.php', '1');
-INSERT INTO `nuke_blocks` VALUES(12, '', 'Shout Box', '', '', 'r', 3, 0, 3600, '0', '', 'block-Shout_Box.php', '1');
-INSERT INTO `nuke_blocks` VALUES(13, '', 'News Center', '', '', 'd', 0, 0, 3600, '0', '', 'block-News_Center.php', '1');
-INSERT INTO `nuke_blocks` VALUES(14, '', 'Donations', '', '', 'r', 1, 0, 3600, '0', '', 'block-Donations.php', '0');
-INSERT INTO `nuke_blocks` VALUES(15, '', 'Arcade Center', '', '', 'd', 1, 0, 3600, '0', '', 'block-Arcade_Center.php', '1');
-INSERT INTO `nuke_blocks` VALUES(16, '', 'ECalendar', '', '', 'l', 3, 0, 3600, '0', '', 'block-ECalendar.php', '1');
-INSERT INTO `nuke_blocks` VALUES(17, '', 'Security', '', '', 'd', 2, 1, 3600, '0', '', 'block-Sentinel_Center.php', '1');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_cnbya_config`
---
+INSERT INTO `nuke_blocks` (`bid`, `bkey`, `title`, `content`, `url`, `bposition`, `weight`, `active`, `refresh`, `time`, `blanguage`, `blockfile`, `view`) VALUES
+(1, '', 'Evo Main Menu', '', '', 'l', 1, 0, 1800, '0', '', 'block-Modules.php', '1'),
+(2, '', 'Search', '', '', 'l', 7, 1, 3600, '', '', 'block-Search.php', '0'),
+(3, '', 'Survey', '', '', 'r', 7, 0, 3600, '', '', 'block-Survey.php', '0'),
+(4, '', 'Information', '<br /><center><span class=\"content\">\r\n<a href=\"http://phpnuke.org\"><img src=\"images/powered/powered8.jpg\" border=\"0\" alt=\"Powered by PHP-Nuke\" title=\"Powered by PHP-Nuke\" width=\"88\" height=\"31\" /></a>\r\n<br /><br />\r\n<a href=\"http://validator.w3.org/check/referer\"><img src=\"images/html401.gif\" width=\"88\" height=\"31\" alt=\"Valid HTML 4.01!\" title=\"Valid HTML 4.01!\" border=\"0\" /></a>\r\n<br /><br />\r\n<a href=\"http://jigsaw.w3.org/css-validator\"><img src=\"images/css.gif\" width=\"88\" height=\"31\" alt=\"Valid CSS!\" title=\"Valid CSS!\" border=\"0\" /></a></span></center><br />', '', 'r', 8, 0, 0, '', '', '', '0'),
+(5, '', 'User Info', '', '', 'r', 0, 1, 0, '', '', 'block-Evo_User_Info.php', '0'),
+(6, '', 'Top 10 Links', '', '', 'r', 4, 1, 3600, '', '', 'block-Top10_Links.php', '0'),
+(7, '', 'Forums', '', '', 'c', 0, 1, 3600, '', '', 'block-Forums.php', '0'),
+(8, '', 'Submissions', '', '', 'l', 2, 0, 0, '', '', 'block-Submissions.php', '4'),
+(9, '', 'Link-us', '', '', 'l', 5, 1, 3600, '0', '', 'block-Link-us.php', '1'),
+(10, '', 'Shout Box', '', '', 'r', 2, 1, 3600, '0', '', 'block-Shout_Box.php', '1'),
+(11, '', 'Donations', '', '', 'r', 6, 0, 3600, '0', '', 'block-Donations.php', '0'),
+(12, '', 'ECalendar', '', '', 'l', 4, 0, 3600, '0', '', 'block-ECalendar.php', '1'),
+(13, '', 'Sentinel Portal Security', '', '', 'd', 3, 1, 3600, '0', '', 'block-Sentinel_Center.php', '1'),
+(14, '', 'Select Network Theme', '', '', 'l', 3, 1, 3600, '0', '', 'block-Titanium_Themes.php', '1'),
+(15, '', 'Honey Pot Protected', '', '', 'l', 6, 1, 3600, '0', '', 'block-Honey_Pot.php', '1'),
+(16, '', 'This is exactly how I feel!', '', '', 'c', 2, 0, 3600, '0', '', 'block-Thank_You.php', '1'),
+(17, '', 'Portal Menu', '', '', 'l', 0, 1, 3600, '0', '', 'block-Portal_Menu.php', '1'),
+(18, '', 'Reviews', '', '', 'r', 9, 0, 3600, '0', '', 'block-Reviews.php', '1'),
+(19, '', 'Server Information', '', '', 'r', 3, 1, 3600, '0', '', 'block-Portal-Information.php', '1'),
+(20, '', 'Visitor Log', '', '', 'c', 1, 1, 3600, '0', '', 'block-Titanium_Visitor_Log_Center.php', '1');
 
 CREATE TABLE `nuke_cnbya_config` (
   `config_name` varchar(255) NOT NULL DEFAULT '',
-  `config_value` longtext,
-  UNIQUE KEY `config_name` (`config_name`)
+  `config_value` longtext DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_cnbya_config`
---
 
 INSERT INTO `nuke_cnbya_config` (`config_name`, `config_value`) VALUES
 ('sendaddmail', '0'),
 ('senddeletemail', '0'),
-('allowuserdelete', '0'),
+('allowuserdelete', '1'),
 ('allowusertheme', '0'),
 ('allowuserreg', '0'),
 ('allowmailchange', '1'),
-('emailvalidate', '0'),
+('emailvalidate', '1'),
 ('requireadmin', '0'),
 ('servermail', '0'),
-('useactivate', '0'),
+('useactivate', '1'),
 ('autosuspend', '0'),
 ('perpage', '100'),
 ('expiring', '86400'),
@@ -2472,8 +1644,8 @@ INSERT INTO `nuke_cnbya_config` (`config_name`, `config_value`) VALUES
 ('nick_max', '20'),
 ('pass_min', '4'),
 ('pass_max', '20'),
-('bad_mail', 'yoursite.com\r\nmysite.com'),
-('bad_nick', 'adm\r\nadmin\r\nanonimo\r\nanonymous\r\nannimo\r\ngod\r\nlinux\r\nnobody\r\noperator\r\nroot\r\nstaff\r\nwebmaster'),
+('bad_mail', 'yoursite.com\nmysite.com'),
+('bad_nick', 'adm\nadmin\nanonimo\nanonymous\nannimo\ngod\nlinux\nnobody\noperator\nroot\nstaff\nwebmaster'),
 ('coppa', '0'),
 ('tos', '0'),
 ('tosall', '1'),
@@ -2483,85 +1655,49 @@ INSERT INTO `nuke_cnbya_config` (`config_name`, `config_value`) VALUES
 ('cookiepath', ''),
 ('cookieinactivity', '-'),
 ('autosuspendmain', '0'),
-('doublecheckemail', '0'),
+('doublecheckemail', '1'),
 ('version', '4.4.2'),
 ('tos_text', 'This is your default TOS. You may edit this through the Your Account Admin Panel.');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_cnbya_field`
---
-
 CREATE TABLE `nuke_cnbya_field` (
-  `fid` int(10) NOT NULL AUTO_INCREMENT,
+  `fid` int(10) NOT NULL,
   `name` varchar(255) NOT NULL DEFAULT 'field',
   `value` varchar(255) DEFAULT NULL,
   `size` int(3) DEFAULT NULL,
-  `need` int(1) NOT NULL DEFAULT '1',
+  `need` int(1) NOT NULL DEFAULT 1,
   `pos` int(3) DEFAULT NULL,
-  `public` int(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`fid`)
+  `public` int(1) NOT NULL DEFAULT 1
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_cnbya_value`
---
 
 CREATE TABLE `nuke_cnbya_value` (
-  `vid` int(10) NOT NULL AUTO_INCREMENT,
-  `uid` int(10) NOT NULL DEFAULT '0',
-  `fid` int(10) NOT NULL DEFAULT '0',
-  `value` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`vid`)
+  `vid` int(10) NOT NULL,
+  `uid` int(10) NOT NULL DEFAULT 0,
+  `fid` int(10) NOT NULL DEFAULT 0,
+  `value` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
-
---
--- Table structure for table `nuke_cnbya_value_temp`
---
 
 CREATE TABLE `nuke_cnbya_value_temp` (
-  `vid` int(10) NOT NULL AUTO_INCREMENT,
-  `uid` int(10) NOT NULL DEFAULT '0',
-  `fid` int(10) NOT NULL DEFAULT '0',
-  `value` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`vid`)
+  `vid` int(10) NOT NULL,
+  `uid` int(10) NOT NULL DEFAULT 0,
+  `fid` int(10) NOT NULL DEFAULT 0,
+  `value` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_comments`
---
-
 CREATE TABLE `nuke_comments` (
-  `tid` int(11) NOT NULL AUTO_INCREMENT,
-  `pid` int(11) NOT NULL DEFAULT '0',
-  `sid` int(11) NOT NULL DEFAULT '0',
-  `date` datetime DEFAULT NULL,
+  `tid` int(11) NOT NULL,
+  `pid` int(11) NOT NULL DEFAULT 0,
+  `sid` int(11) NOT NULL DEFAULT 0,
+  `datePublished` timestamp NULL DEFAULT '0000-00-00 00:00:00',
+  `dateModified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `name` varchar(60) NOT NULL DEFAULT '',
   `email` varchar(60) DEFAULT NULL,
   `url` varchar(60) DEFAULT NULL,
   `host_name` varchar(60) DEFAULT NULL,
   `subject` varchar(85) NOT NULL DEFAULT '',
   `comment` text NOT NULL,
-  `score` tinyint(4) NOT NULL DEFAULT '0',
-  `reason` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`tid`),
-  KEY `pid` (`pid`),
-  KEY `sid` (`sid`)
+  `score` tinyint(4) NOT NULL DEFAULT 0,
+  `reason` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_config`
---
 
 CREATE TABLE `nuke_config` (
   `sitename` varchar(255) NOT NULL DEFAULT '',
@@ -2569,87 +1705,66 @@ CREATE TABLE `nuke_config` (
   `site_logo` varchar(255) NOT NULL DEFAULT '',
   `slogan` varchar(255) NOT NULL DEFAULT '',
   `startdate` varchar(50) NOT NULL DEFAULT '',
+  `datePublished` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `dateModified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `adminmail` varchar(255) NOT NULL DEFAULT '',
-  `anonpost` tinyint(1) NOT NULL DEFAULT '0',
-  `default_Theme` varchar(255) NOT NULL DEFAULT '',
-  `foot1` text NOT NULL,
-  `foot2` text NOT NULL,
-  `foot3` text NOT NULL,
-  `commentlimit` int(9) NOT NULL DEFAULT '4096',
+  `anonpost` tinyint(1) NOT NULL DEFAULT 0,
+  `default_Theme` varchar(255) NOT NULL DEFAULT 'Xtreme_Core',
+  `foot1` text DEFAULT NULL,
+  `foot2` text DEFAULT NULL,
+  `foot3` text DEFAULT NULL,
+  `commentlimit` int(9) NOT NULL DEFAULT 4096,
   `anonymous` varchar(255) NOT NULL DEFAULT '',
-  `minpass` tinyint(1) NOT NULL DEFAULT '5',
-  `pollcomm` tinyint(1) NOT NULL DEFAULT '1',
-  `articlecomm` tinyint(1) NOT NULL DEFAULT '1',
-  `broadcast_msg` tinyint(1) NOT NULL DEFAULT '1',
-  `my_headlines` tinyint(1) NOT NULL DEFAULT '1',
-  `top` int(3) NOT NULL DEFAULT '10',
-  `storyhome` int(2) NOT NULL DEFAULT '10',
-  `user_news` tinyint(1) NOT NULL DEFAULT '1',
-  `oldnum` int(2) NOT NULL DEFAULT '30',
-  `ultramode` tinyint(1) NOT NULL DEFAULT '0',
-  `banners` tinyint(1) NOT NULL DEFAULT '1',
+  `minpass` tinyint(1) NOT NULL DEFAULT 5,
+  `pollcomm` tinyint(1) NOT NULL DEFAULT 1,
+  `articlecomm` tinyint(1) NOT NULL DEFAULT 1,
+  `broadcast_msg` tinyint(1) NOT NULL DEFAULT 1,
+  `my_headlines` tinyint(1) NOT NULL DEFAULT 1,
+  `top` int(3) NOT NULL DEFAULT 10,
+  `storyhome` int(2) NOT NULL DEFAULT 10,
+  `user_news` tinyint(1) NOT NULL DEFAULT 1,
+  `oldnum` int(2) NOT NULL DEFAULT 30,
+  `ultramode` tinyint(1) NOT NULL DEFAULT 0,
+  `banners` tinyint(1) NOT NULL DEFAULT 1,
   `backend_title` varchar(255) NOT NULL DEFAULT '',
   `backend_language` varchar(10) NOT NULL DEFAULT '',
   `language` varchar(100) NOT NULL DEFAULT '',
   `locale` varchar(10) NOT NULL DEFAULT '',
-  `multilingual` tinyint(1) NOT NULL DEFAULT '0',
-  `useflags` tinyint(1) NOT NULL DEFAULT '0',
-  `notify` tinyint(1) NOT NULL DEFAULT '0',
+  `multilingual` tinyint(1) NOT NULL DEFAULT 0,
+  `useflags` tinyint(1) NOT NULL DEFAULT 0,
+  `notify` tinyint(1) NOT NULL DEFAULT 0,
   `notify_email` varchar(255) NOT NULL DEFAULT '',
   `notify_subject` varchar(255) NOT NULL DEFAULT '',
   `notify_message` varchar(255) NOT NULL DEFAULT '',
   `notify_from` varchar(255) NOT NULL DEFAULT '',
-  `moderate` tinyint(1) NOT NULL DEFAULT '0',
-  `admingraphic` tinyint(1) NOT NULL DEFAULT '1',
-  `httpref` tinyint(1) NOT NULL DEFAULT '1',
-  `httprefmax` int(5) NOT NULL DEFAULT '1000',
-  `CensorMode` tinyint(1) NOT NULL DEFAULT '3',
+  `moderate` tinyint(1) NOT NULL DEFAULT 0,
+  `admingraphic` tinyint(1) NOT NULL DEFAULT 1,
+  `httpref` tinyint(1) NOT NULL DEFAULT 1,
+  `httprefmax` int(5) NOT NULL DEFAULT 1000,
+  `CensorMode` tinyint(1) NOT NULL DEFAULT 3,
   `CensorReplace` varchar(10) NOT NULL DEFAULT '',
-  `copyright` text NOT NULL,
+  `copyright` text DEFAULT NULL,
   `Version_Num` varchar(10) NOT NULL DEFAULT '',
-  `admin_pos` tinyint(1) NOT NULL DEFAULT '1',
-  `admin_log_lines` int(11) NOT NULL DEFAULT '0',
-  `error_log_lines` int(11) NOT NULL DEFAULT '0',
-  `cache_data` mediumblob NOT NULL,
-  PRIMARY KEY (`sitename`)
+  `admin_pos` tinyint(1) NOT NULL DEFAULT 1,
+  `admin_log_lines` int(11) NOT NULL DEFAULT 0,
+  `error_log_lines` int(11) NOT NULL DEFAULT 0,
+  `cache_data` mediumblob DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_config`
---
-
-INSERT INTO `nuke_config` (`sitename`, `nukeurl`, `site_logo`, `slogan`, `startdate`, `adminmail`, `anonpost`, `default_Theme`, `foot1`, `foot2`, `foot3`, `commentlimit`, `anonymous`, `minpass`, `pollcomm`, `articlecomm`, `broadcast_msg`, `my_headlines`, `top`, `storyhome`, `user_news`, `oldnum`, `ultramode`, `banners`, `backend_title`, `backend_language`, `language`, `locale`, `multilingual`, `useflags`, `notify`, `notify_email`, `notify_subject`, `notify_message`, `notify_from`, `moderate`, `admingraphic`, `httpref`, `httprefmax`, `CensorMode`, `CensorReplace`, `copyright`, `Version_Num`, `admin_pos`, `admin_log_lines`, `error_log_lines`, `cache_data`) VALUES
-('My Site', 'http://-------------.---', 'logo.png', 'Your Slogan here', 'December 2018', 'Webmaster@MySite.com', 0, 'XtremeV3', '<a href=\"modules.php?name=Spambot_Killer\" target=\"_blank\">Spambot Killer</a> | <a href=\"modules.php?name=Site_Map\" target=\"_blank\">Site Map</a><br />', '<a href=\"rss.php?feed=news\" target=\"_blank\"><img border=\"0\" src=\"images/powered/feed_20_news.png\" width=\"94\" height=\"15\" alt=\"[News Feed]\" title=\"News Feed\" /></a> <a href=\"rss.php?feed=forums\" target=\"_blank\"><img border=\"0\" src=\"images/powered/feed_20_forums.png\" width=\"94\" height=\"15\" alt=\"[Forums Feed]\" title=\"Forums Feed\" /></a> <a href=\"rss.php?feed=downloads\" target=\"_blank\" /><img border=\"0\" src=\"images/powered/feed_20_down.png\" width=\"94\" height=\"15\" alt=\"[Downloads Feed]\" title=\"Downloads Feed\" /></a> <a href=\"rss.php?feed=weblinks\" target=\"_blank\"><img border=\"0\" src=\"images/powered/feed_20_links.png\" width=\"94\" height=\"15\" alt=\"[Web Links Feed]\" title=\"Web Links Feed\" /></a> <a href=\"http://htmlpurifier.org/\"><img src=\"images/powered/html_purifier_powered.png\" alt=\"Powered by HTML Purifier\" border=\"0\" /></a> <a href=\"http://tool.motoricerca.info/robots-checker.phtml?checkreferer=1\" target=\"_blank\"><img border=\"0\" src=\"images/powered/valid-robots.png\" width=\"80\" height=\"15\" alt=\"[Validate robots.txt]\" title=\"Validate robots.txt\" /></a>', '', 4096, 'Anonymous', 5, 1, 1, 1, 1, 10, 10, 1, 30, 1, 0, 'Powered by Evolution Xtreme 2.0.9f', 'en-us', 'english', 'en_US', 1, 0, 0, 'webmaster@---------.---', 'NEWS for my site', 'Hey! You got a new submission for your site.', 'webmaster', 0, 1, 1, 1000, 3, '*****', 'PHP-Nuke Copyright &copy; 2006 by Francisco Burzi.<br>All logos, trademarks and posts in this site are property of their respective owners, all the rest &copy; 2006 by the site owner.<br>Powered by <a href=\"http://www.nuke-evolution.com\" target=\"_blank\">Nuke Evolution 2.0.7</a> - <a href=\"https://www.evolution-xtreme.com\" target=\"_blank\">Nuke-Evolution Xtreme 2.0.9f Edition</a>.<br>', '7.6.0', 1, 0, 0, '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_confirm`
---
+INSERT INTO `nuke_config` (`sitename`, `nukeurl`, `site_logo`, `slogan`, `startdate`, `datePublished`, `dateModified`, `adminmail`, `anonpost`, `default_Theme`, `foot1`, `foot2`, `foot3`, `commentlimit`, `anonymous`, `minpass`, `pollcomm`, `articlecomm`, `broadcast_msg`, `my_headlines`, `top`, `storyhome`, `user_news`, `oldnum`, `ultramode`, `banners`, `backend_title`, `backend_language`, `language`, `locale`, `multilingual`, `useflags`, `notify`, `notify_email`, `notify_subject`, `notify_message`, `notify_from`, `moderate`, `admingraphic`, `httpref`, `httprefmax`, `CensorMode`, `CensorReplace`, `copyright`, `Version_Num`, `admin_pos`, `admin_log_lines`, `error_log_lines`, `cache_data`) VALUES
+('My Site', 'http://yourdomain.com', 'logo.png', '', '01/01/21', '2021-01-01 06:16:00', '2021-01-01 06:16:00', 'webmaster@yourdomain.com', 0, 'Xtreme_Core', '', '', '', 4096, 'Anonymous', 5, 1, 1, 1, 1, 5, 5, 1, 30, 1, 1, 'Powered by PHP-Nuke Titanium 4.0.0 Dev 4', 'en-us', 'english', 'en_US', 1, 0, 0, 'webmaster@yourdomain.com', 'Blog for yourprefix.86it.us', 'Hey! You\'ve got a new blog submission for yourprefix.86it.us!', 'WebMaster', 0, 1, 1, 1000, 3, '*****', '', '7.6.0', 1, 0, 0, '');
 
 CREATE TABLE `nuke_confirm` (
   `confirm_id` char(32) NOT NULL DEFAULT '',
   `session_id` char(32) NOT NULL DEFAULT '',
-  `code` char(6) NOT NULL DEFAULT '',
-  PRIMARY KEY (`session_id`,`confirm_id`)
+  `code` char(6) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_counter`
---
 
 CREATE TABLE `nuke_counter` (
   `type` varchar(80) NOT NULL DEFAULT '',
   `var` varchar(80) NOT NULL DEFAULT '',
-  `count` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  KEY `var` (`var`)
+  `count` int(10) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_counter`
---
 
 INSERT INTO `nuke_counter` (`type`, `var`, `count`) VALUES
 ('total', 'hits', 0),
@@ -2693,44 +1808,26 @@ INSERT INTO `nuke_counter` (`type`, `var`, `count`) VALUES
 ('os', 'AIX', 0),
 ('os', 'Other', 0);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_donators`
---
-
 CREATE TABLE `nuke_donators` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` int(11) NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL,
+  `uid` int(11) NOT NULL DEFAULT 0,
   `uname` varchar(60) NOT NULL DEFAULT '',
   `fname` varchar(25) NOT NULL DEFAULT '',
   `lname` varchar(25) NOT NULL DEFAULT '',
   `email` varchar(255) NOT NULL DEFAULT '',
-  `donated` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `donated` decimal(8,2) NOT NULL DEFAULT 0.00,
   `dondate` varchar(255) NOT NULL DEFAULT '',
-  `donshow` tinyint(1) NOT NULL DEFAULT '0',
+  `donshow` tinyint(1) NOT NULL DEFAULT 0,
   `uip` varchar(255) NOT NULL DEFAULT '',
-  `donok` tinyint(1) NOT NULL DEFAULT '0',
-  `msg` text,
-  `donto` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `donok` tinyint(1) NOT NULL DEFAULT 0,
+  `msg` text DEFAULT NULL,
+  `donto` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_donators_config`
---
 
 CREATE TABLE `nuke_donators_config` (
   `config_name` varchar(255) NOT NULL DEFAULT '',
-  `config_value` text NOT NULL,
-  PRIMARY KEY (`config_name`)
+  `config_value` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_donators_config`
---
 
 INSERT INTO `nuke_donators_config` (`config_name`, `config_value`) VALUES
 ('values', '5,10,25,50,100'),
@@ -2766,56 +1863,38 @@ INSERT INTO `nuke_donators_config` (`config_name`, `config_value`) VALUES
 ('gen_codes', ''),
 ('gen_cookie', 'no');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_ecalendar`
---
-
 CREATE TABLE `nuke_ecalendar` (
-  `eid` int(11) NOT NULL AUTO_INCREMENT,
+  `eid` int(11) NOT NULL,
   `month` varchar(11) DEFAULT NULL,
   `day` varchar(11) DEFAULT NULL,
   `year` int(11) DEFAULT NULL,
-  `reoccur` int(11) NOT NULL DEFAULT '0',
+  `reoccur` int(11) NOT NULL DEFAULT 0,
   `time` varchar(5) DEFAULT NULL,
-  `ampm` tinyint(1) NOT NULL DEFAULT '0',
-  `title` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`eid`)
+  `ampm` tinyint(1) NOT NULL DEFAULT 0,
+  `title` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_evolution`
---
 
 CREATE TABLE `nuke_evolution` (
   `evo_field` varchar(50) NOT NULL DEFAULT '',
-  `evo_value` text NOT NULL,
-  PRIMARY KEY (`evo_field`)
+  `evo_value` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_evolution`
---
 
 INSERT INTO `nuke_evolution` (`evo_field`, `evo_value`) VALUES
 ('sub', 'Xtreme'),
 ('ver_check', '0'),
-('ver_previous', '2.0.9f'),
+('ver_previous', '4.0.0'),
 ('lock_modules', '0'),
 ('queries_count', '1'),
-('adminssl', '0'),
+('adminssl', '1'),
 ('poll_random', '0'),
 ('poll_days', '30'),
-('censor_words', 'ass asshole arse bitch bullshit c0ck clit cock crap cum cunt fag faggot fuck fucker fucking fuk fuking motherfucker pussy shit tits twat'),
+('censor_words', 'ass cuntface balllicker shitbag asshole arse bitch bullshit c0ck clit cock crap cum cunt fag faggot fuck fucker fucking fuk fuking motherfucker pussy shit tits twat'),
 ('censor', '0'),
-('usrclearcache', '0'),
-('cache_last_cleared', '1536324841'),
-('textarea', 'bbcode'),
+('usrclearcache', '1'),
+('cache_last_cleared', '1620227074'),
+('textarea', 'ckeditor'),
 ('use_colors', '1'),
-('usegfxcheck', '0'),
+('usegfxcheck', '7'),
 ('codesize', '7'),
 ('iphub_use', '0'),
 ('useimage', '1'),
@@ -2845,67 +1924,48 @@ INSERT INTO `nuke_evolution` (`evo_field`, `evo_value`) VALUES
 ('iphub_status', '0'),
 ('iphub_key', ''),
 ('iphub_cookietime', '5'),
-('recap_color', 'white'),
+('recap_color', ''),
 ('recap_lang', 'en'),
 ('recap_site_key', ''),
 ('recap_priv_key', ''),
 ('block_cachetime', '86400');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_evo_userinfo`
---
-
 CREATE TABLE `nuke_evo_userinfo` (
   `name` varchar(25) NOT NULL,
   `filename` varchar(25) NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '0',
+  `active` tinyint(1) NOT NULL DEFAULT 0,
   `position` int(10) NOT NULL,
   `image` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_evo_userinfo`
---
-
 INSERT INTO `nuke_evo_userinfo` (`name`, `filename`, `active`, `position`, `image`) VALUES
 ('Good Afternoon', 'good_afternoon', 1, 1, ''),
 ('Username', 'username', 0, 2, ''),
-('Rank', 'rank', 0, 4, ''),
-('Login/logout/register', 'login', 1, 5, ''),
-('Current Online', 'online', 1, 17, ''),
-('PMs', 'pms', 1, 4, ''),
-('Users', 'users', 1, 9, ''),
-('Most Ever', 'mostever', 0, 13, ''),
-('Members', 'members', 1, 7, ''),
-('Avatar', 'avatar', 1, 2, ''),
+('Rank', 'rank', 1, 5, ''),
+('Login/logout/register', 'login', 1, 9, ''),
+('Current Online', 'online', 1, 19, ''),
+('PMs', 'pms', 1, 7, ''),
+('Users', 'users', 1, 15, ''),
+('Most Ever', 'mostever', 1, 17, ''),
+('Members', 'members', 1, 11, ''),
+('Avatar', 'avatar', 1, 3, ''),
 ('Personal Message', 'personal_message', 0, 1, ''),
 ('Language', 'language', 0, 3, ''),
-('Posts', 'posts', 0, 11, ''),
+('Posts', 'posts', 1, 13, ''),
+('Break', 'Break', 1, 16, ''),
 ('Break', 'Break', 1, 14, ''),
 ('Break', 'Break', 1, 12, ''),
 ('Break', 'Break', 1, 10, ''),
 ('Break', 'Break', 1, 8, ''),
 ('Break', 'Break', 1, 6, ''),
-('Break', 'Break', 1, 3, ''),
-('Break', 'Break', 1, 16, '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_evo_userinfo_addons`
---
+('Break', 'Break', 1, 4, ''),
+('Break', 'Break', 1, 2, ''),
+('Break', 'Break', 1, 18, '');
 
 CREATE TABLE `nuke_evo_userinfo_addons` (
   `name` varchar(255) NOT NULL,
-  `value` text NOT NULL,
-  PRIMARY KEY (`name`)
+  `value` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_evo_userinfo_addons`
---
 
 INSERT INTO `nuke_evo_userinfo_addons` (`name`, `value`) VALUES
 ('good_afternoon_message', 'Good morning %name%:'),
@@ -2923,166 +1983,100 @@ INSERT INTO `nuke_evo_userinfo_addons` (`name`, `value`) VALUES
 ('rank_show_4th', 'no'),
 ('rank_show_5th', 'no');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_faqanswer`
---
-
 CREATE TABLE `nuke_faqanswer` (
-  `id` int(25) NOT NULL AUTO_INCREMENT,
-  `id_cat` int(25) NOT NULL DEFAULT '0',
+  `id` int(25) NOT NULL,
+  `id_cat` int(25) NOT NULL DEFAULT 0,
   `question` varchar(255) DEFAULT '',
-  `answer` text,
-  PRIMARY KEY (`id`),
-  KEY `id_cat` (`id_cat`)
+  `answer` text DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_faqcategories`
---
 
 CREATE TABLE `nuke_faqcategories` (
-  `id_cat` tinyint(3) NOT NULL AUTO_INCREMENT,
+  `id_cat` tinyint(3) NOT NULL,
   `categories` varchar(255) DEFAULT NULL,
-  `flanguage` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id_cat`)
+  `flanguage` varchar(30) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_file_repository_categories`
---
 
 CREATE TABLE `nuke_file_repository_categories` (
-  `cid` int(11) NOT NULL AUTO_INCREMENT,
+  `cid` int(11) NOT NULL,
   `cname` varchar(100) NOT NULL,
   `color` varchar(50) NOT NULL,
-  `parentid` int(11) NOT NULL DEFAULT '0',
-  `permissions` int(11) NOT NULL DEFAULT '0',
-  `isallowed` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`cid`)
+  `parentid` int(11) NOT NULL DEFAULT 0,
+  `permissions` int(11) NOT NULL DEFAULT 0,
+  `isallowed` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_file_repository_comments`
---
 
 CREATE TABLE `nuke_file_repository_comments` (
-  `cid` int(11) NOT NULL AUTO_INCREMENT,
-  `did` int(11) NOT NULL DEFAULT '0',
-  `comment` text,
+  `cid` int(11) NOT NULL,
+  `did` int(11) NOT NULL DEFAULT 0,
+  `comment` text DEFAULT NULL,
   `date` datetime NOT NULL DEFAULT '2018-12-12 00:00:00',
-  `rating` int(11) NOT NULL DEFAULT '0',
-  `uid` int(11) NOT NULL DEFAULT '0',
-  `user` varchar(255) NOT NULL,
-  PRIMARY KEY (`cid`)
+  `rating` int(11) NOT NULL DEFAULT 0,
+  `uid` int(11) NOT NULL DEFAULT 0,
+  `user` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_file_repository_files`
---
-
 CREATE TABLE `nuke_file_repository_files` (
-  `fid` int(11) NOT NULL AUTO_INCREMENT,
+  `fid` int(11) NOT NULL,
   `did` int(11) NOT NULL,
   `ftitle` varchar(50) NOT NULL,
   `filename` varchar(100) NOT NULL,
   `filesize` int(20) NOT NULL,
-  `last_downloaded` datetime NOT NULL DEFAULT '2018-12-12 00:00:00',
-  PRIMARY KEY (`fid`)
+  `last_downloaded` datetime NOT NULL DEFAULT '2018-12-12 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_file_repository_items`
---
-
 CREATE TABLE `nuke_file_repository_items` (
-  `cid` int(11) NOT NULL DEFAULT '0',
+  `cid` int(11) NOT NULL DEFAULT 0,
   `author` varchar(100) NOT NULL DEFAULT '',
   `author_email` varchar(100) NOT NULL DEFAULT '',
   `author_website` varchar(100) NOT NULL DEFAULT '',
   `color` varchar(7) NOT NULL DEFAULT '',
   `currency` varchar(7) NOT NULL DEFAULT '',
   `date` datetime NOT NULL DEFAULT '2018-12-12 00:00:00',
-  `description` text,
-  `did` int(11) NOT NULL AUTO_INCREMENT,
-  `fixes` longtext,
-  `groups` int(11) NOT NULL DEFAULT '0',
-  `hits` int(11) NOT NULL DEFAULT '0',
-  `isactive` int(11) NOT NULL DEFAULT '0',
-  `isapproved` int(11) NOT NULL DEFAULT '0',
-  `isbroken` tinyint(1) NOT NULL DEFAULT '0',
-  `isfeatured` int(11) NOT NULL DEFAULT '0',
-  `isnew` int(11) NOT NULL DEFAULT '0',
+  `description` text DEFAULT NULL,
+  `did` int(11) NOT NULL,
+  `fixes` longtext DEFAULT NULL,
+  `groups` int(11) NOT NULL DEFAULT 0,
+  `hits` int(11) NOT NULL DEFAULT 0,
+  `isactive` int(11) NOT NULL DEFAULT 0,
+  `isapproved` int(11) NOT NULL DEFAULT 0,
+  `isbroken` tinyint(1) NOT NULL DEFAULT 0,
+  `isfeatured` int(11) NOT NULL DEFAULT 0,
+  `isnew` int(11) NOT NULL DEFAULT 0,
   `isupdated` datetime NOT NULL DEFAULT '2018-12-12 00:00:00',
   `lastdownloaded` datetime NOT NULL DEFAULT '2018-12-12 00:00:00',
   `paypal` varchar(255) NOT NULL DEFAULT '',
-  `points` int(11) NOT NULL DEFAULT '0',
-  `posts` int(11) NOT NULL DEFAULT '0',
+  `points` int(11) NOT NULL DEFAULT 0,
+  `posts` int(11) NOT NULL DEFAULT 0,
   `preview` varchar(255) NOT NULL DEFAULT '',
-  `price` int(11) NOT NULL DEFAULT '0',
+  `price` int(11) NOT NULL DEFAULT 0,
   `semail` varchar(100) NOT NULL DEFAULT '',
   `sname` varchar(100) NOT NULL DEFAULT '',
-  `suid` int(11) NOT NULL DEFAULT '0',
+  `suid` int(11) NOT NULL DEFAULT 0,
   `title` varchar(100) NOT NULL DEFAULT '',
   `version` varchar(30) NOT NULL DEFAULT '',
-  `views` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`did`),
-  KEY `cid` (`cid`),
-  KEY `title` (`title`)
+  `views` int(11) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_file_repository_screenshots`
---
 
 CREATE TABLE `nuke_file_repository_screenshots` (
-  `pid` int(11) NOT NULL AUTO_INCREMENT,
-  `did` int(11) NOT NULL DEFAULT '0',
+  `pid` int(11) NOT NULL,
+  `did` int(11) NOT NULL DEFAULT 0,
   `filename` varchar(255) NOT NULL,
-  `size` int(11) NOT NULL DEFAULT '0',
-  `active` int(11) NOT NULL DEFAULT '1',
+  `size` int(11) NOT NULL DEFAULT 0,
+  `active` int(11) NOT NULL DEFAULT 1,
   `submitter` varchar(100) NOT NULL DEFAULT '',
-  `title` varchar(100) NOT NULL,
-  PRIMARY KEY (`pid`),
-  KEY `did` (`did`)
+  `title` varchar(100) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_file_repository_settings`
---
 
 CREATE TABLE `nuke_file_repository_settings` (
   `config_name` varchar(255) NOT NULL,
-  `config_value` varchar(255) NOT NULL,
-  PRIMARY KEY (`config_name`)
+  `config_value` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_file_repository_settings`
---
 
 INSERT INTO `nuke_file_repository_settings` (`config_name`, `config_value`) VALUES
 ('uhead', '1'),
 ('utext', '0'),
 ('pophits', '250'),
 ('version', '1.1.0'),
-
 ('usegfxcheck', '1'),
 ('currency', 'GBP'),
 ('parse_smilies', '1'),
@@ -3103,93 +2097,40 @@ INSERT INTO `nuke_file_repository_settings` (`config_name`, `config_value`) VALU
 ('allowed_image_extensions', 'jpeg,jpg,png,gif'),
 ('group_allowed_to_upload', '1');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_file_repository_themes`
---
-
 CREATE TABLE `nuke_file_repository_themes` (
   `theme_name` varchar(255) NOT NULL,
   `cell` int(11) NOT NULL,
   `head` int(11) NOT NULL,
   `per_row` int(11) NOT NULL,
-  `show_left` int(11) NOT NULL,
-  PRIMARY KEY (`theme_name`)
+  `show_left` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_file_repository_themes`
---
-
 INSERT INTO `nuke_file_repository_themes` (`theme_name`, `cell`, `head`, `per_row`, `show_left`) VALUES
-('XtremeV3', 0, 0, 2, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_headlines`
---
+('Inferno', 0, 0, 2, 1),
+('Xtreme_Core', 0, 0, 2, 1);
 
 CREATE TABLE `nuke_headlines` (
-  `hid` int(11) NOT NULL AUTO_INCREMENT,
+  `hid` int(11) NOT NULL,
   `sitename` varchar(30) NOT NULL DEFAULT '',
-  `headlinesurl` varchar(200) NOT NULL DEFAULT '',
-  PRIMARY KEY (`hid`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_headlines`
---
-
-INSERT INTO `nuke_headlines` (`hid`, `sitename`, `headlinesurl`) VALUES
-(1, 'AbsoluteGames', 'http://files.gameaholic.com/agfa.rdf'),
-(2, 'DailyDaemonNews', 'http://daily.daemonnews.org/ddn.rdf.php3'),
-(3, 'FreeDOS', 'http://sourceforge.net/export/rss2_projnews.php?group_id=5109'),
-(4, 'LinuxWeelyNews', 'http://lwn.net/headlines/rss'),
-(5, 'Listology', 'http://listology.com/recent.rdf'),
-(6, 'PHP-Nuke', 'http://phpnuke.org/backend.php'),
-(7, 'PerlMonks', 'http://www.perlmonks.org/headlines.rdf'),
-(8, 'WebReference', 'http://webreference.com/webreference.rdf');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_hnl_categories`
---
+  `headlinesurl` varchar(200) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `nuke_hnl_categories` (
-  `cid` int(11) NOT NULL AUTO_INCREMENT,
+  `cid` int(11) NOT NULL,
   `ctitle` varchar(50) NOT NULL DEFAULT '',
   `cdescription` text NOT NULL,
-  `cblocklimit` int(4) NOT NULL DEFAULT '10',
-  PRIMARY KEY (`cid`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_hnl_categories`
---
+  `cblocklimit` int(4) NOT NULL DEFAULT 10
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_hnl_categories` (`cid`, `ctitle`, `cdescription`, `cblocklimit`) VALUES
 (1, '*Unassigned*', 'This is a catch-all category where newsletters can default to or if all other categories are removed.  Do NOT remove this category!  This category of newsletters are only shown to the Admins.  ', 5),
 (2, 'Archived Newsletters', 'This category is for newsletter subscribers.', 5),
 (3, 'Archived Mass Mails', 'This category is used for mass mails.', 5);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_hnl_cfg`
---
-
 CREATE TABLE `nuke_hnl_cfg` (
   `cfg_nm` varchar(255) NOT NULL DEFAULT '',
-  `cfg_val` longtext NOT NULL,
-  PRIMARY KEY (`cfg_nm`)
+  `cfg_val` longtext NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_hnl_cfg`
---
 
 INSERT INTO `nuke_hnl_cfg` (`cfg_nm`, `cfg_val`) VALUES
 ('debug_mode', 'ERROR'),
@@ -3215,58 +2156,32 @@ INSERT INTO `nuke_hnl_cfg` (`cfg_nm`, `cfg_val`) VALUES
 ('wysiwyg_on', '1'),
 ('wysiwyg_rows', '30');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_hnl_newsletters`
---
-
 CREATE TABLE `nuke_hnl_newsletters` (
-  `nid` int(11) NOT NULL AUTO_INCREMENT,
-  `cid` int(11) NOT NULL DEFAULT '1',
+  `nid` int(11) NOT NULL,
+  `cid` int(11) NOT NULL DEFAULT 1,
   `topic` varchar(100) NOT NULL DEFAULT '',
   `sender` varchar(20) NOT NULL DEFAULT '',
   `filename` varchar(32) NOT NULL DEFAULT '',
   `datesent` date DEFAULT NULL,
-  `view` int(1) NOT NULL DEFAULT '0',
+  `view` int(1) NOT NULL DEFAULT 0,
   `groups` text NOT NULL,
-  `hits` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`nid`),
-  KEY `cid` (`cid`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_hnl_newsletters`
---
+  `hits` int(11) NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_hnl_newsletters` (`nid`, `cid`, `topic`, `sender`, `filename`, `datesent`, `view`, `groups`, `hits`) VALUES
 (1, 1, 'PREVIEW Newsletter File', 'Admin', 'tmp.php', '2018-12-12', 99, '', 0),
 (2, 1, 'Tested Email Temporary File', 'Admin', 'testemail.php', '2018-12-12', 99, '', 0);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_honeypot`
---
-
 CREATE TABLE `nuke_honeypot` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `username` varchar(55) NOT NULL,
   `realname` varchar(75) NOT NULL,
   `email` varchar(255) NOT NULL,
   `ip` varchar(60) NOT NULL DEFAULT '',
   `date` varchar(50) NOT NULL DEFAULT '',
   `potnum` varchar(1) NOT NULL DEFAULT '',
-  `reason` varchar(255) NOT NULL,
-  UNIQUE KEY `id` (`id`)
+  `reason` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_honeypot_config`
---
 
 CREATE TABLE `nuke_honeypot_config` (
   `usehp` tinyint(1) NOT NULL,
@@ -3304,23 +2219,12 @@ CREATE TABLE `nuke_honeypot_config` (
   `version` varchar(6) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_honeypot_config`
---
-
 INSERT INTO `nuke_honeypot_config` (`usehp`, `botlisting`, `perpage`, `pagenumberpos`, `headcolor`, `rowcolor1`, `rowcolor2`, `pagebgcolor`, `pagebordercolor`, `fontcolor`, `fontcolor2`, `check1`, `check2`, `check3`, `check4`, `check5`, `check6`, `c7opt1`, `c7opt2`, `c7amount`, `c8opt1`, `c8opt2`, `usebsapi`, `c8apikey`, `fs9opt1`, `fs9opt2`, `fs9apikey`, `check3time`, `check4question`, `check4answer`, `usefeedback`, `email`, `version`) VALUES
-(1, 1, '30', 2, '#a92828', '#e48600', '#f8ce55', '#f8ce55', '#a92828', '#000000', '#000000', 1, 1, 1, 0, 1, 1, 1, 1, '5', 0, 0, 0, '', 0, 0, '', '30', '', '', 0, 'admin@YourSite.com', '2.2');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_image_repository_settings`
---
+(1, 1, '30', 2, '#a92828', '#e48600', '#f8ce55', '#f8ce55', '#a92828', '#000000', '#000000', 1, 1, 1, 0, 1, 1, 1, 1, '5', 0, 0, 0, '', 0, 0, '', '30', '', '', 0, 'ernest.bufffington@gmail.com', '2.2');
 
 CREATE TABLE `nuke_image_repository_settings` (
   `config_name` varchar(255) NOT NULL DEFAULT '',
-  `config_value` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`config_name`)
+  `config_value` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_image_repository_settings` (`config_name`, `config_value`) VALUES
@@ -3336,527 +2240,437 @@ INSERT INTO `nuke_image_repository_settings` (`config_name`, `config_value`) VAL
 ('thumb_height', '120'),
 ('jquery_prefix', 'nuke_jq'),
 ('pagination', '1'),
-('max_upload', '4194304'),
-('quota', '52428800');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_image_repository_uploads`
---
+('max_upload', '6291456'),
+('quota', '524288000');
 
 CREATE TABLE `nuke_image_repository_uploads` (
-  `pid` int(20) NOT NULL AUTO_INCREMENT,
+  `pid` int(20) NOT NULL,
   `filename` varchar(255) DEFAULT NULL,
   `submitter` varchar(255) DEFAULT NULL,
-  `image` text,
-  `size` int(11) NOT NULL DEFAULT '0',
+  `image` text DEFAULT NULL,
+  `size` int(11) NOT NULL DEFAULT 0,
   `screensize` varchar(255) DEFAULT NULL,
-  `uploaded` int(11) NOT NULL DEFAULT '0',
-  `bypass_thumb` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`pid`)
+  `uploaded` int(11) NOT NULL DEFAULT 0,
+  `bypass_thumb` int(11) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_image_repository_users`
---
-
 CREATE TABLE `nuke_image_repository_users` (
-  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
   `background_color` varchar(20) DEFAULT NULL,
   `border_color` varchar(20) DEFAULT NULL,
   `border_thickness` varchar(3) DEFAULT NULL,
-  `folder` int(11) NOT NULL DEFAULT '0',
+  `folder` int(11) NOT NULL DEFAULT 0,
   `percent_color` varchar(20) DEFAULT NULL,
   `quota` varchar(255) DEFAULT NULL,
-  `quota_request` tinyint(2) NOT NULL DEFAULT '0',
-  `custom_color` varchar(7) DEFAULT NULL,
-  PRIMARY KEY (`uid`)
+  `quota_request` tinyint(2) NOT NULL DEFAULT 0,
+  `custom_color` varchar(7) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_jmap`
---
+INSERT INTO `nuke_image_repository_users` (`uid`, `background_color`, `border_color`, `border_thickness`, `folder`, `percent_color`, `quota`, `quota_request`, `custom_color`) VALUES
+(2, 'firebrick', 'goldenrod', NULL, 10002, 'seagreen', '52428800', 0, ''),
+(4, 'white', 'black', NULL, 10004, 'darkorchid', '52428800', 0, NULL),
+(6, 'white', 'black', NULL, 10006, 'darkorchid', '52428800', 0, NULL),
+(5, 'white', 'black', NULL, 10005, 'darkorchid', '52428800', 0, NULL),
+(3, 'white', 'black', NULL, 10003, 'darkorchid', '52428800', 0, NULL),
+(11, 'white', 'black', NULL, 10011, 'darkorchid', '52428800', 0, NULL),
+(20, 'white', 'black', NULL, 10020, 'darkorchid', '52428800', 0, NULL);
 
 CREATE TABLE `nuke_jmap` (
   `name` varchar(255) NOT NULL DEFAULT '',
-  `value` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`name`)
+  `value` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_jmap`
---
 
 INSERT INTO `nuke_jmap` (`name`, `value`) VALUES
 ('xml', '1'),
-('ntopics', '10'),
-('nnews', '15'),
-('ndown', '10'),
-('nrev', '10'),
-('nuser', '5');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_links_categories`
---
+('ntopics', '10000'),
+('nnews', '10000'),
+('ndown', '100000'),
+('nrev', '100000'),
+('nuser', '10000');
 
 CREATE TABLE `nuke_links_categories` (
-  `cid` int(11) NOT NULL AUTO_INCREMENT,
+  `cid` int(11) NOT NULL,
   `title` varchar(50) NOT NULL DEFAULT '',
   `cdescription` text NOT NULL,
-  `parentid` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`cid`)
+  `parentid` int(11) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_links_editorials`
---
-
 CREATE TABLE `nuke_links_editorials` (
-  `linkid` int(11) NOT NULL DEFAULT '0',
+  `linkid` int(11) NOT NULL DEFAULT 0,
   `adminid` varchar(60) NOT NULL DEFAULT '',
   `editorialtimestamp` datetime NOT NULL DEFAULT '2018-12-12 00:00:00',
   `editorialtext` text NOT NULL,
-  `editorialtitle` varchar(100) NOT NULL DEFAULT '',
-  PRIMARY KEY (`linkid`)
+  `editorialtitle` varchar(100) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_links_links`
---
-
 CREATE TABLE `nuke_links_links` (
-  `lid` int(11) NOT NULL AUTO_INCREMENT,
-  `cid` int(11) NOT NULL DEFAULT '0',
-  `sid` int(11) NOT NULL DEFAULT '0',
+  `lid` int(11) NOT NULL,
+  `cid` int(11) NOT NULL DEFAULT 0,
+  `sid` int(11) NOT NULL DEFAULT 0,
   `title` varchar(100) NOT NULL DEFAULT '',
   `url` varchar(100) NOT NULL DEFAULT '',
   `description` text NOT NULL,
   `date` datetime DEFAULT NULL,
   `name` varchar(100) NOT NULL DEFAULT '',
   `email` varchar(100) NOT NULL DEFAULT '',
-  `hits` int(11) NOT NULL DEFAULT '0',
+  `hits` int(11) NOT NULL DEFAULT 0,
   `submitter` varchar(60) NOT NULL DEFAULT '',
-  `linkratingsummary` double(6,4) NOT NULL DEFAULT '0.0000',
-  `totalvotes` int(11) NOT NULL DEFAULT '0',
-  `totalcomments` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`lid`),
-  KEY `cid` (`cid`),
-  KEY `sid` (`sid`)
+  `linkratingsummary` double(6,4) NOT NULL DEFAULT 0.0000,
+  `totalvotes` int(11) NOT NULL DEFAULT 0,
+  `totalcomments` int(11) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_links_modrequest`
---
-
 CREATE TABLE `nuke_links_modrequest` (
-  `requestid` int(11) NOT NULL AUTO_INCREMENT,
-  `lid` int(11) NOT NULL DEFAULT '0',
-  `cid` int(11) NOT NULL DEFAULT '0',
-  `sid` int(11) NOT NULL DEFAULT '0',
+  `requestid` int(11) NOT NULL,
+  `lid` int(11) NOT NULL DEFAULT 0,
+  `cid` int(11) NOT NULL DEFAULT 0,
+  `sid` int(11) NOT NULL DEFAULT 0,
   `title` varchar(100) NOT NULL DEFAULT '',
   `url` varchar(100) NOT NULL DEFAULT '',
   `description` text NOT NULL,
   `modifysubmitter` varchar(60) NOT NULL DEFAULT '',
-  `brokenlink` int(3) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`requestid`)
+  `brokenlink` int(3) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_links_newlink`
---
-
 CREATE TABLE `nuke_links_newlink` (
-  `lid` int(11) NOT NULL AUTO_INCREMENT,
-  `cid` int(11) NOT NULL DEFAULT '0',
-  `sid` int(11) NOT NULL DEFAULT '0',
+  `lid` int(11) NOT NULL,
+  `cid` int(11) NOT NULL DEFAULT 0,
+  `sid` int(11) NOT NULL DEFAULT 0,
   `title` varchar(100) NOT NULL DEFAULT '',
   `url` varchar(100) NOT NULL DEFAULT '',
   `description` text NOT NULL,
   `name` varchar(100) NOT NULL DEFAULT '',
   `email` varchar(100) NOT NULL DEFAULT '',
-  `submitter` varchar(60) NOT NULL DEFAULT '',
-  PRIMARY KEY (`lid`),
-  KEY `cid` (`cid`),
-  KEY `sid` (`sid`)
+  `submitter` varchar(60) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_links_votedata`
---
 
 CREATE TABLE `nuke_links_votedata` (
-  `ratingdbid` int(11) NOT NULL AUTO_INCREMENT,
-  `ratinglid` int(11) NOT NULL DEFAULT '0',
+  `ratingdbid` int(11) NOT NULL,
+  `ratinglid` int(11) NOT NULL DEFAULT 0,
   `ratinguser` varchar(60) NOT NULL DEFAULT '',
-  `rating` int(11) NOT NULL DEFAULT '0',
+  `rating` int(11) NOT NULL DEFAULT 0,
   `ratinghostname` varchar(60) NOT NULL DEFAULT '',
   `ratingcomments` text NOT NULL,
-  `ratingtimestamp` datetime NOT NULL DEFAULT '2018-12-12 00:00:00',
-  PRIMARY KEY (`ratingdbid`)
+  `ratingtimestamp` datetime NOT NULL DEFAULT '2018-12-12 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_link_us`
---
-
 CREATE TABLE `nuke_link_us` (
-  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `id` int(255) NOT NULL,
   `site_name` varchar(60) NOT NULL DEFAULT '',
   `site_url` varchar(255) NOT NULL DEFAULT '',
   `site_image` varchar(255) NOT NULL DEFAULT '',
   `site_description` text NOT NULL,
-  `site_hits` int(10) NOT NULL DEFAULT '0',
-  `site_status` int(1) NOT NULL DEFAULT '0',
+  `site_hits` int(10) NOT NULL DEFAULT 0,
+  `site_status` int(1) NOT NULL DEFAULT 0,
   `date_added` varchar(255) NOT NULL DEFAULT '',
-  `button_type` smallint(1) NOT NULL DEFAULT '0',
-  `user_id` int(11) NOT NULL DEFAULT '0',
+  `button_type` smallint(1) NOT NULL DEFAULT 0,
+  `user_id` int(11) NOT NULL DEFAULT 0,
   `user_name` varchar(60) NOT NULL DEFAULT '',
   `user_email` varchar(60) NOT NULL DEFAULT '',
-  `user_ip` varchar(20) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  `user_ip` varchar(20) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_link_us`
---
-
-INSERT INTO `nuke_link_us` (`id`, `site_name`, `site_url`, `site_image`, `site_description`, `site_hits`, `site_status`, `date_added`, `button_type`, `user_id`, `user_name`, `user_email`, `user_ip`) VALUES (1, 'Headshotdomain', 'https://www.headshotdomain.net', 'images/evo/headshotdomain.gif', '[HSX] is a multi gaming clan that is involved with a bunch of games and our library is always adding new games.\nWe are a bunch of people that just like to hang out and have fun playing games.', 0, 1, '1542823866', 1, 2, '', '', '82.5.206.228');
-INSERT INTO `nuke_link_us` (`id`, `site_name`, `site_url`, `site_image`, `site_description`, `site_hits`, `site_status`, `date_added`, `button_type`, `user_id`, `user_name`, `user_email`, `user_ip`) VALUES (2, 'Lonestar Modules', 'https://lonestar-modules.com', 'images/evo/lonestarmodules.gif', 'Coding quality Block & Modules for Nuke Evolution Xtreme & Raven Nuke CMS.', 0, 1, '1542823990', 1, 2, 'Administrator', '', '82.5.206.228');
-INSERT INTO `nuke_link_us` (`id`, `site_name`, `site_url`, `site_image`, `site_description`, `site_hits`, `site_status`, `date_added`, `button_type`, `user_id`, `user_name`, `user_email`, `user_ip`) VALUES (3, 'ViZual DeZinez', 'http://vizual-dezinez.com', 'images/evo/vd88x31.gif', 'Web Design and Development. We design and code custom addons, themes, blocks, modules, banners and more.', 0, 1, '1542824042', 1, 2, 'Administrator', '', '82.5.206.228');
-INSERT INTO `nuke_link_us` (`id`, `site_name`, `site_url`, `site_image`, `site_description`, `site_hits`, `site_status`, `date_added`, `button_type`, `user_id`, `user_name`, `user_email`, `user_ip`) VALUES (4, 'Mega Portal', 'http://www.megasportal.co.uk', 'images/evo/megasportal.gif', 'Custom graphic designs and more.', 0, 1, '1542824429', 1, 2, 'Administrator', '', '82.5.206.228');
---
--- Table structure for table `nuke_link_us_config`
---
+INSERT INTO `nuke_link_us` (`id`, `site_name`, `site_url`, `site_image`, `site_description`, `site_hits`, `site_status`, `date_added`, `button_type`, `user_id`, `user_name`, `user_email`, `user_ip`) VALUES
+(1, 'Headshotdomain', 'https://www.headshotdomain.net', 'images/evo/headshotdomain.gif', '[HSX] is a multi gaming clan that is involved with a bunch of games and our library is always adding new games.\nWe are a bunch of people that just like to hang out and have fun playing games.', 16, 1, '1542823866', 1, 2, '', '', '82.5.206.228'),
+(2, 'Lonestar Modules', 'https://lonestar-modules.com', 'images/evo/lonestarmodules.gif', 'Coding quality Block & Modules for Nuke Evolution Xtreme & Raven Nuke CMS.', 10, 1, '1542823990', 1, 2, 'Administrator', '', '82.5.206.228'),
+(3, 'ViZual DeZinez', 'https://vizual-dezinez.86it.us', 'images/evo/vd88x31.gif', 'Web Design and Development. We design and code custom addons, themes, blocks, modules, banners and more.', 11, 1, '1542824042', 1, 2, 'Administrator', '', '82.5.206.228'),
+(4, 'Mega Portal', 'http://www.megasportal.co.uk', 'images/evo/megasportal.gif', 'Custom graphic designs and more.', 7, 1, '1542824429', 1, 2, 'Administrator', '', '82.5.206.228');
 
 CREATE TABLE `nuke_link_us_config` (
   `my_image` varchar(255) NOT NULL DEFAULT '',
-  `fade_effect` smallint(1) NOT NULL DEFAULT '0',
-  `marquee` smallint(1) NOT NULL DEFAULT '0',
-  `marquee_direction` smallint(1) NOT NULL DEFAULT '0',
-  `marquee_scroll` smallint(1) NOT NULL DEFAULT '0',
-  `block_height` smallint(1) NOT NULL DEFAULT '0',
-  `show_clicks` smallint(1) NOT NULL DEFAULT '0',
-  `button_seperate` smallint(1) NOT NULL DEFAULT '0',
-  `user_submit` smallint(1) NOT NULL DEFAULT '0',
-  `button_method` smallint(1) NOT NULL DEFAULT '0',
-  `button_height` tinyint(4) NOT NULL DEFAULT '0',
-  `button_banner_height` tinyint(4) NOT NULL DEFAULT '0',
-  `button_ressource_height` tinyint(4) NOT NULL DEFAULT '0',
-  `button_width` tinyint(4) NOT NULL DEFAULT '0',
-  `button_banner_width` tinyint(4) NOT NULL DEFAULT '0',
-  `button_ressource_width` tinyint(4) NOT NULL DEFAULT '0',
+  `fade_effect` smallint(1) NOT NULL DEFAULT 0,
+  `marquee` smallint(1) NOT NULL DEFAULT 0,
+  `marquee_direction` smallint(1) NOT NULL DEFAULT 0,
+  `marquee_scroll` smallint(1) NOT NULL DEFAULT 0,
+  `block_height` smallint(1) NOT NULL DEFAULT 0,
+  `show_clicks` smallint(1) NOT NULL DEFAULT 0,
+  `button_seperate` smallint(1) NOT NULL DEFAULT 0,
+  `user_submit` smallint(1) NOT NULL DEFAULT 0,
+  `button_method` smallint(1) NOT NULL DEFAULT 0,
+  `button_height` tinyint(4) NOT NULL DEFAULT 0,
+  `button_banner_height` tinyint(4) NOT NULL DEFAULT 0,
+  `button_ressource_height` tinyint(4) NOT NULL DEFAULT 0,
+  `button_width` tinyint(4) NOT NULL DEFAULT 0,
+  `button_banner_width` tinyint(4) NOT NULL DEFAULT 0,
+  `button_ressource_width` tinyint(4) NOT NULL DEFAULT 0,
   `upload_file` varchar(255) NOT NULL DEFAULT '',
-  `button_standard` smallint(1) NOT NULL DEFAULT '0',
-  `button_banner` smallint(1) NOT NULL DEFAULT '0',
-  `button_resource` smallint(1) NOT NULL DEFAULT '0'
+  `button_standard` smallint(1) NOT NULL DEFAULT 0,
+  `button_banner` smallint(1) NOT NULL DEFAULT 0,
+  `button_resource` smallint(1) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_link_us_config`
---
 
 INSERT INTO `nuke_link_us_config` (`my_image`, `fade_effect`, `marquee`, `marquee_direction`, `marquee_scroll`, `block_height`, `show_clicks`, `button_seperate`, `user_submit`, `button_method`, `button_height`, `button_banner_height`, `button_ressource_height`, `button_width`, `button_banner_width`, `button_ressource_width`, `upload_file`, `button_standard`, `button_banner`, `button_resource`) VALUES
-('images/evo/minilogo.gif', 1, 1, 1, 2, 1, 0, 1, 1, 1, 31, 45, 31, 88, 127, 88, 'modules/Link_Us/buttons/', 1, 1, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_main`
---
+('images/evo/minilogo.gif', 1, 1, 1, 2, 3, 1, 1, 1, 0, 31, 45, 31, 88, 127, 88, 'modules/Link_Us/buttons/', 1, 1, 1);
 
 CREATE TABLE `nuke_main` (
-  `main_module` varchar(255) NOT NULL DEFAULT '',
-  KEY `main_module` (`main_module`)
+  `main_module` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_main`
---
-
 INSERT INTO `nuke_main` (`main_module`) VALUES
-('News');
+('Blog');
 
--- --------------------------------------------------------
+CREATE TABLE `nuke_menu` (
+  `groupmenu` int(2) NOT NULL DEFAULT 0,
+  `name` varchar(200) DEFAULT NULL,
+  `image` varchar(99) DEFAULT NULL,
+  `lien` text DEFAULT NULL,
+  `hr` char(2) DEFAULT NULL,
+  `center` char(2) DEFAULT NULL,
+  `bgcolor` tinytext DEFAULT NULL,
+  `invisible` int(1) NOT NULL DEFAULT 0,
+  `class` tinytext DEFAULT NULL,
+  `bold` char(2) DEFAULT NULL,
+  `new` char(2) DEFAULT NULL,
+  `listbox` char(2) DEFAULT NULL,
+  `dynamic` char(2) DEFAULT NULL,
+  `date_debut` bigint(20) NOT NULL DEFAULT 0,
+  `date_fin` bigint(20) NOT NULL DEFAULT 0,
+  `days` varchar(8) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Table structure for table `nuke_message`
---
+INSERT INTO `nuke_menu` (`groupmenu`, `name`, `image`, `lien`, `hr`, `center`, `bgcolor`, `invisible`, `class`, `bold`, `new`, `listbox`, `dynamic`, `date_debut`, `date_fin`, `days`) VALUES
+(2, 'Network Modules', 'flourecent_module_page_05.png', '', 'on', '', '', 1, '', 'on', '', '', '', 0, 0, ''),
+(3, 'Portal Modules', 'yellow_module_page_05.png', '', '', '', '', 1, '', 'on', '', '', '', 0, 0, ''),
+(4, 'Member Modules', 'babyblue_module_page_05.png', '', '', '', '', 1, '', 'on', '', '', '', 0, 0, ''),
+(5, 'Code Tool Box', 'Image1_page_05.png', '', 'on', '', '', 1, '', 'on', '', '', 'on', 0, 0, ''),
+(6, 'Graphics Tool Box', 'green_toolbox_page_05.png', '', '', '', '', 1, '', 'on', '', '', 'on', 0, 0, ''),
+(7, 'CSS Tool Box', 'purple_toolbox_page_05.png', '', '', '', '', 1, '', 'on', '', '', 'on', 0, 0, ''),
+(8, 'Java Tool Box', 'yellow_toolbox_page_05.png', '', '', '', '', 1, '', 'on', '', '', 'on', 0, 0, ''),
+(9, 'PHP Tool Box', 'babyblue_toolbox_page_05.png', '', '', '', '', 1, '', 'on', '', '', 'on', 0, 0, ''),
+(10, 'JSON Tool Box', 'Image1_page_05.png', '', '', '', '', 1, '', 'on', '', '', 'on', 0, 0, ''),
+(11, 'Google Tool Box', 'green_toolbox_page_05.png', '', '', '', '', 1, '', 'on', '', '', 'on', 0, 0, ''),
+(12, 'Admin Tools', 'posts.png', '', 'on', '', '', 1, '', 'on', '', '', 'on', 0, 0, ''),
+(13, 'Network Listening', 'headphones.png', '', 'on', '', '', 1, '', 'on', '', '', '', 0, 0, ''),
+(99, 'menunoadmindisplay', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '', 0, 0, NULL);
+
+CREATE TABLE `nuke_menu_categories` (
+  `id` int(11) NOT NULL,
+  `date_fin` bigint(20) NOT NULL DEFAULT 0,
+  `date_debut` bigint(20) NOT NULL DEFAULT 0,
+  `sublevel` tinyint(3) NOT NULL DEFAULT 0,
+  `groupmenu` int(2) NOT NULL DEFAULT 0,
+  `module` varchar(50) NOT NULL DEFAULT '',
+  `url` text NOT NULL,
+  `url_text` text NOT NULL,
+  `image` varchar(50) NOT NULL DEFAULT '',
+  `new` char(2) DEFAULT NULL,
+  `new_days` tinyint(4) NOT NULL DEFAULT -1,
+  `class` varchar(20) DEFAULT NULL,
+  `bold` char(2) DEFAULT NULL,
+  `days` varchar(8) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `nuke_menu_categories` (`id`, `date_fin`, `date_debut`, `sublevel`, `groupmenu`, `module`, `url`, `url_text`, `image`, `new`, `new_days`, `class`, `bold`, `days`) VALUES
+(1, 0, 0, 0, 2, 'Network_Advertising', '', '', 'tree-greenT.png', '', -1, 'modules', 'on', ''),
+(2, 0, 0, 0, 2, 'Network_projects', '', '', 'tree-greenT.png', '', -1, 'modules', 'on', ''),
+(3, 0, 0, 0, 2, 'Network', '', '', 'tree-green-L.png', '', -1, 'modules', 'on', ''),
+(4, 0, 0, 0, 3, 'FAQ', '', '', 'tree-yellowT.png', '', -1, 'modules', 'on', ''),
+(5, 0, 0, 0, 3, 'Recommend_Us', '', '', 'tree-yellowT.png', '', -1, 'modules', 'on', ''),
+(6, 0, 0, 0, 3, 'Advertising', '', '', 'tree-yellowT.png', '', -1, 'modules', 'on', ''),
+(7, 0, 0, 0, 3, 'ECalendar', '', '', 'tree-yellowT.png', '', -1, 'modules', 'on', ''),
+(8, 0, 0, 0, 3, 'File_Repository', '', '', 'tree-yellowT.png', '', -1, 'modules', 'on', ''),
+(9, 0, 0, 0, 3, 'Web_Links', '', '', 'tree-yellowT.png', '', -1, 'modules', 'on', ''),
+(10, 0, 0, 0, 3, 'Docs', '', '', 'tree-yellowT.png', '', -1, 'modules', 'on', ''),
+(11, 0, 0, 0, 3, 'Link_Us', '', '', 'tree-yellowT.png', '', -1, 'modules', 'on', ''),
+(12, 0, 0, 0, 3, 'Google-Site-Map', '', '', 'tree-yellow-L.png', '', -1, 'modules', 'on', ''),
+(13, 0, 0, 0, 4, 'Members_List', '', '', 'tree-lightblueT.png', 'on', -1, 'modules', 'on', ''),
+(14, 0, 0, 0, 4, 'Groups', '', '', 'tree-lightblueT.png', 'on', -1, 'modules', 'on', ''),
+(15, 0, 0, 0, 4, 'Network_Cemetery', '', '', 'tree-lightblueT.png', 'on', -1, 'modules', 'on', ''),
+(16, 0, 0, 0, 4, 'Loan', '', '', 'tree-lightblue-L.png', '', -1, 'modules', 'on', ''),
+(17, 0, 0, 0, 5, 'External Link', 'https://codebeat.co/', 'CODEBEAT.CO', 'tree-L.png', '', -1, 'modules', 'on', ''),
+(18, 0, 0, 0, 6, 'External Link', 'https://www.resizepixel.com/', 'Image Tool', 'tree-greenT.png', '', -1, 'modules', 'on', ''),
+(19, 0, 0, 0, 6, 'External Link', 'https://www.cleanpng.com/free/geek.html', 'CLEAN PNG', 'tree-greenT.png', '', -1, 'modules', 'on', ''),
+(20, 0, 0, 0, 6, 'External Link', 'https://elements.envato.com/', 'Evanto Elements', 'tree-green-L.png', '', -1, 'modules', 'on', ''),
+(21, 0, 0, 0, 7, 'CSS_Color_Chart', '', '', 'tree-pinkT.png', 'on', -1, 'modules', 'on', ''),
+(22, 0, 0, 0, 7, 'CSS_Reference', '', '', 'tree-pinkT.png', 'on', -1, 'modules', 'on', ''),
+(23, 0, 0, 0, 7, 'External Link', 'https://codepen.io/ProfessorSamoff/pen/QQrPPy', 'Real-Time CSS', 'tree-pink-L.png', '', -1, 'modules', 'on', ''),
+(24, 0, 0, 0, 8, 'External Link', 'https://codecollab.io/', 'Real-Time Java', 'tree-yellow-L.png', '', -1, 'modules', 'on', ''),
+(25, 0, 0, 0, 9, 'External Link', 'https://realtimeapi.io/hub/php-realtime-resources/', 'realtimeapi.io', 'tree-lightblue-L.png', '', -1, 'modules', 'on', ''),
+(26, 0, 0, 0, 10, 'External Link', 'https://search.google.com/structured-data/testing-tool#', 'Structure Data Testing', 'tree-L.png', '', -1, 'modules', 'on', ''),
+(27, 0, 0, 0, 11, 'External Link', 'https://www.google.com/webmasters/markup-helper/', 'Markup Helper', 'tree-greenT.png', '', -1, 'modules', 'on', ''),
+(28, 0, 0, 0, 11, 'External Link', 'https://developers.google.com/youtube/iframe_api_reference', 'YouTube API', 'tree-greenT.png', '', -1, 'modules', 'on', ''),
+(29, 0, 0, 0, 11, 'External Link', 'https://github.com/googleapis/google-api-php-client', 'google-api-php-client', 'tree-greenT.png', '', -1, 'modules', 'on', ''),
+(30, 0, 0, 0, 11, 'External Link', 'https://google.dev/', 'Developer Profile', 'tree-green-L.png', '', -1, 'modules', 'on', ''),
+(31, 0, 0, 0, 12, 'cPanel_Login', '', '', 'tree-orange-L.png', '', -1, 'modules', 'on', ''),
+(32, 0, 0, 0, 13, 'External Link', 'https://bigcountryradio.net/', 'BigCountryRadio.Net', 'tree-L.gif', '', -1, 'modules', 'on', '');
 
 CREATE TABLE `nuke_message` (
-  `mid` int(11) NOT NULL AUTO_INCREMENT,
+  `mid` int(11) NOT NULL,
   `title` varchar(100) NOT NULL DEFAULT '',
   `content` text NOT NULL,
   `date` varchar(14) NOT NULL DEFAULT '',
-  `expire` int(7) NOT NULL DEFAULT '0',
-  `active` int(1) NOT NULL DEFAULT '1',
-  `view` int(1) NOT NULL DEFAULT '1',
+  `expire` int(7) NOT NULL DEFAULT 0,
+  `active` int(1) NOT NULL DEFAULT 1,
+  `view` int(1) NOT NULL DEFAULT 1,
   `groups` text NOT NULL,
-  `mlanguage` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`mid`),
-  UNIQUE KEY `mid` (`mid`)
+  `mlanguage` varchar(30) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
+INSERT INTO `nuke_message` (`mid`, `title`, `content`, `date`, `expire`, `active`, `view`, `groups`, `mlanguage`) VALUES
+(1, 'Welcome to Nuke-Evolution Xtreme 4.0.0b', 'The US version of Nuke-Evolution Xtreme CMS is an open-source highly modified Fork of the UK Nuke-Evolution version written in PHP as a programming language and development was first started in 2005. The software comes with a set of basic features like a WYSIWYG editor, an admin interface with drag and drop blocks, spam protection, and image processing. Nuke-Evolution Xtreme CMS comes with the ability to use various modules that will extend the current functionality of your portal/website. The latest version available for download is 4.0.0b and is still in beta.<br />\nNuke-Evolution Xtreme now comes with v5 of the Titanium Facebook SDK kit. It&#39;s already set up. All you have to do is add your app ID and secret...<br />\nIf you need help, we would be glad to set it up for FREE.<br />\nNOTE: Your admin and user accounts have already been setup for you so please visit [url=admin.php]THIS LINK[/url] to get started.<br />\nYou can edit or remove this message by going into the Admin Panel located in the Admin area.<br />\n&nbsp;', '1620541700', 0, 1, 1, '', '');
 
---
--- Table structure for table `nuke_meta`
---
 
 CREATE TABLE `nuke_meta` (
   `meta_name` varchar(50) NOT NULL DEFAULT '',
-  `meta_content` text NOT NULL,
-  PRIMARY KEY (`meta_name`)
+  `meta_content` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_meta`
---
 
 INSERT INTO `nuke_meta` (`meta_name`, `meta_content`) VALUES
 ('resource-type', 'document'),
 ('distribution', 'global'),
-('author', 'Nuke-Evolution Xtreme'),
-('copyright', 'Copyright (c) by Nuke-Evolution'),
-('keywords', 'Nuke-Evolution, evo, pne, evolution, nuke, php-nuke, software, downloads, community, forums, bulletin, boards, cms, nuke-evo, phpnuke'),
-('description', 'Nuke-Evolution Xtreme'),
+('author', 'Ernest Allen Buffington'),
+('copyright', 'Copyright (c) Brandon Maintenance Management'),
+('keywords', 'PHP-Nuke,Titanium,PHP-Nuke-Titanium,nuke,phpnuke,php-nuke,best,CMS,cms'),
+('description', 'Nuke-Evolution Xtreme 4.0.0b'),
 ('robots', 'index, follow'),
 ('revisit-after', '1 days'),
-('rating', 'general');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_modules`
---
+('rating', 'general'),
+('facebook-domain-verification', 'get verfied and put your key here');
 
 CREATE TABLE `nuke_modules` (
-  `mid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `mid` int(10) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
   `custom_title` varchar(255) NOT NULL,
-  `active` tinyint(4) NOT NULL DEFAULT '0',
-  `view` tinyint(4) NOT NULL DEFAULT '0',
-  `inmenu` tinyint(4) NOT NULL DEFAULT '1',
-  `pos` tinyint(4) NOT NULL DEFAULT '0',
-  `cat_id` tinyint(4) NOT NULL DEFAULT '0',
-  `blocks` tinyint(4) NOT NULL DEFAULT '1',
+  `active` tinyint(4) NOT NULL DEFAULT 0,
+  `view` tinyint(4) NOT NULL DEFAULT 0,
+  `inmenu` tinyint(4) NOT NULL DEFAULT 1,
+  `pos` tinyint(4) NOT NULL DEFAULT 0,
+  `cat_id` tinyint(4) NOT NULL DEFAULT 0,
+  `blocks` tinyint(4) NOT NULL DEFAULT 1,
   `admins` varchar(255) NOT NULL DEFAULT '',
-  `groups` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`mid`),
-  UNIQUE KEY `mid` (`mid`),
-  KEY `title` (`title`),
-  KEY `custom_title` (`custom_title`)
-) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_modules`
---
-
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (1, 'Forums', 'Forums', 1, 1, 1, 3, 3, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (2, 'File_Repository', 'File Repository', 1, 1, 1, 0, 5, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (3, 'Your_Account', 'Your Account', 1, 0, 1, 4, 2, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (4, 'Shout_Box', 'Shout Box', 1, 0, 1, 5, 3, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (5, 'Advertising', 'Advertising', 0, 0, 1, 19, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (6, 'ECalendar', 'ECalendar', 0, 0, 1, 17, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (7, 'Content', 'Content', 1, 0, 1, 0, 3, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (8, 'Docs', 'Docs', 1, 0, 1, 21, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (9, 'Donations', 'Donations', 1, 0, 1, 1, 3, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (10, 'Evo_UserBlock', 'Evo UserBlock', 0, 0, 1, 26, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (11, 'FAQ', 'FAQ', 0, 0, 1, 25, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (12, 'Feedback', 'Feedback', 1, 0, 1, 2, 3, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (13, 'Groups', 'Groups', 1, 0, 1, 4, 3, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (14, 'HTML_Newsletter', 'HTML Newsletter', 0, 0, 1, 24, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (15, 'Link_Us', 'Link Us', 1, 0, 1, 23, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (16, 'Members_List', 'Members List', 1, 0, 1, 1, 2, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (17, 'News', 'News', 1, 0, 1, 0, 6, 3, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (18, 'NukeSentinel', 'NukeSentinel', 0, 0, 1, 15, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (19, 'Private_Messages', 'Private Messages', 1, 0, 1, 3, 2, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (20, 'Profile', 'Profile', 1, 0, 1, 2, 2, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (21, 'Recommend_Us', 'Recommend Us', 0, 0, 1, 5, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (22, 'Reviews', 'Reviews', 0, 0, 1, 4, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (23, 'Search', 'Search', 0, 0, 1, 3, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (24, 'Site_Map', 'Site Map', 0, 0, 1, 2, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (25, 'Spambot_Killer', 'Spambot Killer', 0, 0, 1, 1, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (26, 'Statistics', 'Statistics', 0, 0, 1, 7, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (27, 'Stories_Archive', 'Stories Archive', 0, 0, 1, 8, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (28, 'Submit_News', 'Submit News', 0, 0, 1, 14, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (29, 'Supporters', 'Supporters', 0, 0, 1, 13, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (30, 'Surveys', 'Surveys', 0, 0, 1, 12, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (31, 'Top', 'Top', 0, 0, 1, 11, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (32, 'Topics', 'Topics', 0, 0, 1, 10, 7, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (33, 'Web_Links', 'Web Links', 1, 0, 1, 1, 5, 1, '', '');
-INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES (34, 'Image_Repository', 'Image Repository', 1, 3, 1, 0, 7, 1, '', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_modules_cat`
---
-
-CREATE TABLE `nuke_modules_cat` (
-  `cid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) NOT NULL,
-  `image` text NOT NULL,
-  `pos` tinyint(4) NOT NULL DEFAULT '0',
-  `link_type` tinyint(4) NOT NULL DEFAULT '0',
-  `link` varchar(255) NOT NULL,
-  PRIMARY KEY (`cid`),
-  UNIQUE KEY `cid` (`cid`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_modules_cat`
---
-
-INSERT INTO `nuke_modules_cat` (`cid`, `name`, `image`, `pos`, `link_type`, `link`) VALUES (1, 'Home', 'home.png', 0, 2, 'index.php');
-INSERT INTO `nuke_modules_cat` (`cid`, `name`, `image`, `pos`, `link_type`, `link`) VALUES (2, 'Members', 'members.png', 1, 0, '');
-INSERT INTO `nuke_modules_cat` (`cid`, `name`, `image`, `pos`, `link_type`, `link`) VALUES (3, 'Community', 'community.png', 2, 0, '');
-INSERT INTO `nuke_modules_cat` (`cid`, `name`, `image`, `pos`, `link_type`, `link`) VALUES (4, 'Statistics', 'poll.png', 3, 0, '');
-INSERT INTO `nuke_modules_cat` (`cid`, `name`, `image`, `pos`, `link_type`, `link`) VALUES (5, 'Files &amp; Links', 'web.png', 4, 0, '');
-INSERT INTO `nuke_modules_cat` (`cid`, `name`, `image`, `pos`, `link_type`, `link`) VALUES (6, 'News', 'news.png', 5, 0, '');
-INSERT INTO `nuke_modules_cat` (`cid`, `name`, `image`, `pos`, `link_type`, `link`) VALUES (7, 'Other', 'general.png', 6, 0, '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_modules_links`
---
-
-CREATE TABLE `nuke_modules_links` (
-  `lid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(30) NOT NULL,
-  `link_type` tinyint(4) NOT NULL DEFAULT '0',
-  `link` varchar(255) NOT NULL,
-  `active` tinyint(4) NOT NULL DEFAULT '0',
-  `view` tinyint(4) NOT NULL DEFAULT '0',
-  `pos` tinyint(4) NOT NULL DEFAULT '0',
-  `cat_id` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`lid`),
-  UNIQUE KEY `lid` (`lid`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_modules_links`
---
-
-INSERT INTO `nuke_modules_links` (`lid`, `title`, `link_type`, `link`, `active`, `view`, `pos`, `cat_id`) VALUES (2, 'Home', 1, 'index.php', 1, 0, 0, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_mostonline`
---
-
-CREATE TABLE `nuke_mostonline` (
-  `total` int(10) NOT NULL DEFAULT '0',
-  `members` int(10) NOT NULL DEFAULT '0',
-  `nonmembers` int(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`total`)
+  `groups` varchar(50) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_mostonline`
---
+INSERT INTO `nuke_modules` (`mid`, `title`, `custom_title`, `active`, `view`, `inmenu`, `pos`, `cat_id`, `blocks`, `admins`, `groups`) VALUES
+(1, 'Forums', 'Forums', 1, 1, 1, 3, 3, 0, '', 'Array'),
+(2, 'File_Repository', 'File Repository', 1, 6, 1, 0, 5, 3, '', '4'),
+(3, 'Your_Account', 'Your Account', 1, 0, 1, 3, 2, 3, '', 'Array'),
+(4, 'Shout_Box', 'Shout Box', 1, 1, 1, 5, 3, 3, '', 'Array'),
+(5, 'Advertising', 'Advertising', 1, 1, 1, 22, 7, 3, '', 'Array'),
+(6, 'ECalendar', 'ECalendar', 1, 1, 1, 21, 7, 3, '', 'Array'),
+(7, 'Docs', 'Docs', 1, 1, 1, 23, 7, 3, '', 'Array'),
+(8, 'Donations', 'Donations', 1, 1, 1, 1, 3, 3, '', 'Array'),
+(9, 'Evo_UserBlock', 'Evo UserBlock', 1, 0, 1, 27, 7, 1, '', ''),
+(10, 'FAQ', 'FAQ', 1, 6, 1, 26, 7, 3, '', '3'),
+(11, 'Feedback', 'Feedback', 1, 6, 1, 2, 3, 3, '', '3'),
+(12, 'Groups', 'Groups', 1, 6, 1, 4, 3, 3, '', '3'),
+(13, 'HTML_Newsletter', 'HTML Newsletter', 1, 6, 1, 25, 7, 3, '', '4'),
+(14, 'Link_Us', 'Link Us', 1, 1, 1, 24, 7, 3, '', 'Array'),
+(15, 'Members_List', 'Members List', 1, 1, 1, 0, 2, 3, '', 'Array'),
+(16, 'NukeSentinel', 'NukeSentinel', 1, 6, 1, 20, 7, 3, '', '4'),
+(17, 'Private_Messages', 'Private Messages', 1, 3, 1, 2, 2, 3, '', 'Array'),
+(18, 'Profile', 'Profile', 1, 0, 1, 1, 2, 3, '', 'Array'),
+(19, 'Recommend_Us', 'Recommend Us', 1, 1, 1, 17, 7, 3, '', 'Array'),
+(20, 'Reviews', 'Reviews', 1, 6, 1, 16, 7, 3, '', '4'),
+(21, 'Search', 'Search', 1, 1, 1, 15, 7, 3, '', 'Array'),
+(22, 'Spambot_Killer', 'Spambot Killer', 1, 1, 1, 14, 7, 3, '', 'Array'),
+(23, 'Statistics', 'Statistics', 1, 1, 1, 18, 7, 3, '', 'Array'),
+(24, 'Surveys', 'Surveys', 1, 1, 1, 19, 7, 3, '', 'Array'),
+(25, 'Web_Links', 'Web Links', 1, 1, 1, 1, 5, 3, '', 'Array'),
+(26, 'Image_Repository', 'Image Repository', 1, 3, 1, 0, 7, 3, '', 'Array'),
+(27, 'Blog', 'Blog', 1, 0, 1, 2, 7, 3, '', 'Array'),
+(28, 'Blog_Archive', 'Blog Archive', 1, 1, 1, 3, 7, 3, '', 'Array'),
+(29, 'Blog_Submit', 'Blog Submit', 1, 1, 1, 4, 7, 3, '', 'Array'),
+(30, 'Blog_Top', 'Blog Top 10', 1, 1, 1, 5, 7, 3, '', 'Array'),
+(31, 'Blog_Topics', 'Blog Topics', 1, 1, 1, 6, 7, 3, '', 'Array'),
+(32, 'Loan', 'Loan Amortization', 1, 6, 1, 7, 7, 3, '', '4'),
+(33, 'Network', 'Network Disclaimer', 1, 1, 1, 8, 7, 3, '', 'Array'),
+(34, 'Network_Bookmarks', 'Network Bookmarks', 1, 3, 1, 9, 7, 3, '', 'Array'),
+(35, 'cPanel_Login', 'cPanel Login', 1, 6, 1, 10, 7, 3, '', '5'),
+(36, 'Google-Site-Map', 'Google Site Map', 1, 1, 1, 11, 7, 3, '', 'Array'),
+(37, 'Network_Advertising', 'Network Advertising', 1, 1, 1, 12, 7, 3, '', 'Array'),
+(38, 'CSS_Color_Chart', 'CSS Color Chart', 1, 6, 1, 0, 7, 3, '', '4'),
+(39, 'CSS_Reference', 'CSS Reference', 1, 6, 1, 0, 7, 3, '', '4'),
+(40, 'Network_Cemetery', 'Network Cemetery', 1, 6, 1, 0, 7, 3, '', '4'),
+(41, 'Proof_Of_God', 'Proof Of God', 1, 6, 1, 0, 7, 3, '', '4'),
+(42, 'Titanium_SandBox', 'Titanium SandBox', 1, 4, 1, 0, 7, 3, '', 'Array'),
+(43, 'facebook_SandBox', 'facebook SandBox', 1, 4, 1, 0, 7, 3, '', 'Array'),
+(44, 'Network_projects', 'Network projects', 1, 1, 1, 0, 7, 3, '', 'Array');
 
-INSERT INTO `nuke_mostonline` (`total`, `members`, `nonmembers`) VALUES (1, 1, 0);
+CREATE TABLE `nuke_modules_cat` (
+  `cid` int(10) UNSIGNED NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `image` text NOT NULL,
+  `pos` tinyint(4) NOT NULL DEFAULT 0,
+  `link_type` tinyint(4) NOT NULL DEFAULT 0,
+  `link` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
+INSERT INTO `nuke_modules_cat` (`cid`, `name`, `image`, `pos`, `link_type`, `link`) VALUES
+(1, 'Home', 'home.png', 0, 2, 'index.php'),
+(2, 'Members', 'members.png', 1, 0, ''),
+(3, 'Community', 'community.png', 2, 0, ''),
+(4, 'Statistics', 'poll.png', 3, 0, ''),
+(5, 'Files &amp; Links', 'web.png', 4, 0, ''),
+(6, 'News', 'news.png', 5, 0, ''),
+(7, 'Other', 'general.png', 6, 0, '');
 
---
--- Table structure for table `nuke_nsncb_blocks`
---
+CREATE TABLE `nuke_modules_links` (
+  `lid` int(10) UNSIGNED NOT NULL,
+  `title` varchar(30) NOT NULL,
+  `link_type` tinyint(4) NOT NULL DEFAULT 0,
+  `link` varchar(255) NOT NULL,
+  `active` tinyint(4) NOT NULL DEFAULT 0,
+  `view` tinyint(4) NOT NULL DEFAULT 0,
+  `pos` tinyint(4) NOT NULL DEFAULT 0,
+  `cat_id` tinyint(4) NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `nuke_modules_links` (`lid`, `title`, `link_type`, `link`, `active`, `view`, `pos`, `cat_id`) VALUES
+(2, 'Home', 1, 'index.php', 1, 0, 0, 1);
+
+CREATE TABLE `nuke_mostonline` (
+  `total` int(10) NOT NULL DEFAULT 0,
+  `members` int(10) NOT NULL DEFAULT 0,
+  `nonmembers` int(10) NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `nuke_nsncb_blocks` (
-  `rid` tinyint(2) NOT NULL DEFAULT '0',
-  `cgid` tinyint(2) NOT NULL DEFAULT '0',
-  `cbid` tinyint(2) NOT NULL DEFAULT '0',
+  `rid` tinyint(2) NOT NULL DEFAULT 0,
+  `cgid` tinyint(2) NOT NULL DEFAULT 0,
+  `cbid` tinyint(2) NOT NULL DEFAULT 0,
   `title` varchar(60) NOT NULL DEFAULT '',
   `filename` varchar(255) NOT NULL DEFAULT '',
   `content` text NOT NULL,
-  `wtype` tinyint(1) NOT NULL DEFAULT '0',
-  `width` smallint(6) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`rid`),
-  UNIQUE KEY `rid` (`rid`)
+  `wtype` tinyint(1) NOT NULL DEFAULT 0,
+  `width` smallint(6) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_nsncb_blocks`
---
-
-INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES (1, 1, 1, 'Place Holder', '', 'This is only a place holder', 1, 25);
-INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES (2, 1, 2, 'Place Holder', '', 'This is only a place holder', 1, 25);
-INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES (3, 1, 3, 'Place Holder', '', 'This is only a place holder', 1, 25);
-INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES (4, 1, 4, 'Place Holder', '', 'This is only a place holder', 1, 25);
-INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES (5, 2, 1, 'Place Holder', '', 'This is only a place holder', 1, 25);
-INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES (6, 2, 2, 'Place Holder', '', 'This is only a place holder', 1, 25);
-INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES (7, 2, 3, 'Place Holder', '', 'This is only a place holder', 1, 25);
-INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES (8, 2, 4, 'Place Holder', '', 'This is only a place holder', 1, 25);
-INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES (9, 3, 1, 'Place Holder', '', 'This is only a place holder', 1, 25);
-INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES (10, 3, 2, 'Place Holder', '', 'This is only a place holder', 1, 25);
-INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES (11, 3, 3, 'Place Holder', '', 'This is only a place holder', 1, 25);
-INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES (12, 3, 4, 'Place Holder', '', 'This is only a place holder', 1, 25);
-INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES (13, 4, 1, 'Place Holder', '', 'This is only a place holder', 1, 25);
-INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES (14, 4, 2, 'Place Holder', '', 'This is only a place holder', 1, 25);
-INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES (15, 4, 3, 'Place Holder', '', 'This is only a place holder', 1, 25);
-INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES (16, 4, 4, 'Place Holder', '', 'This is only a place holder', 1, 25);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsncb_config`
---
+INSERT INTO `nuke_nsncb_blocks` (`rid`, `cgid`, `cbid`, `title`, `filename`, `content`, `wtype`, `width`) VALUES
+(1, 1, 1, 'Place Holder', '', 'This is only a place holder', 1, 25),
+(2, 1, 2, 'Place Holder', '', 'This is only a place holder', 1, 25),
+(3, 1, 3, 'Place Holder', '', 'This is only a place holder', 1, 25),
+(4, 1, 4, 'Place Holder', '', 'This is only a place holder', 1, 25),
+(5, 2, 1, 'Place Holder', '', 'This is only a place holder', 1, 25),
+(6, 2, 2, 'Place Holder', '', 'This is only a place holder', 1, 25),
+(7, 2, 3, 'Place Holder', '', 'This is only a place holder', 1, 25),
+(8, 2, 4, 'Place Holder', '', 'This is only a place holder', 1, 25),
+(9, 3, 1, 'Place Holder', '', 'This is only a place holder', 1, 25),
+(10, 3, 2, 'Place Holder', '', 'This is only a place holder', 1, 25),
+(11, 3, 3, 'Place Holder', '', 'This is only a place holder', 1, 25),
+(12, 3, 4, 'Place Holder', '', 'This is only a place holder', 1, 25),
+(13, 4, 1, 'Place Holder', '', 'This is only a place holder', 1, 25),
+(14, 4, 2, 'Place Holder', '', 'This is only a place holder', 1, 25),
+(15, 4, 3, 'Place Holder', '', 'This is only a place holder', 1, 25),
+(16, 4, 4, 'Place Holder', '', 'This is only a place holder', 1, 25);
 
 CREATE TABLE `nuke_nsncb_config` (
   `cgid` tinyint(1) NOT NULL,
   `enabled` tinyint(1) NOT NULL,
   `height` smallint(6) NOT NULL,
-  `count` tinyint(1) NOT NULL,
-  PRIMARY KEY (`cgid`),
-  UNIQUE KEY `cfgid` (`cgid`)
+  `count` tinyint(1) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_nsncb_config`
---
-
-INSERT INTO `nuke_nsncb_config` (`cgid`, `enabled`, `height`, `count`) VALUES (1, 0, 0, 0);
-INSERT INTO `nuke_nsncb_config` (`cgid`, `enabled`, `height`, `count`) VALUES (2, 0, 0, 0);
-INSERT INTO `nuke_nsncb_config` (`cgid`, `enabled`, `height`, `count`) VALUES (3, 0, 0, 0);
-INSERT INTO `nuke_nsncb_config` (`cgid`, `enabled`, `height`, `count`) VALUES (4, 0, 0, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsnne_config`
---
+INSERT INTO `nuke_nsncb_config` (`cgid`, `enabled`, `height`, `count`) VALUES
+(1, 0, 0, 0),
+(2, 0, 0, 0),
+(3, 0, 0, 0),
+(4, 0, 0, 0);
 
 CREATE TABLE `nuke_nsnne_config` (
   `config_name` varchar(255) NOT NULL DEFAULT '',
-  `config_value` longtext NOT NULL,
-  UNIQUE KEY `config_name` (`config_name`)
+  `config_value` longtext NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_nsnne_config`
---
 
 INSERT INTO `nuke_nsnne_config` (`config_name`, `config_value`) VALUES
 ('columns', '0'),
@@ -3867,21 +2681,10 @@ INSERT INTO `nuke_nsnne_config` (`config_name`, `config_value`) VALUES
 ('hometopic', '0'),
 ('version_number', '1.1.6');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsnsp_config`
---
-
 CREATE TABLE `nuke_nsnsp_config` (
   `config_name` varchar(255) NOT NULL DEFAULT '',
-  `config_value` text NOT NULL,
-  PRIMARY KEY (`config_name`)
+  `config_value` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_nsnsp_config`
---
 
 INSERT INTO `nuke_nsnsp_config` (`config_name`, `config_value`) VALUES
 ('require_user', '1'),
@@ -3890,33 +2693,20 @@ INSERT INTO `nuke_nsnsp_config` (`config_name`, `config_value`) VALUES
 ('max_height', '31'),
 ('version_number', '1.3.0');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsnsp_sites`
---
-
 CREATE TABLE `nuke_nsnsp_sites` (
-  `site_id` int(11) NOT NULL AUTO_INCREMENT,
+  `site_id` int(11) NOT NULL,
   `site_name` varchar(60) NOT NULL DEFAULT '',
   `site_url` varchar(255) NOT NULL DEFAULT '',
   `site_image` varchar(255) NOT NULL DEFAULT '',
-  `site_status` int(1) NOT NULL DEFAULT '0',
-  `site_hits` int(10) NOT NULL DEFAULT '0',
+  `site_status` int(1) NOT NULL DEFAULT 0,
+  `site_hits` int(10) NOT NULL DEFAULT 0,
   `site_date` date NOT NULL DEFAULT '2018-12-12',
   `site_description` text NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL DEFAULT 0,
   `user_name` varchar(60) NOT NULL DEFAULT '',
   `user_email` varchar(60) NOT NULL DEFAULT '',
-  `user_ip` varchar(20) NOT NULL DEFAULT '',
-  PRIMARY KEY (`site_id`)
+  `user_ip` varchar(20) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsnst_admins`
---
 
 CREATE TABLE `nuke_nsnst_admins` (
   `aid` varchar(25) NOT NULL DEFAULT '',
@@ -3924,27 +2714,18 @@ CREATE TABLE `nuke_nsnst_admins` (
   `password` varchar(20) NOT NULL DEFAULT '',
   `password_md5` varchar(60) NOT NULL DEFAULT '',
   `password_crypt` varchar(60) NOT NULL DEFAULT '',
-  `protected` tinyint(2) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`aid`),
-  KEY `password_md5` (`password_md5`)
+  `protected` tinyint(2) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsnst_blocked_ips`
---
 
 CREATE TABLE `nuke_nsnst_blocked_ips` (
   `ip_addr` varchar(15) NOT NULL DEFAULT '',
-  `ip_long` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `user_id` int(11) NOT NULL DEFAULT '1',
+  `ip_long` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `user_id` int(11) NOT NULL DEFAULT 1,
   `username` varchar(60) NOT NULL DEFAULT 'Anonymous',
   `user_agent` text NOT NULL,
-  `date` int(20) NOT NULL DEFAULT '0',
+  `date` int(20) NOT NULL DEFAULT 0,
   `notes` text NOT NULL,
-  `reason` tinyint(1) NOT NULL DEFAULT '0',
+  `reason` tinyint(1) NOT NULL DEFAULT 0,
   `query_string` text NOT NULL,
   `get_string` text NOT NULL,
   `post_string` text NOT NULL,
@@ -3953,53 +2734,33 @@ CREATE TABLE `nuke_nsnst_blocked_ips` (
   `remote_addr` varchar(32) NOT NULL DEFAULT '',
   `remote_port` varchar(11) NOT NULL DEFAULT 'Unknown',
   `request_method` varchar(10) NOT NULL DEFAULT '',
-  `expires` int(20) NOT NULL DEFAULT '0',
-  `c2c` char(2) NOT NULL DEFAULT '00',
-  PRIMARY KEY (`ip_addr`),
-  KEY `ip_long` (`ip_long`)
+  `expires` int(20) NOT NULL DEFAULT 0,
+  `c2c` char(2) NOT NULL DEFAULT '00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsnst_blocked_ranges`
---
 
 CREATE TABLE `nuke_nsnst_blocked_ranges` (
-  `ip_lo` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `ip_hi` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `date` int(20) NOT NULL DEFAULT '0',
+  `ip_lo` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `ip_hi` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `date` int(20) NOT NULL DEFAULT 0,
   `notes` text NOT NULL,
-  `reason` tinyint(1) NOT NULL DEFAULT '0',
-  `expires` int(20) NOT NULL DEFAULT '0',
-  `c2c` char(2) NOT NULL DEFAULT '00',
-  KEY `code` (`ip_lo`,`ip_hi`,`c2c`)
+  `reason` tinyint(1) NOT NULL DEFAULT 0,
+  `expires` int(20) NOT NULL DEFAULT 0,
+  `c2c` char(2) NOT NULL DEFAULT '00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsnst_blockers`
---
-
 CREATE TABLE `nuke_nsnst_blockers` (
-  `blocker` int(4) NOT NULL DEFAULT '0',
+  `blocker` int(4) NOT NULL DEFAULT 0,
   `block_name` varchar(20) NOT NULL DEFAULT '',
-  `activate` int(4) NOT NULL DEFAULT '0',
-  `block_type` int(4) NOT NULL DEFAULT '0',
-  `email_lookup` int(4) NOT NULL DEFAULT '0',
+  `activate` int(4) NOT NULL DEFAULT 0,
+  `block_type` int(4) NOT NULL DEFAULT 0,
+  `email_lookup` int(4) NOT NULL DEFAULT 0,
   `forward` varchar(255) NOT NULL DEFAULT '',
   `reason` varchar(20) NOT NULL DEFAULT '',
   `template` varchar(255) NOT NULL DEFAULT '',
-  `duration` int(20) NOT NULL DEFAULT '0',
-  `htaccess` int(4) NOT NULL DEFAULT '0',
-  `list` longtext NOT NULL,
-  PRIMARY KEY (`blocker`)
+  `duration` int(20) NOT NULL DEFAULT 0,
+  `htaccess` int(4) NOT NULL DEFAULT 0,
+  `list` longtext NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_nsnst_blockers`
---
 
 INSERT INTO `nuke_nsnst_blockers` (`blocker`, `block_name`, `activate`, `block_type`, `email_lookup`, `forward`, `reason`, `template`, `duration`, `htaccess`, `list`) VALUES
 (0, 'other', 0, 0, 0, '', 'Abuse-Other', 'abuse_default.tpl', 0, 0, ''),
@@ -4015,22 +2776,11 @@ INSERT INTO `nuke_nsnst_blockers` (`blocker`, `block_name`, `activate`, `block_t
 (10, 'admin', 0, 0, 0, '', 'Abuse-Admin', 'abuse_admin.tpl', 0, 0, ''),
 (11, 'flood', 0, 1, 2, '', 'Abuse-Flood', 'abuse_flood.tpl', 0, 1, '');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsnst_cidrs`
---
-
 CREATE TABLE `nuke_nsnst_cidrs` (
-  `cidr` int(2) NOT NULL DEFAULT '0',
-  `hosts` int(10) NOT NULL DEFAULT '0',
-  `mask` varchar(15) NOT NULL DEFAULT '',
-  PRIMARY KEY (`cidr`)
+  `cidr` int(2) NOT NULL DEFAULT 0,
+  `hosts` int(10) NOT NULL DEFAULT 0,
+  `mask` varchar(15) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_nsnst_cidrs`
---
 
 INSERT INTO `nuke_nsnst_cidrs` (`cidr`, `hosts`, `mask`) VALUES
 (1, 2147483647, '127.255.255.255'),
@@ -4066,24 +2816,13 @@ INSERT INTO `nuke_nsnst_cidrs` (`cidr`, `hosts`, `mask`) VALUES
 (31, 2, '0.0.0.1'),
 (32, 1, '0.0.0.0');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsnst_config`
---
-
 CREATE TABLE `nuke_nsnst_config` (
   `config_name` varchar(255) NOT NULL DEFAULT '',
-  `config_value` longtext NOT NULL,
-  PRIMARY KEY (`config_name`)
+  `config_value` longtext NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_nsnst_config`
---
-
 INSERT INTO `nuke_nsnst_config` (`config_name`, `config_value`) VALUES
-('admin_contact', 'webmaster@yoursite.com'),
+('admin_contact', 'webmaster@yourdomain.com'),
 ('block_perpage', '50'),
 ('block_sort_column', 'date'),
 ('block_sort_direction', 'desc'),
@@ -4094,10 +2833,10 @@ INSERT INTO `nuke_nsnst_config` (`config_name`, `config_value`) VALUES
 ('help_switch', '1'),
 ('htaccess_path', ''),
 ('http_auth', '0'),
-('lookup_link', 'http://www.DNSstuff.com/tools/whois.ch?ip='),
-('page_delay', '5'),
+('lookup_link', 'admin.php?op=ABIpCheck&domain='),
+('page_delay', '1'),
 ('prevent_dos', '1'),
-('proxy_reason', 'admin_proxy_reason.tpl'),
+('proxy_reason', 'abuse_admin.tpl'),
 ('proxy_switch', '0'),
 ('santy_protection', '1'),
 ('self_expire', '0'),
@@ -4107,37 +2846,26 @@ INSERT INTO `nuke_nsnst_config` (`config_name`, `config_value`) VALUES
 ('track_active', '1'),
 ('track_max', '604800'),
 ('track_perpage', '50'),
-('track_sort_column', '6'),
+('track_sort_column', 'ip_long'),
 ('track_sort_direction', 'desc'),
 ('ip_reason', 'admin_ip_reason.tpl'),
 ('ip_switch', '0'),
 ('ftaccess_path', ''),
 ('flood_delay', '2'),
 ('disable_switch', '0'),
-('track_clear', '1539388800'),
+('track_clear', '1620604800'),
 ('blocked_clear', '0'),
 ('version_check', '$checktime'),
-('version_newest', '2.6.01'),
-('version_number', '2.6.01'),
+('version_newest', '2.6.04'),
+('version_number', '2.6.04'),
 ('dump_directory', ''),
 ('show_right', '0'),
 ('test_switch', '0');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsnst_countries`
---
-
 CREATE TABLE `nuke_nsnst_countries` (
   `c2c` char(2) NOT NULL DEFAULT '',
-  `country` varchar(60) NOT NULL DEFAULT '',
-  KEY `c2c` (`c2c`)
+  `country` varchar(60) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_nsnst_countries`
---
 
 INSERT INTO `nuke_nsnst_countries` (`c2c`, `country`) VALUES
 ('00', 'Unknown'),
@@ -4398,37 +3126,18 @@ INSERT INTO `nuke_nsnst_countries` (`c2c`, `country`) VALUES
 ('zw', 'Zimbabwe'),
 ('02', 'UnAllocated');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsnst_excluded_ranges`
---
-
 CREATE TABLE `nuke_nsnst_excluded_ranges` (
-  `ip_lo` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `ip_hi` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `date` int(20) NOT NULL DEFAULT '0',
+  `ip_lo` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `ip_hi` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `date` int(20) NOT NULL DEFAULT 0,
   `notes` text NOT NULL,
-  `c2c` char(2) NOT NULL DEFAULT '00',
-  KEY `code` (`ip_lo`,`ip_hi`,`c2c`)
+  `c2c` char(2) NOT NULL DEFAULT '00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsnst_harvesters`
---
-
 CREATE TABLE `nuke_nsnst_harvesters` (
-  `hid` int(2) NOT NULL AUTO_INCREMENT,
-  `harvester` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`harvester`),
-  KEY `hid` (`hid`)
-) ENGINE=MyISAM AUTO_INCREMENT=220 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_nsnst_harvesters`
---
+  `hid` int(2) NOT NULL,
+  `harvester` varchar(255) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_nsnst_harvesters` (`hid`, `harvester`) VALUES
 (1, '@yahoo.com'),
@@ -4497,6 +3206,7 @@ INSERT INTO `nuke_nsnst_harvesters` (`hid`, `harvester`) VALUES
 (64, 'igetter'),
 (65, 'image stripper'),
 (66, 'image sucker'),
+
 (67, 'industry program'),
 (68, 'indy library'),
 (69, 'infonavirobot'),
@@ -4649,39 +3359,21 @@ INSERT INTO `nuke_nsnst_harvesters` (`hid`, `harvester`) VALUES
 (216, 'xenu'),
 (217, 'zeus'),
 (218, 'ziggy'),
-(219, 'zippy');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsnst_protected_ranges`
---
+(219, 'cuntmonkey'),
+(220, 'zippy');
 
 CREATE TABLE `nuke_nsnst_protected_ranges` (
-  `ip_lo` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `ip_hi` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `date` int(20) NOT NULL DEFAULT '0',
+  `ip_lo` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `ip_hi` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `date` int(20) NOT NULL DEFAULT 0,
   `notes` text NOT NULL,
-  `c2c` char(2) NOT NULL DEFAULT '00',
-  KEY `code` (`ip_lo`,`ip_hi`,`c2c`)
+  `c2c` char(2) NOT NULL DEFAULT '00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsnst_referers`
---
-
 CREATE TABLE `nuke_nsnst_referers` (
-  `rid` int(2) NOT NULL AUTO_INCREMENT,
-  `referer` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`referer`),
-  KEY `rid` (`rid`)
-) ENGINE=MyISAM AUTO_INCREMENT=366 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_nsnst_referers`
---
+  `rid` int(2) NOT NULL,
+  `referer` varchar(255) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_nsnst_referers` (`rid`, `referer`) VALUES
 (1, '121hr.com'),
@@ -5048,99 +3740,185 @@ INSERT INTO `nuke_nsnst_referers` (`rid`, `referer`) VALUES
 (362, 'yuppieslovestocks.com'),
 (363, 'yuzhouhuagong.com'),
 (364, 'zhaori-food.com'),
-(365, 'zwiebelbacke.com');
+(365, 'traffic2money.com'),
+(366, 'floating-share-buttons.com'),
+(367, 'get-free-social-traffic.com'),
+(368, 'site4.free-floating-buttons.com'),
+(369, '4webmasters.org'),
+(370, 'site10.free-floating-buttons.com'),
+(371, 'free-social-buttons.com'),
+(372, 'site3.free-floating-buttons.com'),
+(373, 'www.event-tracking.com'),
+(374, 'success-seo.com'),
+(375, 'seo-platform.com'),
+(376, 'site2.free-floating-buttons.com'),
+(377, 'chinese-amezon.com'),
+(378, 'hongfanji.com'),
+(379, 'site8.free-floating-buttons.com'),
+(380, 'site9.free-floating-buttons.com'),
+(381, 'video–production.com'),
+(382, 'www.Get-Free-Traffic-Now.com'),
+(383, 'buttons-for-website.com'),
+(384, 'qualitymarketzone.com'),
+(385, 'site5.free-floating-buttons.co'),
+(386, 'videos-for-your-business.com'),
+(387, 'how-to-earn-quick-money.com'),
+(388, 'forum.topic63020490.darodar.com'),
+(389, '7makemoneyonline.com'),
+(390, 'acads.net'),
+(391, 'anal-acrobats.hol.es'),
+(392, 'anticrawler.org'),
+(393, 'best-seo-offer.com'),
+(394, 'best-seo-solution.com'),
+(395, 'bestwebsitesawards.comblackhatworth.com'),
+(396, 'brakehawk.com'),
+(397, 'buttons-for-your-website.com'),
+(398, 'buy-cheap-online.info'),
+(399, 'darodar.com'),
+(400, 'econom.co'),
+(401, 'event-tracking.com'),
+(402, 'forum20.smailik.org'),
+(403, 'forum69.info'),
+(404, 'free-share-buttons.com'),
+(405, 'googlsucks.com'),
+(406, 'guardlink.org'),
+(407, 'hulfingtonpost.com'),
+(408, 'humanorightswatch.org'),
+(409, 'ilovevitaly.com'),
+(410, 'iminent.com'),
+(411, 'kabbalah-red-bracelets.com'),
+(412, 'kambasoft.com'),
+(413, 'makemoneyonline.com'),
+(414, 'masterseek.com'),
+(415, 'o-o-6-o-o.com'),
+(416, 'ok.ru'),
+(417, 'pornhub-forum.ga'),
+(418, 'pornhub-forum.uni.me'),
+(419, 'priceg.com'),
+(420, 'ranksonic.info'),
+(421, 'ranksonic.org'),
+(422, 'rapidgator-porn.ga'),
+(423, 'savetubevideo.com'),
+(424, 'semalt.com'),
+(425, 'sexyteens.hol.es'),
+(426, 'simple-share-buttons.com'),
+(427, 'social-buttons.com'),
+(428, 'theguardlan.com'),
+(429, 'webmaster-traffic.com'),
+(430, 'youporn-forum.ga'),
+(431, 'youporn-forum.uni.me'),
+(432, 'ilovevitaly.co'),
+(433, 'myftpupload.com'),
+(434, 'iskalko.ru'),
+(435, 'ilovevitaly.ru'),
+(436, 'o-o-8-o-o.ru'),
+(437, 'o-o-6-o-o.ru'),
+(438, 'cenoval.ru'),
+(439, 'cenokos.ru');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsnst_strings`
---
+INSERT INTO `nuke_nsnst_referers` (`rid`, `referer`) VALUES
+(440, 'seoexperimenty.ru'),
+(441, 'gobongo.info'),
+(442, 'vodkoved.ru'),
+(443, 'adcash.com'),
+(444, 'websocial.me'),
+(445, 'cityadspix.com'),
+(446, 'luxup.ru'),
+(447, 'ykecwqlixx.ru'),
+(448, 'superiends.org'),
+(449, 'slftsdybbg.ru'),
+(450, 'edakgfvwql.ru'),
+(451, 'socialseet.ru'),
+(452, 'screentoolkit.com'),
+(453, 'blackhatworth.com'),
+(454, 'prlog.ru'),
+(455, 'bestwebsitesawards.com'),
+(456, 'forum.smailik.org'),
+(457, 'aliexpress.com'),
+(458, 'Get-Free-Traffic-Now.com'),
+(459, 'semalt.semalt.com'),
+(460, 'iloveitaly.ro'),
+(461, 'prodvigator.ua'),
+(462, 'resellerclub.com'),
+(463, 'adviceforum.info'),
+(464, 'europages.com.ru'),
+(465, 'lomb.co'),
+(466, 'lumb.co'),
+(467, '54.186.60.77'),
+(468, 'srecorder.com'),
+(469, 'see-your-website-here.com'),
+(470, '76brighton.co.uk'),
+(471, 'paparazzistudios.com.au'),
+(472, 'powitania.pl'),
+(473, 'sharebutton.net'),
+(474, 'tasteidea.com'),
+(475, 'descargar-musica-gratis.net'),
+(476, 'torontoplumbinggroup.com'),
+(477, '100dollars-seo.com'),
+(478, 'semaltmedia.com'),
+(479, 'rankings-analytics.com'),
+(480, 'free-floating-buttons.com'),
+(481, 'rednise.com'),
+(482, 'erot.co'),
+(483, 'generalporn.org'),
+(484, 'trafficmonetize.org'),
+(485, 'trafficmonetizer.org'),
+(486, 'domination.ml'),
+(487, 'torture.ml'),
+(488, 'depositfiles-porn.ga'),
+(489, 'pornhubforum.yk'),
+(490, 'pops.foundation'),
+(491, 'justprofit.xyz'),
+(492, 'best-seo-software.xyz'),
+(493, 'zwiebelbacke.com');
 
 CREATE TABLE `nuke_nsnst_strings` (
   `string` varchar(60) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_nsnst_tracked_ips`
---
-
 CREATE TABLE `nuke_nsnst_tracked_ips` (
-  `tid` int(10) NOT NULL AUTO_INCREMENT,
+  `tid` int(11) NOT NULL,
   `ip_addr` varchar(15) NOT NULL DEFAULT '',
-  `ip_long` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `user_id` int(11) NOT NULL DEFAULT '1',
+  `ip_long` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `user_id` int(11) NOT NULL DEFAULT 1,
   `username` varchar(60) NOT NULL DEFAULT '',
   `user_agent` text NOT NULL,
   `refered_from` text NOT NULL,
-  `date` int(20) NOT NULL DEFAULT '0',
+  `date` int(11) NOT NULL DEFAULT 0,
   `page` text NOT NULL,
   `x_forward_for` varchar(32) NOT NULL DEFAULT '',
   `client_ip` varchar(32) NOT NULL DEFAULT '',
   `remote_addr` varchar(32) NOT NULL DEFAULT '',
   `remote_port` varchar(11) NOT NULL DEFAULT '',
   `request_method` varchar(10) NOT NULL DEFAULT '',
-  `c2c` char(2) NOT NULL DEFAULT '00',
-  PRIMARY KEY (`tid`),
-  KEY `maintracking` (`ip_addr`,`ip_long`),
-  KEY `ip_addr` (`ip_addr`),
-  KEY `ip_long` (`ip_long`),
-  KEY `user_id` (`user_id`),
-  KEY `username` (`username`),
-  KEY `user_agent` (`user_agent`(255)),
-  KEY `refered_from` (`refered_from`(255)),
-  KEY `date` (`date`),
-  KEY `page` (`page`(255)),
-  KEY `c2c` (`c2c`)
+  `c2c` char(2) NOT NULL DEFAULT '00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_pages`
---
-
 CREATE TABLE `nuke_pages` (
-  `pid` int(10) NOT NULL AUTO_INCREMENT,
-  `cid` int(10) NOT NULL DEFAULT '0',
+  `pid` int(10) NOT NULL,
+  `cid` int(10) NOT NULL DEFAULT 0,
   `title` varchar(255) NOT NULL DEFAULT '',
   `subtitle` varchar(255) NOT NULL DEFAULT '',
-  `active` int(1) NOT NULL DEFAULT '0',
+  `active` int(1) NOT NULL DEFAULT 0,
   `page_header` text NOT NULL,
   `text` text NOT NULL,
   `page_footer` text NOT NULL,
   `signature` text NOT NULL,
   `date` datetime NOT NULL DEFAULT '2018-12-12 00:00:00',
-  `counter` int(10) NOT NULL DEFAULT '0',
-  `clanguage` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`pid`),
-  KEY `cid` (`cid`)
+  `counter` int(10) NOT NULL DEFAULT 0,
+  `clanguage` varchar(30) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_pages_categories`
---
 
 CREATE TABLE `nuke_pages_categories` (
-  `cid` int(10) NOT NULL AUTO_INCREMENT,
+  `cid` int(10) NOT NULL,
   `title` varchar(255) NOT NULL DEFAULT '',
-  `description` text NOT NULL,
-  PRIMARY KEY (`cid`)
+  `description` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_pollcomments`
---
-
 CREATE TABLE `nuke_pollcomments` (
-  `tid` int(11) NOT NULL AUTO_INCREMENT,
-  `pid` int(11) NOT NULL DEFAULT '0',
-  `pollID` int(11) NOT NULL DEFAULT '0',
+  `tid` int(11) NOT NULL,
+  `pid` int(11) NOT NULL DEFAULT 0,
+  `pollID` int(11) NOT NULL DEFAULT 0,
   `date` datetime DEFAULT NULL,
   `name` varchar(60) NOT NULL DEFAULT '',
   `email` varchar(60) DEFAULT NULL,
@@ -5148,252 +3926,138 @@ CREATE TABLE `nuke_pollcomments` (
   `host_name` varchar(60) DEFAULT NULL,
   `subject` varchar(60) NOT NULL DEFAULT '',
   `comment` text NOT NULL,
-  `score` tinyint(4) NOT NULL DEFAULT '0',
-  `reason` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`tid`),
-  KEY `pid` (`pid`),
-  KEY `pollID` (`pollID`)
+  `score` tinyint(4) NOT NULL DEFAULT 0,
+  `reason` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_poll_check`
---
 CREATE TABLE `nuke_poll_check` (
   `ip` varchar(20) NOT NULL DEFAULT '',
   `time` varchar(14) NOT NULL DEFAULT '',
-  `pollID` int(10) NOT NULL DEFAULT '0'
+  `pollID` int(10) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_poll_data`
---
+INSERT INTO `nuke_poll_check` (`ip`, `time`, `pollID`) VALUES
+('47.206.216.196', '1618949976', 1);
 
 CREATE TABLE `nuke_poll_data` (
-  `pollID` int(11) NOT NULL DEFAULT '0',
+  `pollID` int(11) NOT NULL DEFAULT 0,
   `optionText` char(50) NOT NULL DEFAULT '',
-  `optionCount` int(11) NOT NULL DEFAULT '0',
-  `voteID` int(11) NOT NULL DEFAULT '0'
+  `optionCount` int(11) NOT NULL DEFAULT 0,
+  `voteID` int(11) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_poll_data`
---
 
 INSERT INTO `nuke_poll_data` (`pollID`, `optionText`, `optionCount`, `voteID`) VALUES
 (1, 'Ummmm, not bad', 0, 1),
-(1, 'Cool', 0, 2),
+(1, 'Farout', 0, 2),
 (1, 'Terrific', 0, 3),
-(1, 'The best one!', 0, 4),
-(1, 'what the hell is this?', 0, 5),
-(1, '', 0, 6),
-(1, '', 0, 7),
+(1, 'The Shit!!', 1, 4),
+(1, 'Where has this been?', 0, 5),
+(1, 'Blows...', 0, 6),
+(1, 'Absolutely #1!', 0, 7),
 (1, '', 0, 8),
 (1, '', 0, 9),
 (1, '', 0, 10),
 (1, '', 0, 11),
 (1, '', 0, 12);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_poll_desc`
---
-
 CREATE TABLE `nuke_poll_desc` (
-  `pollID` int(11) NOT NULL AUTO_INCREMENT,
+  `pollID` int(11) NOT NULL,
   `pollTitle` varchar(100) NOT NULL DEFAULT '',
-  `timeStamp` int(11) NOT NULL DEFAULT '0',
-  `voters` mediumint(9) NOT NULL DEFAULT '0',
+  `timeStamp` int(11) NOT NULL DEFAULT 0,
+  `voters` mediumint(9) NOT NULL DEFAULT 0,
   `planguage` varchar(30) NOT NULL DEFAULT '',
-  `artid` int(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`pollID`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_poll_desc`
---
+  `artid` int(10) NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_poll_desc` (`pollID`, `pollTitle`, `timeStamp`, `voters`, `planguage`, `artid`) VALUES
-(1, 'What do you think about this site?', 961405160, 0, 'english', 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_queue`
---
+(1, 'What do you think about this portal?', 961405160, 1, 'english', 0);
 
 CREATE TABLE `nuke_queue` (
-  `qid` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `uid` mediumint(9) NOT NULL DEFAULT '0',
+  `qid` smallint(5) UNSIGNED NOT NULL,
+  `uid` mediumint(9) NOT NULL DEFAULT 0,
   `uname` varchar(40) NOT NULL DEFAULT '',
   `subject` varchar(100) NOT NULL DEFAULT '',
-  `story` text,
+  `story` text DEFAULT NULL,
   `storyext` text NOT NULL,
   `timestamp` datetime NOT NULL DEFAULT '2018-12-12 00:00:00',
   `topic` varchar(20) NOT NULL DEFAULT '',
-  `alanguage` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`qid`),
-  KEY `uid` (`uid`),
-  KEY `uname` (`uname`)
+  `alanguage` varchar(30) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_quotes`
---
-
 CREATE TABLE `nuke_quotes` (
-  `qid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `quote` text,
-  PRIMARY KEY (`qid`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_quotes`
---
+  `qid` int(10) UNSIGNED NOT NULL,
+  `quote` text DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_quotes` (`qid`, `quote`) VALUES
 (1, 'Nos morituri te salutamus - CBHS');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_referer`
---
-
 CREATE TABLE `nuke_referer` (
   `url` varchar(100) NOT NULL,
-  `lasttime` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `link` varchar(100) NOT NULL,
-  PRIMARY KEY (`url`),
-  KEY `lasttime` (`lasttime`)
+  `lasttime` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `link` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_referer`
---
-
-INSERT INTO `nuke_referer` (`url`, `lasttime`, `link`) VALUES
-('http://www.google.com/search', 1535915647, '/');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_related`
---
-
 CREATE TABLE `nuke_related` (
-  `rid` int(11) NOT NULL AUTO_INCREMENT,
-  `tid` int(11) NOT NULL DEFAULT '0',
+  `rid` int(11) NOT NULL,
+  `tid` int(11) NOT NULL DEFAULT 0,
   `name` varchar(30) NOT NULL DEFAULT '',
-  `url` varchar(200) NOT NULL DEFAULT '',
-  PRIMARY KEY (`rid`),
-  KEY `tid` (`tid`)
+  `url` varchar(200) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_reviews`
---
-
 CREATE TABLE `nuke_reviews` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `date` date NOT NULL DEFAULT '2018-12-12 00:00:00',
+  `id` int(10) NOT NULL,
+  `date` date NOT NULL DEFAULT '2018-12-12',
   `title` varchar(150) NOT NULL DEFAULT '',
   `text` text NOT NULL,
   `reviewer` varchar(25) DEFAULT NULL,
   `email` varchar(60) DEFAULT NULL,
-  `score` int(10) NOT NULL DEFAULT '0',
+  `score` int(10) NOT NULL DEFAULT 0,
   `cover` varchar(100) NOT NULL DEFAULT '',
   `url` varchar(100) NOT NULL DEFAULT '',
   `url_title` varchar(50) NOT NULL DEFAULT '',
-  `hits` int(10) NOT NULL DEFAULT '0',
-  `rlanguage` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `hits` int(10) NOT NULL DEFAULT 0,
+  `rlanguage` varchar(30) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_reviews_add`
---
-
 CREATE TABLE `nuke_reviews_add` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `id` int(10) NOT NULL,
   `date` date DEFAULT NULL,
   `title` varchar(150) NOT NULL DEFAULT '',
   `text` text NOT NULL,
   `reviewer` varchar(25) NOT NULL DEFAULT '',
   `email` varchar(60) DEFAULT NULL,
-  `score` int(10) NOT NULL DEFAULT '0',
+  `score` int(10) NOT NULL DEFAULT 0,
   `url` varchar(100) NOT NULL DEFAULT '',
   `url_title` varchar(50) NOT NULL DEFAULT '',
-  `rlanguage` varchar(30) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `rlanguage` varchar(30) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_reviews_comments`
---
 
 CREATE TABLE `nuke_reviews_comments` (
-  `cid` int(10) NOT NULL AUTO_INCREMENT,
-  `rid` int(10) NOT NULL DEFAULT '0',
+  `cid` int(10) NOT NULL,
+  `rid` int(10) NOT NULL DEFAULT 0,
   `userid` varchar(25) NOT NULL DEFAULT '',
   `date` datetime DEFAULT NULL,
-  `comments` text,
-  `score` int(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`cid`),
-  KEY `rid` (`rid`),
-  KEY `userid` (`userid`)
+  `comments` text DEFAULT NULL,
+  `score` int(10) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_reviews_main`
---
 
 CREATE TABLE `nuke_reviews_main` (
   `title` varchar(100) DEFAULT NULL,
-  `description` text,
-  KEY `title` (`title`)
+  `description` text DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_reviews_main`
---
 
 INSERT INTO `nuke_reviews_main` (`title`, `description`) VALUES
 ('Reviews Section Title', 'Reviews Section Long Description');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_security_agents`
---
 
 CREATE TABLE `nuke_security_agents` (
   `agent_name` varchar(20) NOT NULL DEFAULT '',
   `agent_fullname` varchar(30) DEFAULT '',
   `agent_hostname` varchar(30) DEFAULT '',
   `agent_url` varchar(80) DEFAULT '',
-  `agent_ban` int(1) NOT NULL DEFAULT '0',
-  `agent_desc` text,
-  PRIMARY KEY (`agent_name`)
+  `agent_ban` int(1) NOT NULL DEFAULT 0,
+  `agent_desc` text DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_security_agents`
---
 
 INSERT INTO `nuke_security_agents` (`agent_name`, `agent_fullname`, `agent_hostname`, `agent_url`, `agent_ban`, `agent_desc`) VALUES
 ('1Noon', '1Noonbot', NULL, '1nooncorp.com', -1, 'Doesn\'t follow robots.txt'),
@@ -5610,42 +4274,21 @@ INSERT INTO `nuke_security_agents` (`agent_name`, `agent_fullname`, `agent_hostn
 ('SVSearch', 'SVSearchRobot/', NULL, NULL, -1, NULL),
 ('Lorkyll', 'Lorkyll', NULL, '444.net', -1, NULL);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_session`
---
-
 CREATE TABLE `nuke_session` (
-  `uname` varchar(25) NOT NULL DEFAULT '',
+  `uname` varchar(255) NOT NULL DEFAULT '',
   `time` varchar(14) NOT NULL DEFAULT '',
   `starttime` varchar(14) NOT NULL DEFAULT '',
   `host_addr` varchar(48) NOT NULL DEFAULT '',
-  `guest` int(1) NOT NULL DEFAULT '0',
-  `module` varchar(30) NOT NULL DEFAULT '',
-  `url` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`uname`),
-  KEY `time` (`time`),
-  KEY `guest` (`guest`)
+  `guest` int(1) NOT NULL DEFAULT 0,
+  `module` varchar(255) NOT NULL DEFAULT '',
+  `url` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_shoutbox_censor`
---
-
 CREATE TABLE `nuke_shoutbox_censor` (
-  `id` int(9) NOT NULL AUTO_INCREMENT,
+  `id` int(9) NOT NULL,
   `text` varchar(30) NOT NULL,
-  `replacement` varchar(30) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=140 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_shoutbox_censor`
---
+  `replacement` varchar(30) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_shoutbox_censor` (`id`, `text`, `replacement`) VALUES
 (1, '@$$', 'butt'),
@@ -5788,14 +4431,8 @@ INSERT INTO `nuke_shoutbox_censor` (`id`, `text`, `replacement`) VALUES
 (138, 'wop', '[censored]'),
 (139, 'yed', '[censored]');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_shoutbox_conf`
---
-
 CREATE TABLE `nuke_shoutbox_conf` (
-  `id` int(9) NOT NULL DEFAULT '0',
+  `id` int(9) NOT NULL DEFAULT 0,
   `color1` varchar(20) NOT NULL DEFAULT '',
   `color2` varchar(20) NOT NULL DEFAULT '',
   `date` varchar(5) NOT NULL DEFAULT '',
@@ -5819,53 +4456,26 @@ CREATE TABLE `nuke_shoutbox_conf` (
   `pointspershout` varchar(5) NOT NULL DEFAULT '',
   `shoutsperpage` varchar(5) NOT NULL DEFAULT '',
   `serverTimezone` varchar(5) NOT NULL DEFAULT '',
-  `blockxxx` varchar(5) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `blockxxx` varchar(5) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_shoutbox_conf`
---
 
 INSERT INTO `nuke_shoutbox_conf` (`id`, `color1`, `color2`, `date`, `time`, `number`, `ipblock`, `nameblock`, `censor`, `tablewidth`, `urlonoff`, `delyourlastpost`, `anonymouspost`, `height`, `themecolors`, `textWidth`, `nameWidth`, `smiliesPerRow`, `reversePosts`, `timeOffset`, `urlanononoff`, `pointspershout`, `shoutsperpage`, `serverTimezone`, `blockxxx`) VALUES
 (1, '#EBEBEB', '#FFFFFF', 'yes', 'yes', '10', 'yes', 'yes', 'yes', '150', 'yes', 'yes', 'yes', '150', 'no', '20', '10', '7', 'no', '0', 'no', '0', '25', '-6', 'yes');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_shoutbox_date`
---
-
 CREATE TABLE `nuke_shoutbox_date` (
-  `id` int(5) NOT NULL DEFAULT '0',
+  `id` int(5) NOT NULL DEFAULT 0,
   `date` varchar(10) NOT NULL DEFAULT '',
-  `time` varchar(10) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `time` varchar(10) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_shoutbox_date`
---
 
 INSERT INTO `nuke_shoutbox_date` (`id`, `date`, `time`) VALUES
 (1, 'd-m-Y', 'g:i:a');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_shoutbox_emoticons`
---
-
 CREATE TABLE `nuke_shoutbox_emoticons` (
-  `id` int(9) NOT NULL AUTO_INCREMENT,
+  `id` int(9) NOT NULL,
   `text` varchar(20) NOT NULL,
-  `image` varchar(70) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_shoutbox_emoticons`
---
+  `image` varchar(70) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_shoutbox_emoticons` (`id`, `text`, `image`) VALUES
 (1, ':D', '<img src=images/blocks/shout_box/icon_biggrin.gif>'),
@@ -5926,167 +4536,92 @@ INSERT INTO `nuke_shoutbox_emoticons` (`id`, `text`, `image`) VALUES
 (56, ':confused:', '<img src=images/blocks/shout_box/confused.gif>'),
 (57, ':aua:', '<img src=images/blocks/shout_box/aua.gif>');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_shoutbox_ipblock`
---
-
 CREATE TABLE `nuke_shoutbox_ipblock` (
-  `id` int(9) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `id` int(9) NOT NULL,
+  `name` varchar(50) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_shoutbox_manage_count`
---
 
 CREATE TABLE `nuke_shoutbox_manage_count` (
-  `id` int(9) NOT NULL AUTO_INCREMENT,
+  `id` int(9) NOT NULL,
   `admin` varchar(25) NOT NULL DEFAULT '',
-  `aCount` varchar(5) NOT NULL DEFAULT '10',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_shoutbox_manage_count`
---
-
-INSERT INTO `nuke_shoutbox_manage_count` (`id`, `admin`, `aCount`) VALUES
-(1, 'a', '10');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_shoutbox_nameblock`
---
-
-CREATE TABLE `nuke_shoutbox_nameblock` (
-  `id` int(9) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
+  `aCount` varchar(5) NOT NULL DEFAULT '10'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
+INSERT INTO `nuke_shoutbox_manage_count` (`id`, `admin`, `aCount`) VALUES
+(1, 'a', '10'),
+(2, 'V', '10');
 
---
--- Table structure for table `nuke_shoutbox_shouts`
---
+CREATE TABLE `nuke_shoutbox_nameblock` (
+  `id` int(9) NOT NULL,
+  `name` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `nuke_shoutbox_shouts` (
-  `id` int(9) NOT NULL AUTO_INCREMENT,
+  `id` int(9) NOT NULL,
   `name` varchar(20) NOT NULL,
   `comment` text NOT NULL,
   `date` varchar(10) NOT NULL,
   `time` varchar(10) NOT NULL,
   `ip` varchar(39) DEFAULT NULL,
-  `timestamp` varchar(20) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_shoutbox_shouts`
---
+  `timestamp` varchar(20) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_shoutbox_shouts` (`id`, `name`, `comment`, `date`, `time`, `ip`, `timestamp`) VALUES
-(1, 'OurScripts.net', 'Thank You for trying this out!', '8-6-05', '24:00', 'noip', '1102320000');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_shoutbox_sticky`
---
+(1, 'www.86it.us', 'Thank You for trying this out!', '8-6-05', '24:00', 'noip', '1102320000');
 
 CREATE TABLE `nuke_shoutbox_sticky` (
-  `id` int(9) NOT NULL AUTO_INCREMENT,
+  `id` int(9) NOT NULL,
   `name` varchar(20) NOT NULL,
   `comment` text NOT NULL,
   `timestamp` varchar(20) NOT NULL,
-  `stickySlot` varchar(5) NOT NULL,
-  PRIMARY KEY (`id`)
+  `stickySlot` varchar(5) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_shoutbox_themes`
---
-
 CREATE TABLE `nuke_shoutbox_themes` (
-  `id` int(9) NOT NULL AUTO_INCREMENT,
+  `id` int(9) NOT NULL,
   `themeName` varchar(50) DEFAULT NULL,
   `blockColor1` varchar(20) DEFAULT NULL,
   `blockColor2` varchar(20) DEFAULT NULL,
   `border` varchar(20) DEFAULT NULL,
   `menuColor1` varchar(20) DEFAULT NULL,
-  `menuColor2` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `menuColor2` varchar(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_shoutbox_theme_images`
---
+INSERT INTO `nuke_shoutbox_themes` (`id`, `themeName`, `blockColor1`, `blockColor2`, `border`, `menuColor1`, `menuColor2`) VALUES
+(1, 'Xtreme_Core', '', '', '', '', '');
 
 CREATE TABLE `nuke_shoutbox_theme_images` (
-  `id` int(9) NOT NULL AUTO_INCREMENT,
+  `id` int(9) NOT NULL,
   `themeName` varchar(50) DEFAULT NULL,
   `blockArrowColor` varchar(50) NOT NULL,
-  `blockBackgroundImage` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
+  `blockBackgroundImage` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_shoutbox_version`
---
 
 CREATE TABLE `nuke_shoutbox_version` (
   `id` int(5) NOT NULL,
   `version` varchar(10) NOT NULL,
   `datechecked` varchar(2) NOT NULL,
-  `versionreported` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`)
+  `versionreported` varchar(10) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_shoutbox_version`
---
 
 INSERT INTO `nuke_shoutbox_version` (`id`, `version`, `datechecked`, `versionreported`) VALUES
 (1, '8.5', '0', '0');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_sommaire`
---
-
 CREATE TABLE `nuke_sommaire` (
-  `groupmenu` int(2) NOT NULL DEFAULT '0',
+  `groupmenu` int(2) NOT NULL DEFAULT 0,
   `name` varchar(200) DEFAULT NULL,
   `image` varchar(99) DEFAULT NULL,
-  `lien` text,
+  `lien` text DEFAULT NULL,
   `hr` char(2) DEFAULT NULL,
   `center` char(2) DEFAULT NULL,
-  `bgcolor` tinytext,
+  `bgcolor` tinytext DEFAULT NULL,
   `invisible` int(1) DEFAULT NULL,
-  `class` tinytext,
+  `class` tinytext DEFAULT NULL,
   `bold` char(2) DEFAULT NULL,
   `new` char(2) DEFAULT NULL,
   `listbox` char(2) DEFAULT NULL,
-  `dynamic` char(2) DEFAULT NULL,
-  PRIMARY KEY (`groupmenu`)
+  `dynamic` char(2) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_sommaire`
---
 
 INSERT INTO `nuke_sommaire` (`groupmenu`, `name`, `image`, `lien`, `hr`, `center`, `bgcolor`, `invisible`, `class`, `bold`, `new`, `listbox`, `dynamic`) VALUES
 (0, 'Home', 'icon_home.gif', 'index.php', '', '', '', 2, 'storytitle', '', '', '', 'on'),
@@ -6097,29 +4632,18 @@ INSERT INTO `nuke_sommaire` (`groupmenu`, `name`, `image`, `lien`, `hr`, `center
 (5, 'Infos', 'icon_members.gif', '', '', '', '', 2, 'storytitle', '', '', '', 'on'),
 (99, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_sommaire_categories`
---
-
 CREATE TABLE `nuke_sommaire_categories` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `groupmenu` int(2) NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL,
+  `groupmenu` int(2) NOT NULL DEFAULT 0,
   `module` varchar(50) NOT NULL DEFAULT '',
   `url` text NOT NULL,
   `url_text` text NOT NULL,
   `image` varchar(50) NOT NULL DEFAULT '',
   `new` char(2) DEFAULT NULL,
-  `new_days` tinyint(4) NOT NULL DEFAULT '-1',
+  `new_days` tinyint(4) NOT NULL DEFAULT -1,
   `class` varchar(20) DEFAULT NULL,
-  `bold` char(2) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_sommaire_categories`
---
+  `bold` char(2) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_sommaire_categories` (`id`, `groupmenu`, `module`, `url`, `url_text`, `image`, `new`, `new_days`, `class`, `bold`) VALUES
 (1, 1, 'Forums', '', '', 'tree-T.gif', '', 7, 'boxcontent', ''),
@@ -6140,145 +4664,130 @@ INSERT INTO `nuke_sommaire_categories` (`id`, `groupmenu`, `module`, `url`, `url
 (16, 5, 'Search', '', '', 'tree-T.gif', '', 7, 'boxcontent', ''),
 (17, 5, 'Your_Account', '', '', 'tree-L.gif', '', 7, 'boxcontent', '');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_stats_hour`
---
-
 CREATE TABLE `nuke_stats_hour` (
-  `year` smallint(6) NOT NULL DEFAULT '0',
-  `month` tinyint(4) NOT NULL DEFAULT '0',
-  `date` tinyint(4) NOT NULL DEFAULT '0',
-  `hour` tinyint(4) NOT NULL DEFAULT '0',
-  `hits` int(11) NOT NULL DEFAULT '0'
+  `year` smallint(6) NOT NULL DEFAULT 0,
+  `month` tinyint(4) NOT NULL DEFAULT 0,
+  `date` tinyint(4) NOT NULL DEFAULT 0,
+  `hour` tinyint(4) NOT NULL DEFAULT 0,
+  `hits` int(11) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_stories`
---
 
 CREATE TABLE `nuke_stories` (
-  `sid` int(11) NOT NULL AUTO_INCREMENT,
-  `catid` int(11) NOT NULL DEFAULT '0',
+  `sid` int(11) NOT NULL,
+  `catid` int(11) NOT NULL DEFAULT 0,
   `aid` varchar(25) NOT NULL DEFAULT '',
   `title` varchar(80) DEFAULT NULL,
-  `time` datetime DEFAULT NULL,
-  `hometext` text,
+  `datePublished` timestamp NULL DEFAULT '0000-00-00 00:00:00',
+  `dateModified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `hometext` text DEFAULT NULL,
   `bodytext` text NOT NULL,
-  `comments` int(11) DEFAULT '0',
+  `comments` int(11) DEFAULT 0,
   `counter` mediumint(8) UNSIGNED DEFAULT NULL,
-  `topic` int(3) NOT NULL DEFAULT '1',
+  `topic` int(3) NOT NULL DEFAULT 1,
   `informant` varchar(25) NOT NULL DEFAULT '',
   `notes` text NOT NULL,
-  `ihome` int(1) NOT NULL DEFAULT '0',
+  `ihome` int(1) NOT NULL DEFAULT 0,
   `alanguage` varchar(30) NOT NULL DEFAULT '',
-  `acomm` int(1) NOT NULL DEFAULT '0',
-  `haspoll` int(1) NOT NULL DEFAULT '0',
-  `pollID` int(10) NOT NULL DEFAULT '0',
-  `score` int(10) NOT NULL DEFAULT '0',
-  `ratings` int(10) NOT NULL DEFAULT '0',
+  `acomm` int(1) NOT NULL DEFAULT 0,
+  `haspoll` int(1) NOT NULL DEFAULT 0,
+  `pollID` int(10) NOT NULL DEFAULT 0,
+  `score` int(10) NOT NULL DEFAULT 0,
+  `ratings` int(10) NOT NULL DEFAULT 0,
   `associated` text NOT NULL,
-  `ticon` tinyint(1) NOT NULL DEFAULT '0',
-  `writes` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`sid`),
-  KEY `catid` (`catid`),
-  KEY `counter` (`counter`),
-  KEY `topic` (`topic`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `ticon` tinyint(1) NOT NULL DEFAULT 0,
+  `writes` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_stories`
---
-
-INSERT INTO `nuke_stories` (`sid`, `catid`, `aid`, `title`, `time`, `hometext`, `bodytext`, `comments`, `counter`, `topic`, `informant`, `notes`, `ihome`, `alanguage`, `acomm`, `haspoll`, `pollID`, `score`, `ratings`, `associated`, `ticon`, `writes`) VALUES
-(1, 0, 'admin', 'Welcome to Nuke Evolution Xtreme 2.0.9F', '2018-11-03 05:56:20', 'Thank you for choosing nuke evolution, we hope you enjoy using our cms and we appreciate feedback and donations.
-
-[b]NOTE:[/b] Your admin and user accounts have already been logged in for you so please visit [url=admin.php]this link[/url] to get started. 
-
-You can remove this new story by going into the News Administration or by clicking the delete image below.', '', 0, 0, 1, 'coRpSE', '', 0, '', 0, 0, 0, 0, 0, '', 0, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_stories_cat`
---
+INSERT INTO `nuke_stories` (`sid`, `catid`, `aid`, `title`, `datePublished`, `dateModified`, `hometext`, `bodytext`, `comments`, `counter`, `topic`, `informant`, `notes`, `ihome`, `alanguage`, `acomm`, `haspoll`, `pollID`, `score`, `ratings`, `associated`, `ticon`, `writes`) VALUES
+(1, 8, 'webmaster', 'Welcome to Nuke-Evolution Xtreme 4.0.0b', '2017-10-11 09:56:20', '2022-08-23 18:58:30', '<p>Thank you for choosing Nuke-Evolution Xtreme, we hope you enjoy using our Network CMS and we appreciate all the feedback and donations. This website is using the  2.0.9F Core engine and we are very proud to say so. This is the network version of Nuke-Evolution Xtreme. Nuke-Evolution Xtreme is designed to run solely on The 86it Developers Network. Some folks are not a general part of the network and just want a regular website or portal and in those instances, we set up  (US Version). Understanding which one you need is a big part of starting an online presence. The decision is one that we can help you with...</p>', '', 0, 1778, 1, 'TheGhost', '', 1, '', 0, 0, 0, 45, 9, '', 0, 1),
+(2, 8, 'webmaster', 'New Default Network Theme by EBuffington', '2021-03-16 07:50:13', '2022-08-23 18:58:48', '<p><strong>PHP-Nuke Titanium&nbsp;has a new Default Theme</strong><br />\n<br />\nThe name of our new default network theme is&nbsp;Inferno&nbsp;and was written and designed by multiple people.<br />\n<br />\n<strong>Main Developers</strong></p>\n\n<ul>\n	<li>Ernest Buffington (main designer and coder)</li>\n	<li>Sebastian Buffington (concept designer)</li>\n	<li>Winston Wolfe (coder)</li>\n</ul>\n\n<p><br />\n<strong>Indirect Developers</strong></p>\n\n<ul>\n	<li><strong>coRpSE</strong></li>\n	<li><strong>TheMortal</strong></li>\n	<li><strong>Lonestar</strong></li>\n	<li><strong>killigan</strong></li>\n	<li><strong>SgtLegend</strong></li>\n	<li><strong>Technocrat</strong></li>\n	<li><strong>Eyecu</strong></li>\n	<li><strong>Wolfstar</strong></li>\n</ul>\n\n<p><br />\nThis theme will probably always be under construction as the times roll forward. This theme by default is streaming FIRE and the download for the default theme is in excess of 1.78GB. It takes a pretty large video file to stream in resolution this clear.<br />\n<br />\nThis is our network mascot theme and is not suppose to be used by individual users as their default theme. However, when we set up a new network portal for someone this will be the theme that is installed by default and we recommend that you get familiar with the layout as you will need to understand it to make new themes or design your own default theme. After you have studied the theme a little bit you should be off and running and we recommend that you use the community version of Visual Studio or Dreamweaver for editing your network portal. You can use any version of Dreamweaver but we recommend editing your theme remotely with Adobe Dreamweaver CS6 as it was the last version before Adobe got greedy. We do not believe in online subscription-based software as it only shows corporate greed.<br />\n<br />\nThis new theme was designed and worked on from 2019 all the way up until now. We ported it in a way so that it will work with normal versions of Nuke-Evolution. There are a lot of reasons to have us set up a network portal for you versus you buying online internet services for your personal website.<br />\n<br />\n<strong>Reasons to have a Network Portal</strong><br />\n&nbsp;</p>\n\n<ul>\n	<li>Why pay a monthly FEE for an online presence when we do it for free.</li>\n	<li>We help with module setup and design.</li>\n	<li>We still believe in Bells and Whistles.</li>\n	<li>Free website support for your network portal.</li>\n	<li>You can also convert to a commercial account anytime you wish and at wholesale rates.</li>\n	<li>You can use any domain name you like as we are a licensed registrar.</li>\n	<li>We also have free domain names *.86it.us i.e. your-portal-name.86it.us</li>\n	<li>We cater to newbies and pros.</li>\n	<li>This is the place to be if you want to teach or learn.</li>\n</ul>', '', 0, 1743, 8, 'TheGhost', '', 1, 'english', 0, 0, 0, 20, 4, '', 0, 1),
+(3, 8, 'webmaster', 'What has changed in PHP-Nuke Titanium?', '2021-03-16 09:05:57', '2022-08-23 18:59:02', '<p><strong>What is no longer in PHP-Nuke Titanium&nbsp;</strong></p>\n\n<ul>\n	<li>News</li>\n	<li>Stories_Archive</li>\n	<li>Submit_News</li>\n	<li>Top</li>\n	<li>Topics</li>\n	<li>Projects</li>\n</ul>\n\n<p><br />\n<strong>What is New in PHP-Nuke Titanium</strong></p>\n\n<ul>\n	<li><strong><span style=\"color:#1abc9c\">Added</span></strong>&nbsp;<strong>New Facebook Config file</strong>&nbsp;fconfig.php. This is for facebook connector settings...</li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span></strong>&nbsp;<strong>New Network Config file</strong>&nbsp;nconfig.php. This is for network connector settings...</li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span></strong> <strong>Rounded Corners Mod v1</strong> to images in User Info and blocks.</li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span></strong> <strong>dateModified</strong> and <strong>datePublished </strong>everywhere, no more use of<strong>&nbsp;datetime </strong>or<strong> time</strong>.</li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> Blog Signature Mod v1&nbsp;</strong>by TheGhost</li>\n	<li><strong><span style=\"color:#f39c12\">Updated</span></strong> Admin <strong>Portal Menu</strong>&nbsp;updated for <strong><span style=\"color:#3498db\">PHP 7.xx&nbsp;</span></strong>by <strong>TheGhost</strong></li>\n	<li><strong><span style=\"color:#f39c12\">Updated</span></strong> <strong>Web_Links</strong> Module re-write by <strong>TheGhost</strong></li>\n	<li><strong><span style=\"color:#f39c12\">Updated</span></strong> Admin <strong>Authors Panel</strong>&nbsp;updated by <strong>TheGhost</strong></li>\n	<li><strong><span style=\"color:#f39c12\">Updated</span></strong> Admin <strong>Blocks Panel</strong>&nbsp;updated by <strong>TheGhost</strong></li>\n	<li><strong><span style=\"color:#f39c12\">Updated</span></strong> Admin <strong>Backup Panel</strong> updated for <strong><span style=\"color:#3498db\">PHP 7.xx</span></strong>&nbsp; by <strong>TheGhost</strong></li>\n	<li><strong><span style=\"color:#f39c12\">Updated</span></strong> Admin <strong>Modules Panel</strong> re-write by <strong>TheGhost</strong></li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> Titanium Google&nbsp;SDK</strong>&nbsp;v5 by <strong>TheGhost</strong></li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> Titanium Facebook SDK</strong>&nbsp;v5 by <strong>TheGhost</strong></li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> Facebook Likes</strong> for Blogs by <strong>TheGhost</strong></li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> Facebook Commenting</strong> for Blogs by <strong>TheGhost</strong></li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> </strong>Portals now come with a preconfigured facebook app (associated with your web portal)</li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> Blog</strong> by <strong>TheGhost </strong>(News Re-Write)</li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> Blog_Archive</strong>&nbsp;by <strong>TheGhost</strong> (Stories Archive Re-Write)</li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> Blog_Submit</strong>&nbsp;by <strong>TheGhost</strong> (Submit Re-Write)</li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> Blog_Top</strong>&nbsp;by <strong>TheGhost </strong>(Top Re-Write)</li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> Blog_Topics</strong>&nbsp;by <strong>TheGhost </strong>(Topics Re-Write)</li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> Network_Advertising</strong> Module by <strong>NukeScripts.Net</strong></li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> Loan</strong> Module by <strong>ScottybCoder</strong></li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> Network Bookmarks</strong> (private bookmark vault for users)</li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> Proof_Of_God</strong> Module by <strong>ScottyBcoder</strong></li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> </strong>Resolution Checking for Advanced Themes by <strong>TheGhost</strong></li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> </strong>Flykit for designing themes on the Fly (used to edit CSS in realtime) by <strong>TheGhost</strong></li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> </strong>Network Projects (fixed for network use, used to report errors with themes modules or general code bugs) by Bob Marion of&nbsp;<strong>NukeScripts.Net</strong></li>\n	<li><strong><span style=\"color:#1abc9c\">Added</span> </strong>Each theme will automatically switch to the needed mime-type on the Fly! (awesome for old themes) by <strong>TheGhost</strong></li>\n	<li><span style=\"color:#c0392b\"><strong>Fixed</strong></span> BBCode on the main page used an incorrect display path. i.e. root/filename.png it now uses root/modules/Forum/images/smiles/filename.png.</li>\n	<li><span style=\"color:#c0392b\"><strong>Fixed</strong></span> Site_Map was using read_article i.e.&nbsp;modules.php?name=Blog&amp;amp;file=read_article&amp;amp;sid=4 which was not displaying the header and footer.</li>\n	<li><span style=\"color:#c0392b\"><strong>Fixed</strong></span> Site_Map was using Topics instead of Blog_Topics</li>\n	<li><strong><span style=\"color:#c0392b\">Fixed</span></strong> cookieconsent.min.js was opening the learn link in the <strong>_parent</strong> window thus directing the user away from the current page.</li>\n	<li><span style=\"color:#c0392b\"><strong>Fixed </strong></span>The printer-friendly icon was not right when you clicked on read more or comments.</li>\n	<li><strong><span style=\"color:#c0392b\">Fixed</span></strong> The send to friend icon was not right when you clicked on read more or comments.</li>\n	<li><span style=\"color:#c0392b\"><strong>Fixed</strong></span>&nbsp;In the admin area the modules admin block was listing the index page as a module left a <strong>..</strong> in the module list that says can&#39;t be edited.</li>\n	<li><span style=\"color:#c0392b\"><strong>Fixed</strong></span> In the admin area&nbsp;the modules admin block was listing the index.html file as if it were a module.</li>\n</ul>\n\n<p><br />\n<strong>What is Broken in PHP-Nuke Titanium</strong></p>\n\n<ul>\n	<li>Found 3/16/2021 5:01 am Link to off-site Avatar - Tried to directly link to a file from an Image Repository on another site.&nbsp;</li>\n	<li>ShoutBox broken in PHP 7.3&nbsp;</li>\n	<li>ShoutBox broken in PHP 7.2&nbsp;</li>\n	<li>ShoutBox broken in PHP 7.1&nbsp;</li>\n	<li>Admin database functions broken in PHP 7.3 (admin.php?op=database)&nbsp;</li>\n	<li>Admin database functions broken in PHP 7.2 (admin.php?op=database)&nbsp;</li>\n	<li>Admin database functions broken in PHP 7.1 (admin.php?op=database )</li>\n	<li>Admin database functions broken in PHP 7.0 (admin.php?op=database)&nbsp;</li>\n	<li>Admin database functions broken in PHP 5.6 (admin.php?op=database)&nbsp;</li>\n	<li><strong>Bug</strong> Smiles dropped in by the BBCode editor on the main page have an incorrect display path. i.e. root/filename.png instead of root/modules/Forum/images/smiles/filename.png</li>\n	<li>Site_Map was using read_article i.e.&nbsp;modules.php?name=Blog&amp;amp;file=read_article&amp;amp;sid=4 which was not displaying the header and footer.</li>\n	<li>Sit_Map is using Topics instead of Blog_Topics</li>\n	<li>cookieconsent.min.js is opening the learn link in the _parent window thus directing the user away from the current page.</li>\n	<li>The printer-friendly icon is not right when you click on read more or comments.</li>\n	<li>The send to friend icon is not right when you click on read more or comments.</li>\n	<li>In admin area modules admin block is listing the index page as a module leaves a <strong>..</strong> in the module list that says can&#39;t be edited.</li>\n	<li>In the admin are modules admin block is listing the index.html file as if it were a module.</li>\n</ul>\n\n<p><br />\n<strong>What versions of PHP are stable with PHP-Nuke Titanium and Nuke-Evolution?</strong></p>\n\n<ul>\n	<li><span style=\"color:#3498db\"><strong>PHP 7.4.16</strong></span></li>\n</ul>\n\n<p><br />\n<strong>What version of PHP are we using on this portal/website?</strong></p>\n\n<ul>\n	<li><span style=\"color:#3498db\"><strong>PHP 7.4.16</strong></span></li>\n</ul>', '', 0, 2490, 1, 'TheGhost', '', 0, 'english', 0, 0, 0, 75, 15, '', 0, 1),
+(4, 1, 'webmaster', 'This website portal was designed on this computer!', '2021-03-16 23:48:33', '2022-08-23 18:59:19', '<div>\n<p style=\"text-align:center\"><img alt=\"\" src=\"https://www.86it.us/modules/Image_Repository/files/10002/P6zGD9fove.png\" style=\"align:center; height:480px; width:768px\" /></p>\n</div>', '<div contenteditable=\"false\" tabindex=\"-1\">\n<div contenteditable=\"false\" tabindex=\"-1\">\n<div contenteditable=\"false\" tabindex=\"-1\">\n<div contenteditable=\"false\" tabindex=\"-1\">\n<div contenteditable=\"false\" tabindex=\"-1\">\n<pre data-widget=\"codeSnippet\">\n<code class=\"language-html hljs\">------------------\nSystem Information\n------------------\n      Time of this report: 3/20/2021, 09:54:47\n             Machine name: DESKTOP-CR6BG56\n               Machine Id: {51653035-2DE6-4751-9298-E3EE1F783D2A}\n         Operating System: Windows 10 Pro 64-bit (10.0, Build 19042) (19041.vb_release.191206-1406)\n                 Language: English (Regional Setting: English)\n      System Manufacturer: Dell Inc.\n             System Model: Precision T7610\n                     BIOS: BIOS Date: 09/11/19 09:31:04 Ver: A18.00  (type: BIOS)\n                Processor: Intel(R) Xeon(R) CPU E5-2670 0 @ 2.60GHz (32 CPUs), ~2.6GHz\n                   Memory: 131072MB RAM\n      Available OS Memory: 130984MB RAM\n                Page File: 20644MB used, 129795MB available\n              Windows Dir: C:WINDOWS\n          DirectX Version: DirectX 12\n      DX Setup Parameters: Not found\n         User DPI Setting: 96 DPI (100 percent)\n       System DPI Setting: 96 DPI (100 percent)\n          DWM DPI Scaling: Disabled\n                 Miracast: Available, with HDCP\nMicrosoft Graphics Hybrid: Not Supported\n DirectX Database Version: 1.0.8\n           DxDiag Version: 10.00.19041.0546 64bit Unicode\n\n\n---------------\nDisplay Devices\n---------------\n           Card name: Radeon RX 580 Series\n        Manufacturer: Advanced Micro Devices, Inc.\n           Chip type: AMD Radeon Graphics Processor (0x67DF)\n            DAC type: Internal DAC(400MHz)\n         Device Type: Full Device (POST)\n          Device Key: EnumPCIVEN_1002&amp;DEV_67DF&amp;SUBSYS_C5801682&amp;REV_E7\n      Display Memory: 73663 MB\n    Dedicated Memory: 8171 MB\n       Shared Memory: 65492 MB\n        Current Mode: 1920 x 1080 (32 bit) (59Hz)\n    Display Topology: Extend\n Display Color Space: DXGI_COLOR_SPACE_RGB_FULL_G22_NONE_P709\n     Color Primaries: Red(0.644531,0.334961), Green(0.304688,0.629883), Blue(0.148438,0.049805), White Point(0.313477,0.329102)\n\n-------------\nSound Devices\n-------------\n            Description: 1 - LG IPS FULLHD (AMD High Definition Audio Device)\n Default Sound Playback: No\n Default Voice Playback: Yes\n            Hardware ID: HDAUDIOFUNC_01&amp;VEN_1002&amp;DEV_AA01&amp;SUBSYS_00AA0100&amp;REV_1007\n        Manufacturer ID: N/A\n             Product ID: N/A\n                   Type: N/A\n            Driver Name: AtihdWT6.sys\n         Driver Version: 10.0.1.12 (English)\n      Driver Attributes: Final Retail\n            WHQL Logo&#39;d: Yes\n          Date and Size: 7/9/2019 8:00:00 PM, 108152 bytes\n            Other Files: \n        Driver Provider: Advanced Micro Devices\n         HW Accel Level: Emulation Only\n              Cap Flags: 0xF1F\n    Min/Max Sample Rate: 100, 200000\nStatic/Strm HW Mix Bufs: 1, 0\n Static/Strm HW 3D Bufs: 0, 0\n              HW Memory: 0\n       Voice Management: No\n EAX(tm) 2.0 Listen/Src: No, No\n   I3DL2(tm) Listen/Src: No, No\nSensaura(tm) ZoomFX(tm): No\n\n            Description: 3 - LG IPS FULLHD (AMD High Definition Audio Device)\n Default Sound Playback: No\n Default Voice Playback: No\n            Hardware ID: HDAUDIOFUNC_01&amp;VEN_1002&amp;DEV_AA01&amp;SUBSYS_00AA0100&amp;REV_1007\n        Manufacturer ID: N/A\n             Product ID: N/A\n                   Type: N/A\n            Driver Name: AtihdWT6.sys\n         Driver Version: 10.0.1.12 (English)\n      Driver Attributes: Final Retail\n            WHQL Logo&#39;d: Yes\n          Date and Size: 7/9/2019 8:00:00 PM, 108152 bytes\n            Other Files: \n        Driver Provider: Advanced Micro Devices\n         HW Accel Level: Emulation Only\n              Cap Flags: 0xF1F\n    Min/Max Sample Rate: 100, 200000\nStatic/Strm HW Mix Bufs: 1, 0\n Static/Strm HW 3D Bufs: 0, 0\n              HW Memory: 0\n       Voice Management: No\n EAX(tm) 2.0 Listen/Src: No, No\n   I3DL2(tm) Listen/Src: No, No\nSensaura(tm) ZoomFX(tm): No\n\n            Description: Speakers (E-MU E-DSP Audio Processor (WDM))\n Default Sound Playback: Yes\n Default Voice Playback: No\n            Hardware ID: PCIVEN_1102&amp;DEV_0008&amp;SUBSYS_40021102&amp;REV_00\n        Manufacturer ID: N/A\n             Product ID: N/A\n                   Type: N/A\n            Driver Name: ctaud2k.sys\n         Driver Version: 6.0.1.1246 (English)\n      Driver Attributes: Final Retail\n            WHQL Logo&#39;d: No\n          Date and Size: 2/22/2010 8:00:00 PM, 712832 bytes\n            Other Files: \n        Driver Provider: Creative\n         HW Accel Level: Emulation Only\n              Cap Flags: 0xF1F\n    Min/Max Sample Rate: 100, 200000\nStatic/Strm HW Mix Bufs: 1, 0\n Static/Strm HW 3D Bufs: 0, 0\n              HW Memory: 0\n       Voice Management: No\n EAX(tm) 2.0 Listen/Src: No, No\n   I3DL2(tm) Listen/Src: No, No\nSensaura(tm) ZoomFX(tm): No\n\n            Description: Speakers (High Definition Audio Device)\n Default Sound Playback: No\n Default Voice Playback: No\n            Hardware ID: HDAUDIOFUNC_01&amp;VEN_10EC&amp;DEV_0280&amp;SUBSYS_102805D4&amp;REV_1000\n        Manufacturer ID: N/A\n             Product ID: N/A\n                   Type: N/A\n            Driver Name: HdAudio.sys\n         Driver Version: 10.0.19041.264 (English)\n      Driver Attributes: Final Retail\n            WHQL Logo&#39;d: Yes\n          Date and Size: 5/8/2020 8:00:00 PM, 430080 bytes\n            Other Files: \n        Driver Provider: Microsoft\n         HW Accel Level: Emulation Only\n              Cap Flags: 0xF1F\n    Min/Max Sample Rate: 100, 200000\nStatic/Strm HW Mix Bufs: 1, 0\n Static/Strm HW 3D Bufs: 0, 0\n              HW Memory: 0\n       Voice Management: No\n EAX(tm) 2.0 Listen/Src: No, No\n   I3DL2(tm) Listen/Src: No, No\nSensaura(tm) ZoomFX(tm): No\n\n---------------------\nSound Capture Devices\n---------------------\n            Description: Microphone (HD Pro Webcam C920)\n  Default Sound Capture: No\n  Default Voice Capture: No\n            Driver Name: USBAUDIO.sys\n         Driver Version: 10.0.19041.789 (English)\n      Driver Attributes: Final Retail\n          Date and Size: 1/28/2021 8:00:00 PM, 210432 bytes\n              Cap Flags: 0x1\n           Format Flags: 0xFFFFF\n\n            Description: Wave (E-MU E-DSP Audio Processor (WDM))\n  Default Sound Capture: Yes\n  Default Voice Capture: Yes\n            Driver Name: ctaud2k.sys\n         Driver Version: 6.0.1.1246 (English)\n      Driver Attributes: Final Retail\n          Date and Size: 2/22/2010 8:00:00 PM, 712832 bytes\n              Cap Flags: 0x1\n           Format Flags: 0xFFFFF\n\n---------------------\nVideo Capture Devices\nNumber of Devices: 1\n---------------------\n           FriendlyName: HD Pro Webcam C920\n               Category: Camera\n           SymbolicLink: ?usb#vid_046d&amp;pid_082d&amp;mi_00#7&amp;1984bc0&amp;0&amp;0000#{e5323777-f976-4f5b-9b55-b94699c46e44}global\n               Location: n/a\n               Rotation: n/a\n           Manufacturer: Logitech\n             HardwareID: USBVID_046D&amp;PID_082D&amp;REV_0011&amp;MI_00,USBVID_046D&amp;PID_082D&amp;MI_00\n             DriverDesc: HD Pro Webcam C920\n         DriverProvider: Logitech\n          DriverVersion: 1.3.89.0\n      DriverDateEnglish: 10/24/2018 00:00:00\n    DriverDateLocalized: 10/24/2018 12:00:00 AM\n                Service: usbvideo\n                  Class: Image\n          DevNodeStatus: 180200A[DN_DRIVER_LOADED|DN_STARTED|DN_DISABLEABLE|DN_NT_ENUMERATOR|DN_NT_DRIVER]\n            ContainerId: {3FCD13B0-8E09-57DF-8C83-2B085C12358B}\n            ProblemCode: No Problem\n  BusReportedDeviceDesc: HD Pro Webcam C920\n                 Parent: USBVID_046D&amp;PID_082D6FEDD6EF\n      DriverProblemDesc: n/a\n           UpperFilters: n/a\n           LowerFilters: n/a\n                  Stack: Driverksthunk,Driverusbvideo,Driverusbccgp\n      ContainerCategory: Imaging\n          SensorGroupID: n/a\n                   MFT0: n/a\n                   DMFT: n/a\n    CustomCaptureSource: n/a\n  DependentStillCapture: n/a\n     EnablePlatformDMFT: n/a\n              DMFTChain: n/a\n EnableDshowRedirection: n/a\n     FrameServerEnabled: n/a\n        AnalogProviders: n/a\n             ProfileIDs: n/a\n\n\n-----------\nUSB Devices\n-----------\n+ USB Root Hub\n| Vendor/Product ID: 0x8086, 0x1D26\n| Matching Device ID: USBROOT_HUB20\n| Service: usbhub\n| Driver: usbhub.sys, 12/7/2019 05:07:56, 528184 bytes\n| Driver: usbd.sys, 12/7/2019 05:07:56, 33080 bytes\n| \n+-+ Generic USB Hub\n| | Vendor/Product ID: 0x8087, 0x0024\n| | Location: Port_#0001.Hub_#0002\n| | Matching Device ID: USBClass_09\n| | Service: usbhub\n| | Driver: usbhub.sys, 12/7/2019 05:07:56, 528184 bytes\n| | Driver: usbd.sys, 12/7/2019 05:07:56, 33080 bytes\n| | \n| +-+ USB Composite Device\n| | | Vendor/Product ID: 0x046D, 0xC52B\n| | | Location: Port_#0001.Hub_#0007\n| | | Matching Device ID: USBCOMPOSITE\n| | | Service: usbccgp\n| | | Driver: usbccgp.sys, 10/9/2020 16:46:41, 185664 bytes\n| | | \n| | +-+ USB Input Device\n| | | | Vendor/Product ID: 0x046D, 0xC52B\n| | | | Location: 0000.001d.0000.001.001.000.000.000.000\n| | | | Matching Device ID: USBClass_03&amp;SubClass_01\n| | | | Service: HidUsb\n| | | | Driver: hidusb.sys, 12/7/2019 05:07:56, 44032 bytes\n| | | | Driver: hidclass.sys, 12/7/2019 05:07:56, 225792 bytes\n| | | | Driver: hidparse.sys, 12/7/2019 05:07:56, 46080 bytes\n| | | | \n| | | +-+ HID Keyboard Device\n| | | | | Vendor/Product ID: 0x046D, 0xC52B\n| | | | | Matching Device ID: HID_DEVICE_SYSTEM_KEYBOARD\n| | | | | Service: kbdhid\n| | | | | Driver: kbdhid.sys, 12/7/2019 05:07:56, 46592 bytes\n| | | | | Driver: kbdclass.sys, 12/7/2019 05:07:56, 71480 bytes\n| | | | \n| | +-+ USB Input Device\n| | | | Vendor/Product ID: 0x046D, 0xC52B\n| | | | Location: 0000.001d.0000.001.001.000.000.000.000\n| | | | Matching Device ID: USBClass_03&amp;SubClass_01\n| | | | Service: HidUsb\n| | | | Driver: hidusb.sys, 12/7/2019 05:07:56, 44032 bytes\n| | | | Driver: hidclass.sys, 12/7/2019 05:07:56, 225792 bytes\n| | | | Driver: hidparse.sys, 12/7/2019 05:07:56, 46080 bytes\n| | | | \n| | | +-+ HID-compliant mouse\n| | | | | Vendor/Product ID: 0x046D, 0xC52B\n| | | | | Matching Device ID: HID_DEVICE_SYSTEM_MOUSE\n| | | | | Service: mouhid\n| | | | | Driver: mouhid.sys, 12/7/2019 05:07:56, 35328 bytes\n| | | | | Driver: mouclass.sys, 12/7/2019 05:07:56, 67600 bytes\n| | | | \n| | +-+ Logicool Unifying USB receiver\n| | | | Vendor/Product ID: 0x046D, 0xC52B\n| | | | Location: 0000.001d.0000.001.001.000.000.000.000\n| | | | Matching Device ID: usbvid_046d&amp;pid_c52b&amp;mi_02\n| | | | Service: LEqdUsb\n| | | | Driver: LEqdUsb.sys, 6/17/2015 22:25:00, 87696 bytes\n| | | | Driver: LkmdfCoInst.dll, 6/17/2015 22:25:00, 1854096 bytes\n| | | | \n| | | +-+ Logicool HID-compliant Unifying device\n| | | | | Vendor/Product ID: 0x046D, 0xC52B\n| | | | | Location: DJ Bus 0\n| | | | | Matching Device ID: {a3535e08-eb26-49a9-8ae0-786ed1242812}logi_hid_device\n| | | | | Service: LHidEqd\n| | | | | Driver: LHidEqd.sys, 6/17/2015 22:25:00, 23184 bytes\n| | | | | Driver: LkmdfCoInst.dll, 6/17/2015 22:25:00, 1854096 bytes\n| | | | | \n| | | | +-+ Logicool HID-compliant Unifying Mouse\n| | | | | | Vendor/Product ID: 0x046D, 0xC52B\n| | | | | | Matching Device ID: hidvid_046d&amp;class_00000004\n| | | | | | Upper Filters: LMouFilt\n| | | | | | Lower Filters: LHidFilt\n| | | | | | Service: mouhid\n| | | | | | Driver: LHidFilt.Sys, 6/17/2015 22:25:00, 86672 bytes\n| | | | | | Driver: LMouFilt.Sys, 6/17/2015 22:25:00, 69264 bytes\n| | | | | | Driver: mouhid.sys, 12/7/2019 05:07:56, 35328 bytes\n| | | | | | Driver: mouclass.sys, 12/7/2019 05:07:56, 67600 bytes\n| | | | | | Driver: LkmdfCoInst.dll, 6/17/2015 22:25:00, 1854096 bytes\n| | | | | | Driver: LMouFiltCoInst.dll, 6/17/2015 22:25:00, 63120 bytes\n| | | \n| +-+ USB Composite Device\n| | | Vendor/Product ID: 0x04D9, 0xA0CD\n| | | Location: Port_#0006.Hub_#0007\n| | | Matching Device ID: USBCOMPOSITE\n| | | Service: usbccgp\n| | | Driver: usbccgp.sys, 10/9/2020 16:46:41, 185664 bytes\n| | | \n| | +-+ USB Input Device\n| | | | Vendor/Product ID: 0x04D9, 0xA0CD\n| | | | Location: 0000.001d.0000.001.006.000.000.000.000\n| | | | Matching Device ID: USBClass_03&amp;SubClass_01\n| | | | Service: HidUsb\n| | | | Driver: hidusb.sys, 12/7/2019 05:07:56, 44032 bytes\n| | | | Driver: hidclass.sys, 12/7/2019 05:07:56, 225792 bytes\n| | | | Driver: hidparse.sys, 12/7/2019 05:07:56, 46080 bytes\n| | | | \n| | | +-+ HID Keyboard Device\n| | | | | Vendor/Product ID: 0x04D9, 0xA0CD\n| | | | | Matching Device ID: HID_DEVICE_SYSTEM_KEYBOARD\n| | | | | Service: kbdhid\n| | | | | Driver: kbdhid.sys, 12/7/2019 05:07:56, 46592 bytes\n| | | | | Driver: kbdclass.sys, 12/7/2019 05:07:56, 71480 bytes\n| | | | \n| | +-+ USB Input Device\n| | | | Vendor/Product ID: 0x04D9, 0xA0CD\n| | | | Location: 0000.001d.0000.001.006.000.000.000.000\n| | | | Matching Device ID: USBClass_03\n| | | | Service: HidUsb\n| | | | Driver: hidusb.sys, 12/7/2019 05:07:56, 44032 bytes\n| | | | Driver: hidclass.sys, 12/7/2019 05:07:56, 225792 bytes\n| | | | Driver: hidparse.sys, 12/7/2019 05:07:56, 46080 bytes\n| | | | \n| | | +-+ HID Keyboard Device\n| | | | | Vendor/Product ID: 0x04D9, 0xA0CD\n| | | | | Matching Device ID: HID_DEVICE_SYSTEM_KEYBOARD\n| | | | | Service: kbdhid\n| | | | | Driver: kbdhid.sys, 12/7/2019 05:07:56, 46592 bytes\n| | | | | Driver: kbdclass.sys, 12/7/2019 05:07:56, 71480 bytes\n\n----------------\nGameport Devices\n----------------\n\n------------\nPS/2 Devices\n------------\n\n------------------------\nDisk &amp; DVD/CD-ROM Drives\n------------------------\n      Drive: C:\n Free Space: 1753.3 GB\nTotal Space: 1906.1 GB\nFile System: NTFS\n      Model: DELL PERC H310 SCSI Disk Device\n\n      Drive: E:\n Free Space: 124.7 GB\nTotal Space: 242.5 GB\nFile System: NTFS\n      Model: DELL PERC H310 SCSI Disk Device\n\n      Drive: F:\n Free Space: 0.0 GB\nTotal Space: 0.0 GB\nFile System: NTFS\n      Model: WD My Book 25EE USB Device\n\n      Drive: I:\n Free Space: 9059.7 GB\nTotal Space: 11444.2 GB\nFile System: NTFS\n      Model: WD easystore 264D USB Device\n\n      Drive: K:\n Free Space: 3770.9 GB\nTotal Space: 3815.3 GB\nFile System: NTFS\n      Model: WD My Book 25EE USB Device\n\n      Drive: L:\n Free Space: 9374.5 GB\nTotal Space: 9537.5 GB\nFile System: NTFS\n      Model: WD My Book 25EE USB Device\n\n      Drive: X:\n Free Space: 0.5 GB\nTotal Space: 0.5 GB\nFile System: NTFS\n      Model: DELL PERC H310 SCSI Disk Device\n\n      Drive: Y:\n Free Space: 0.5 GB\nTotal Space: 0.5 GB\nFile System: NTFS\n      Model: DELL PERC H310 SCSI Disk Device\n\n      Drive: Z:\n Free Space: 0.5 GB\nTotal Space: 0.5 GB\nFile System: NTFS\n      Model: DELL PERC H310 SCSI Disk Device\n\n      Drive: D:\n      Model: PLDS DVD-ROM DS-8DBSH\n     Driver: C:WINDOWSSYSTEM32DRIVERSCDROM.SYS, 10.00.19041.0001 (English), 12/7/2019 05:07:53, 174080 bytes\n\n      Drive: G:\n      Model: TSSTcorp DVD+-RW SH-216DB\n     Driver: C:WINDOWSSYSTEM32DRIVERSCDROM.SYS, 10.00.19041.0001 (English), 12/7/2019 05:07:53, 174080 bytes</code></pre>\n<img src=\"data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==\" /><span style=\"background-color:rgba(220,220,220,0.5)\"><img role=\"presentation\" src=\"data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==\" style=\"height:15px; width:15px\" title=\"Click and drag to move\" /></span></div>\n<img src=\"data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==\" /><span style=\"background-color:rgba(220,220,220,0.5)\"><img role=\"presentation\" src=\"data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==\" style=\"height:15px; width:15px\" title=\"Click and drag to move\" /></span></div>\n<img src=\"data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==\" /><img role=\"presentation\" src=\"data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==\" style=\"height:15px; width:15px\" title=\"Click and drag to move\" /></div>\n<img src=\"data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==\" /><img role=\"presentation\" src=\"data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==\" style=\"height:15px; width:15px\" title=\"Click and drag to move\" /></div>\n<img src=\"data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==\" /><img role=\"presentation\" src=\"data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==\" style=\"height:15px; width:15px\" title=\"Click and drag to move\" /></div>', 0, 1225, 4, 'TheGhost', '', 1, 'english', 0, 0, 0, 15, 3, '', 0, 1),
+(10, 5, 'webmaster', 'We have dumped MariaDB and here is why!', '2021-05-05 21:32:32', '2022-08-23 18:59:29', '<hr />\n<p>We dumped <span style=\"color:#1abc9c\"><strong>MariaDB</strong></span> 10.2.3</p>\n\n<p>We are now running&nbsp;<span style=\"color:#1abc9c\"><strong>MySQL </strong></span>8.0.23</p>\n\n<p>As time goes on,<strong><span style=\"color:#1abc9c\"> MySQL</span></strong> develops more extensive features or changes to its internal architecture. They have more developers on staff than <span style=\"color:#1abc9c\"><strong>MariaDB</strong></span>, so they are making changes at a faster pace.</p>\n\n<p>&nbsp;</p>\n\n<h2>Who&#39;s Currently Behind The Databases?</h2>\n\n<p>In 2010, <span style=\"color:#1abc9c\"><strong>MySQL</strong></span> was acquired by the <strong>Oracle Corporation</strong>. At that time, one of the original developers, Michael &ldquo;Monty&rdquo; Widenius, felt that the <span style=\"color:#e74c3c\"><strong>Oracle Corporation</strong></span> had a conflict of interest between <strong><span style=\"color:#1abc9c\">MySQL</span></strong> and their <span style=\"color:#e74c3c\"><strong>Oracle database</strong></span>.<br />\n<br />\nIn response to this, he decided to create a fork of the project named <span style=\"color:#1abc9c\"><strong>MariaDB</strong></span>. Since then, there&#39;s been a lot of healthy competition between <span style=\"color:#1abc9c\"><strong>MySQL</strong></span> and <strong><span style=\"color:#1abc9c\">MariaDB</span></strong> that has led to some really great innovation. Since <span style=\"color:#e74c3c\"><strong>Oracle</strong></span> is backing <span style=\"color:#1abc9c\"><strong>MySQL</strong></span> and has a solid foundation, it continues to be the leader. However, <span style=\"color:#1abc9c\"><strong>MariaDB</strong></span> offers some compelling reasons for why nerds may want to switch databases.<br />\n<br />\n<strong>MySQL:</strong>&nbsp;<span style=\"color:#1abc9c\"><strong>MySQL</strong></span> was originally started by <span style=\"color:#1abc9c\"><strong>MySQL AB</strong></span> in 1994 by a Swedish company that was created by a nerd named David Axmark, Allan Larsson, and another nerd named Michael &ldquo;Monty&rdquo; Widenius. The first version of <span style=\"color:#1abc9c\"><strong>MySQL</strong></span> was released in 1995. In 2008, <span style=\"color:#e74c3c\"><strong>Sun Microsystems</strong></span> purchased <span style=\"color:#1abc9c\"><strong>MySQL AB</strong></span>. In 2010, <span style=\"color:#e74c3c\"><strong>Sun Microsystems</strong></span> was acquired by <span style=\"color:#e74c3c\"><strong>Oracle</strong></span>.<br />\n<br />\n<span style=\"color:#1abc9c\"><strong>MySQL</strong></span> is currently maintained by the <span style=\"color:#e74c3c\"><strong>Oracle Corporation</strong></span>.<br />\n<br />\n<strong>MariaDB:</strong>&nbsp;On the day <span style=\"color:#e74c3c\"><strong>Oracle</strong></span> announced they had purchased <span style=\"color:#1abc9c\"><strong>MySQL</strong></span>, Michael &ldquo;Monty&rdquo; Widenius with his shining nerd cape took several <span style=\"color:#1abc9c\"><strong>MySQL</strong></span> developers and started <span style=\"color:#1abc9c\"><strong>MariaDB</strong></span>, a fork of <span style=\"color:#1abc9c\"><strong>MySQL</strong></span> from that point.</p>\n\n<hr />\n<p>Thanks,<br />\nThe 86it Team</p>', '', 0, 263, 4, 'TheGhost', '', 1, 'english', 0, 0, 0, 15, 3, '', 0, 1),
+(7, 4, 'webmaster', 'What is a CDN?', '2021-03-22 16:15:01', '2022-08-23 18:59:40', '<p>A content delivery network (<strong>CDN</strong>) refers to a geographically distributed group of servers that work together to provide fast delivery of Internet content.</p>\n\n<p>A <strong>CDN</strong> allows for the quick transfer of assets needed for loading Internet content including <strong>HTML</strong> pages, <strong>javascript</strong> files, <strong>stylesheets</strong>, <strong>images</strong>, and <strong>videos</strong>. The popularity of <strong>CDN</strong> services continues to grow, and today the majority of web traffic is served through <strong>CDN</strong>s, including traffic from major sites like <strong>The 86it Developers Network</strong>,&nbsp;<strong>Facebook</strong>, <strong>Netflix</strong>, and <strong>Amazon</strong>.</p>\n\n<p>A properly configured <strong>CDN</strong> may also help protect websites against some common malicious attacks, such as&nbsp;<a dir=\"ltr\" href=\"https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/\" id=\"ddos\" name=\"ddos\" onclick=\"window.open(this.href, \'ddos\', \'resizable=yes,status=no,location=no,toolbar=no,menubar=no,fullscreen=no,scrollbars=no,dependent=no,width=1024,height=768\'); return false;\" title=\"ddos\">Distributed Denial of Service (DDOS) attacks</a>.</p>', '', 0, 1886, 3, 'TheGhost', '', 1, 'english', 0, 0, 0, 10, 2, '', 0, 1),
+(8, 1, 'webmaster', 'Do you want to be a part of the 86it Developers Team?', '2021-03-27 23:23:05', '2022-08-23 18:59:51', '<h1>PHP-Nuke Titanium <span style=\"font-size:12px\">(Open Source Project)</span></h1>\n\n<p>As a temporary promotion, we are giving away <strong>FREE</strong> commercial web hosting accounts to our 1st 10 beta testers. We will set up&nbsp;your web portal/website on our commercial servers and help you design a theme that best fits your needs. You will have a network link on your portal to report bugs and errors. You will use the <strong>Network Projects</strong> link on your website/portal to report errors or make design requests. This is used for users to be set up as concept designers right out of the gate. <strong>PHP-Nuke Titanium</strong> and <strong>The 86it Developers Network</strong>, unlike other teams and projects, will implement any and all design requests&nbsp;and they will become a permanent part of the <strong>PHP-Nuke Titanium</strong> design or be offered as a <strong>module</strong> or maybe even a <strong>block</strong>. Our 1st 10 beta testers will get a lifetime account paid in full for being a part of our team and project. Your first response to this will probably be &quot;nothing is free this sounds to good to be true&quot;, and if it is you&#39;re wrong. We are very serious and this is how we have decided to build and put together an awesome new team.</p>\n\n<p><strong>PHP-Nuke Titanium</strong> is a&nbsp;&#39;web-based automated blog&nbsp;publishing and content management system based on <strong><span style=\"color:#3498db\">PHP 7.xx</span></strong> and <strong><span style=\"color:#27ae60\">MySQL</span></strong>.&nbsp;<strong>PHP-Nuke Titanium</strong>&nbsp;is controlled using a web-browser-based user interface&#39; and is an app in the Business &amp; Commerce category. There are more than <strong>25</strong> alternatives to the original PHP-Nuke for a variety of platforms, including Self-Hosted solutions, however, none of them were or have been written with as much care as <strong>PHP-Nuke Titanium</strong>. There are lots of alternatives out there but many have security holes and back door features that allow the original developers&nbsp;or programmers to gain access to your personal files.&nbsp;Some say the best&nbsp;alternative to PHP-Nuke is&nbsp;<a href=\"https://alternativeto.net/software/wordpress/about/\">WordPress</a>, which is both free and Open Source. There are a few other apps that are a lot like&nbsp;PHP-Nuke as well.&nbsp;<a href=\"https://alternativeto.net/software/drupal/about/\">Drupal</a>&nbsp;(Open Source),&nbsp;<a href=\"https://alternativeto.net/software/joomla/about/\">Joomla</a>&nbsp;(Open Source),&nbsp;<a href=\"https://alternativeto.net/software/modx/about/\">MODX</a>&nbsp;(Open Source), and&nbsp;<a href=\"https://alternativeto.net/software/dev-to/about/\">DEV Community</a>&nbsp;(Open Source). None of these come with FREE support as PHP-Nuke Titanium does. We have dedicated an entire network to the design and use of <strong>PHP-Nuke Titanium</strong>.</p>\n\n<p>This is great for beginners and also seasoned programmers. If you wanted to learn <strong>PHP</strong> or <strong>HTML</strong> this is a perfect fit for you and is a great place to start. This project uses <strong>PHP</strong>, <strong>MySQL</strong>, <strong>XHTML</strong>, <strong>HTML</strong>, <strong>JAVA</strong>, <strong>CSS</strong>,&nbsp;<strong>BOOTSTRAP</strong>, <strong>Jquery, </strong>and a lot&nbsp;more...</p>\n\n<p>Unlike the original PHP-Nuke, this project uses multiple doctypes. You can design themes for <strong>HTML5</strong>, <strong>XHTML</strong> or even <strong>JAVA. </strong>When you design a website/portal theme you get to decide how you want to build it and the type of framework support that you would like to have with each individual theme. We will help you learn and walk you through the steps... When&nbsp;just getting started with online programming, making a new&nbsp;<strong>PHP-Nuke Titanium</strong> theme&nbsp;is probably the best place to start. Each theme has the same general framework layout and you get to decide and pick what you feel comfortable learning with. Remember we will be here to help the whole way through and this network and website are here for the duration. We have already been doing this for more than 20 years and have already put more than 15 years into the learning and development of <strong>PHP-Nuke Titanium</strong>. I&#39;m the founder of <strong>PHP-Nuke Titanium</strong> and <strong>The 86it Developers Network</strong>, I&#39;m 54 years old and love programming almost as much as I love to show and teach others. Anytime I get a chance to share my wealth of online programming knowledge it&#39;s a good day for me.</p>\n\n<p>If all this sounds good and you&#39;re ready to become a beta tester or start learning to program online let me know and I will get you set up right away. The 1st 10 beta tester will also be a part of the Ad campaign profit-sharing program. I will go into those details with you after you have become a beta tester and are part of the <strong>PHP-Nuke Titanium</strong> team. What I can tell you is not many people make more than 10 thousand dollars a month and that is what we project our team members should make&nbsp;after the 1st 3 years online. Team members will each be given responsibilities that will help us build a revenue system that will and should pay out even more than 10 thousand dollars a month per team member. Did you ever wonder how Tom Anderson of mySpace became a millionaire or Zucker of Facebook got so rich? I don&#39;t wonder because I spent 20 years doing research and learning all the ways that the highest-paid internet moguls&nbsp;created their success and more than that I learned how they destroyed their own success and I assure you that is not going to happen with my team or my network.</p>\n\n<p>&nbsp;I&#39;m looking for folks that understand the money to be made and more than that, folks that are loyal and dedicated and will never give up or turn their back on their team members. This network is about family and loyalty and if you&#39;re part of this network and part of the <strong>PHP-Nuke Titanium</strong> team you are considered family.</p>\n\n<p>To be continued...</p>', '', 1, 902, 4, 'TheGhost', '', 1, 'english', 0, 0, 0, 30, 6, '', 0, 1),
+(9, 5, 'webmaster', 'We are adding PHP v8 to PHP-FPM today.', '2021-03-29 12:00:26', '2022-08-23 19:00:02', '<p><strong>Current Developer Support:</strong><br />\n<br />\n<strong>FROM:</strong><br />\n<span style=\"color:#3498db\"><strong>PHP 5.4</strong></span> for porting only.<br />\n<span style=\"color:#3498db\"><strong>PHP 5.5</strong></span> for porting only.<br />\n<span style=\"color:#3498db\"><strong>PHP 5.6</strong></span>&nbsp;for porting only.<br />\n<span style=\"color:#3498db\"><strong>PHP 7.0</strong></span>&nbsp;for porting only.<br />\n<span style=\"color:#3498db\"><strong>PHP 7.1</strong></span>&nbsp;for porting only.<br />\n<span style=\"color:#3498db\"><strong>PHP 7.2</strong></span>&nbsp;for porting only.<br />\n<span style=\"color:#3498db\"><strong>PHP 7.3</strong></span>&nbsp;for porting only<br />\n&nbsp;</p>\n\n<p><strong>TO:</strong><br />\n<span style=\"color:#3498db\"><strong>PHP 7.4</strong></span> for current development.<br />\nOR<br />\n<span style=\"color:#3498db\"><strong>PHP 8.0</strong></span> for advanced current development.</p>\n\n<p><span style=\"color:#3498db\"><strong>PHP 8</strong></span> has been&nbsp;here for a little while now.&nbsp;It was released on <span style=\"color:#27ae60\">November 26, 2020</span>. This&nbsp;will introduce some breaking changes, as well as lots of new features and performance improvements.</p>\n\n<p>Because of the breaking changes, there&#39;s a higher chance you&#39;ll need to make some changes in your code to get it running on <strong><span style=\"color:#3498db\">PHP 8</span></strong>. If you&#39;ve kept up to date with the latest releases though, the upgrade shouldn&#39;t be too hard, since most breaking changes were deprecated&nbsp;in the <span style=\"color:#3498db\"><strong>PHP 7.xx</strong></span> versions.</p>\n\n<p>Besides breaking changes, <span style=\"color:#3498db\"><strong>PHP 8</strong></span> also brings a nice set of new features such as&nbsp;<a href=\"https://stitcher.io/blog/new-in-php-8#jit-rfc\" id=\"a1\" name=\"a1\" onclick=\"window.open(this.href, \'a1\', \'resizable=yes,status=no,location=no,toolbar=no,menubar=no,fullscreen=no,scrollbars=no,dependent=no\'); return false;\">the JIT compiler</a>,&nbsp;<a href=\"https://stitcher.io/blog/new-in-php-8#union-types-rfc\" id=\"a2\" name=\"a2\" onclick=\"window.open(this.href, \'a2\', \'resizable=yes,status=no,location=no,toolbar=no,menubar=no,fullscreen=no,scrollbars=no,dependent=no\'); return false;\">union types</a>,&nbsp;<a href=\"https://stitcher.io/blog/new-in-php-8#attributes-rfc\" id=\"a3\" name=\"a3\" onclick=\"window.open(this.href, \'a3\', \'resizable=no,status=no,location=no,toolbar=no,menubar=no,fullscreen=no,scrollbars=no,dependent=no\'); return false;\">attributes</a>, and more.</p>', '', 0, 967, 4, 'TheGhost', '', 1, '', 0, 0, 0, 30, 6, '', 0, 1),
+(11, 1, 'webmaster', 'We decided to dump MySQL 8.0.23', '2021-04-10 06:11:31', '2022-08-23 19:00:14', '<p>We dumped&nbsp;MySQL 8.0.23</p>\n\n<p>We have gone back to&nbsp;MariaDB 10.2.3 and I guess we owe them an apology as it is obvious that we made a horrible decision going to MySQL 8.0.23&nbsp;</p>\n\n<p>As time goes on, MySQL develops more extensive features or changes to its internal architecture. They have more developers on staff than MariaDB, so they are making changes at a faster pace. However, it turns out that MySQL 8.0.23 sucks and is slower than phuck! I guess Oracle deserves it though. I can see some bullshit was pulled during the sale and somebody phucked up when they lost the lead developer for MySQL.</p>\n\n<p>Who&#39;s Currently Behind The Databases?</p>\n\n<p>In 2010, MySQL was acquired by the Oracle Corporation. At that time, one of the original developers, Michael &ldquo;Monty&rdquo; Widenius, felt that the Oracle Corporation had a conflict of interest between MySQL and their Oracle database.<br />\n<br />\nIn response to this, he decided to create a fork of the project named MariaDB. Since then, there&#39;s been a lot of healthy competition between MySQL and MariaDB that has led to some really great innovation. Since Oracle is backing MySQL and has a solid foundation, it continues to be the leader. However, MariaDB offers some compelling reasons why nerds may want to switch databases.<br />\n<br />\nMySQL:&nbsp;MySQL was originally started by MySQL AB in 1994 by a Swedish company that was created by a nerd named David Axmark, Allan Larsson, and another nerd named Michael &ldquo;Monty&rdquo; Widenius. The first version of MySQL was released in 1995. In 2008, Sun Microsystems purchased MySQL AB. In 2010, Sun Microsystems was acquired by Oracle.<br />\n<br />\nMySQL is currently maintained by the Oracle Corporation.<br />\n<br />\nMariaDB:&nbsp;On the day Oracle announced they had purchased MySQL, Michael &ldquo;Monty&rdquo; Widenius shit a&nbsp;shiny nerd cape and took several MySQL developers and started MariaDB, a fork of MySQL from that point.</p>\n\n<p>&nbsp;</p>\n\n<p>Hats off to&nbsp;<strong>Michael &ldquo;Monty&rdquo; Widenius </strong>he is truly the shit and I thank him for what he did and he did us proud.<strong> MariaDB </strong>is lightning fast<strong>!</strong></p>', '', 0, 687, 4, 'TheGhost', '', 1, 'english', 0, 0, 0, 60, 12, '', 1, 1),
+(12, 8, 'webmaster', 'About  (US Version)', '2021-01-01 15:56:20', '2022-08-23 19:00:26', '<p>The <strong>US</strong> version of<strong> PHP-Nuke Titanium CMS</strong>&nbsp;is an open-source highly modified&nbsp;<strong>Fork</strong> of <strong>Nuke-Evolution</strong> wrote in PHP as a programming language and development was first started in 2005. The software comes with a set of basic features like a WYSIWYG editor, an admin interface with drag and drop blocks, spam protection, and image processing. PHP-Nuke Titanium CMS comes with the ability to use various modules that will extend the current functionality of your portal/website. The latest version available for download is 4.0.0b and is still in beta.</p>\n\n<p><strong>PHP-Nuke Titanium</strong>&nbsp;now comes with v5 of the Titanium Facebook SDK kit. It&#39;s already set up. All you have to do is add your app ID and secret... If you need help, we would be glad to set it up for FREE.</p>\n\n<p><strong>PHP-Nuke Titanium</strong> now comes with v5 of the Titanium Google SDK. Everything you need to be a Google developer is already there, just have a look inside your includes directory.</p>\n\n<p>[b]NOTE:[/b] Your admin and user accounts have already been logged in for you so please visit [url=admin.php]this link[/url] to get started.</p>\n\n<p>You can edit or remove this blog message by going into the Blog Admin Panel located in the Admin area, or look below and you can edit by clicking the pencil or the x to delete this blog message.</p>', '', 0, 570, 1, 'WebMaster', '', 0, '', 0, 0, 0, 70, 14, '', 0, 1),
+(13, 9, 'webmaster', 'New Blog Signature Mod', '2021-04-24 12:14:43', '2022-08-23 19:00:35', '<p>TESTING BLOG SIGNATURE MOD v1</p>\n\n<p>This mod was written by Ernest Buffington</p>\n\n<p>The Blog Signature Mod is having a lot of new features added, such as the ability to use your callsign or real name. You will also be able to enable and disable the blog signature at will globally or for each post.</p>', '', 0, 180, 7, 'TheGhost', '', 0, '', 0, 0, 0, 20, 4, '', 0, 1),
+(14, 8, 'webmaster', 'We Will Be Updating The Modules 1 by 1', '2021-04-26 03:44:48', '2022-08-23 19:00:46', '<p>We are going through each module and fixing all the cosmetic issues that we are sure everyone is aware of.</p>\n\n<p>If you see any issues at all please feel free to submit a report. You can do so by clicking [url=modules.php?name=Network_Projects&amp;op=Project&amp;project_id=76]HERE[/url]</p>\n\n<p>A lot of the modules are being re-written for future versions of PHP as well as cosmetic issues.</p>\n\n<p>We would like to apologize for the slacking that has been going on over the years. We intend to keep the US version updated and will cater to anyone who has a mod request or needs install help.</p>\n\n<p>We would again like to thank everyone for stopping in to visit.</p>', '', 0, 144, 1, 'webmaster', '', 0, 'english', 0, 0, 0, 10, 2, '', 0, 1);
+INSERT INTO `nuke_stories` (`sid`, `catid`, `aid`, `title`, `datePublished`, `dateModified`, `hometext`, `bodytext`, `comments`, `counter`, `topic`, `informant`, `notes`, `ihome`, `alanguage`, `acomm`, `haspoll`, `pollID`, `score`, `ratings`, `associated`, `ticon`, `writes`) VALUES
+(15, 6, 'webmaster', 'New Google Site Map Generator Module', '2021-04-27 15:48:34', '2022-08-23 19:00:56', '<p><strong>Module Name: </strong><a href=\"modules.php?name=Google-Site-Map\" target=\"_self\">Google-Site-Map</a><br />\n<strong>Author:</strong> Ernest Buffington<br />\n<strong>Version:</strong> v1.0<br />\n<strong>Core:</strong> PHP-Nuke Titanium v3.0.1a &lt;&gt;&nbsp;v4.0.0b</p>\n\n<p>The original sitemap was an abandoned project and idea, not by me but whoever was working on it originally. The new one is awesome and works great. I&#39;m not sure people really understand how important this little module is. Contrary to popular belief, this is an important part of being found on the internet. The class.sitemap.php file can be found in the&nbsp;<strong>includes/classes </strong>directory.</p>\n\n<p>I used some of the old code, not much just a few lines here and there, and the old sitemap&#39;s admin panel is the same.</p>\n\n<p>This uses <strong>sitemap 0.9</strong></p>\n\n<p>The new Google Site Map Generator works better than just about anything I have seen. You will need to delete the old <strong>sitemap.xml</strong> file that is in the root directory of your portal/website as it is no longer used. The new <strong>sitemap.xml</strong> file is generated in the <strong>xmls/sitemap</strong> folder. This is not the file you tell google to look at.</p>\n\n<p>You will need to point Google to your <strong>sitemap-index.xml</strong> file which resides in that very same directory.</p>\n\n<p>You will do this by telling Google where the file is at like so <strong>https://yourwebsite.com/xmls/sitemap/sitemap-index.xml</strong></p>\n\n<p>You can do so by going here <strong>https://search.google.com/search-console?resource_id=sc-domain:yourdomain.com</strong></p>\n\n<p>I used a fast and lightweight class for generating Google-Site-Map <strong>XML</strong> files and index of sitemap files. Written in <strong>PHP</strong> and uses <strong>XMLWriter</strong> extension (wrapper for <strong>libxml</strong> <strong>xmlWriter</strong> API) for creating <strong>XML</strong> files. <strong>XMLWriter</strong> extension is enabled by default in <strong>PHP</strong> 5 &gt; = 5.1.2. If you have more than 50000 URLs, it will split items into separated files. (In benchmarks, 1.000.000 URLs were generating in 8 seconds) The version we are using is a slightly modified version of the original.</p>\n\n<p>The Sitemap class is now added to a <strong>SitemapPHP</strong> <strong>namespace</strong>.</p>', '', 0, 195, 5, 'webmaster', '', 0, 'english', 0, 0, 0, 20, 4, '', 0, 1),
+(16, 10, 'webmaster', 'New Visitor Log Center Block', '2021-04-28 00:32:27', '2022-08-23 19:01:08', '<p><strong>Block Name: </strong>Titanium Visitor Log Center<br />\n<strong>Author: </strong>Ernest Allen Buffington<br />\n<strong>Filename:</strong> block-Titanium_Visitor_Log_center.php<br />\n<strong>Block Type:</strong> Center Block<br />\n<strong>Version:</strong> v1.0<br />\n<strong>Core:</strong> PHP-Nuke Evolution 2.0.9e &lt;&gt;&nbsp;4.0.0b</p>\n\n<p>This block was created with advanced resolution checking in mind. You can configure this block so that it changes for cell phones and different resolution monitors, It can even be configured for 4k TV.</p>\n\n<p>This block checks your monitor resolution and displays the visitor log in rows and columns, A row is a series of data put out horizontally in a table or spreadsheet while a column is a vertical series of cells in a chart, table, or spreadsheet. Rows go from left to right. On the other hand, Columns are arranged from up to down. After this block gets your monitor resolution width it will decide how many columns and rows to display. If your resolution width is less than 1920 it will display 3 columns, if it is 1920 or above it will display 4 columns. You can configure this block for any resolution and the code is obvious. Just add tables with rows and columns and display them according to the resolution width that PHP-Nuke Titanium gets from your browser.</p>\n\n<p>This was written with the Last Seen block in mind. Someone once asked me why I changed the function for last seen. I never changed it I added a Titanium mod that changes the way the last seen data was displayed. I guess now you have a more declarative answer about why I did that.</p>\n\n<p>This block my friends gives you a perfect example of why PHP-Nuke was designed with a tabular theme interface. It had future ideas for things that had not yet been done. There is what is called a Flat page design and that is when we would use only HTML5 or CSS to layout a web page.</p>\n\n<p>PHP-Nuke Titanium is not a Flat design and never will be. PHP-Nuke Titanium was designed around the idea that people in a community who were just starting out learning PHP or HTML could or would be able to create blocks, modules, or themes with relative ease.</p>\n\n<p>This can be done in CSS and HTML5 and PHP-Nuke Evolution totally allows and supports themes of this design nature, however for Fluid resizeable responsive themes that might be displayed on TVs or extremely wide monitors it is not recommended. Why? PHP-Nuke Titanium was built on the backbone of Theme technology that was written more than 30 years ago.  (US Version) supports XHTML, HTML, HTML5, and XML, so with this being the case anyone can design a theme and nobody has limitations when it comes to designing a block, module, or theme layout for their website.</p>\n\n<p>PHP-Nuke Titanium was created for folks that like bling and beautiful graphics. If you want a Flat design layout with 3 colors and no graphics then use something plain, you know like wearing a white T-Shirt everywhere every day.</p>', '', 0, 220, 6, 'WebMaster', '', 0, 'english', 0, 0, 0, 55, 11, '', 0, 1),
+(17, 7, 'webmaster', 'New Link Us Module Update', '2021-03-01 07:16:01', '2022-08-23 19:01:20', '<p><strong>Module Name:</strong> <a href=\"modules.php?name=Link_Us\" target=\"_self\">Link Us</a><br />\n<strong>Author:</strong> DarkForgeGFX<br />\n<strong>Version:</strong> v1.0.0<br />\n<strong>Core: </strong>PHP-Nuke Titanium v2.0.9d &lt;&gt; 4.0.0b<br />\n<strong>Description:</strong>&nbsp;To show and administrate several methods of backlinks to your website/portal.</p>\n\n<p>I updated the display on the Link_Us index page. It needed to be displayed properly, which may just be a matter of opinion however I&#39;m ocd and I could not take it any longer. I went ahead and took the time to lay out the table and add a fieldset to the default image section. I have not added any other size link back images so I have no idea what those&nbsp;will end up looking like. In that event, I am sure I will log in and re-write those areas as well. For now, this website has only the standard default link back image sizes in use so I will wait till I have to cross that bridge to fix it.</p>\n\n<p>I modified the index.php file located in the &quot;modules/Link_Us/public&quot; directory.&nbsp;</p>', '', 0, 352, 5, 'WebMaster', '', 0, '', 0, 0, 0, 20, 4, '', 0, 1),
+(18, 8, 'webmaster', 'Facebook Plugin and Login Problems', '2021-04-30 16:00:40', '2022-08-23 19:01:31', '<p>The comment and likes section of our CMS and website are down. More than <strong>718</strong> reports to Downdetector since 3:00 am.</p>\n\n<p>I was working on some code and thought all of a sudden I must have done something somehow to cause these plugins and the Facebook app login to stop working. I&#39;m glad I looked carefully and inspected my other domains.&nbsp;</p>\n\n<p>Turns out Facebook did something somehow to cause everything to stop working, and as usual they leave you in confusion wondering what is going on. I don&#39;t think I have ever even gotten a response from a Facebook employee ever. I have to assume they just don&#39;t care and it&#39;s obvious by the way they never respond, reply or get back to anyone who submits any kind of report at all.</p>\n\n<p>The number one reason people connect with Facebook is the social plugins for likes and comments. This is something that could be duplicated through a rather simple but sophisticated API. I have no idea why nobody has done it yet.</p>\n\n<p>As far as using Facebook to log in to a website, well most people use Google or Github to log in to the places they visit nowadays.&nbsp;</p>\n\n<p>Turns out if you want to set up a Facebook SDK or set up a Facebook login for your website you have to have an IQ of 160 or at least a 4-year college reading comprehension level to understand the things you read about. There is no reason that they can&#39;t provide better help and easier-to-understand instructions for newbies and 1st-time developers.</p>\n\n<p>They did not patent the like button or ability to store comments, and all this can be done on your own website via MySQL or MariaDB if you will. Facebook is going to dwindle to nothing if they don&#39;t start offering some incentive for us to have any level of interest at all.</p>\n\n<p>You could add the Google, Twitter, and Github login API and write your own drop-in plugin with Java for comments and likes.</p>\n\n<p>We use Facebook login, likes, and&nbsp;plugins because it is connected to the largest social network in the world, however, the key thing here is we made Facebook what it is today and we are responsible for the lackadaisical user support we are getting, this is our fault because we have allowed it.</p>\n\n<p>I&#39;m left sitting here wondering when the hell my website will go back to normal all the while pondering how many people I know that hate clicking the confirm button when liking something on a Facebook website app. It&#39;s ridiculous and intentional. They do that why? who fuck&nbsp;knows but it&#39;s probably on the top of my ten most annoying things list.</p>\n\n<p>Seems like too many generation X kids have been running the show over at Facebook and 10 bucs says they go belly up sooner or later as a result.</p>\n\n<p>Nobody wants to click a like button 2 times. What do you want to bet that if you spoke to the person that came up with that idea that you wouldn&#39;t walk away wondering who the fuck ties his shoes every morning? I would have to say this is or would probably be one of the dumbest shit heads&nbsp;that you would ever have to meet in your life.</p>\n\n<p>I would like to apologize for my language and I&#39;m sorry but I&#39;m not.</p>', '', 0, 169, 1, 'webmaster', '', 1, 'english', 0, 0, 0, 20, 4, '', 0, 1),
+(19, 10, 'webmaster', 'New Facebook Chat Block', '2021-05-01 12:21:28', '2022-08-23 19:01:41', '<p><strong>Block Name: </strong>Facebook Chat Plugin<br />\n<strong>Author:&nbsp;</strong>Ernest Allen Buffington<br />\n<strong>Filename:</strong>&nbsp;block-Facebook_Chat_Plugin.php<br />\n<strong>Block Type:</strong>&nbsp;Invisible<br />\n<strong>Version:</strong>&nbsp;v1.0<br />\n<strong>Core:</strong> PHP-Nuke Evolution 3.0.1a &lt;&gt; 4.0.0b</p>\n\n<p>One of the interesting features of the US version of PHP-Nuke Titanium is the ability to have invisible blocks. We used this feature when we made the Facebook Chat Plugin&nbsp;block as it does not need any tables or extended decorations.</p>\n\n<p>The Chat Plugin allows you to integrate your Messenger experience directly into your portal/website. This allows your customers or website members to interact with you anytime with the same personalized, rich-media experience that they get in their regular Facebook&nbsp;Messenger.</p>\n\n<p>The Chat Plugin automatically loads recent chat history between the person and your website or portal, meaning recent interactions with your website or page on messenger.com, in the Messenger app, or in the Chat Plugin on your website will be visible. This helps create a single experience for your site members or&nbsp;customers and enables you to continue the conversation even after they have left your web portal. No need to capture their information to follow up, just use the same conversation in Messenger.</p>\n\n<p>The Chat Plugin supports modern popular desktop and mobile browsers except Messenger in-app browsers and Internet Explorer.</p>', '', 0, 566, 6, 'WebMaster', '', 0, 'english', 0, 0, 0, 40, 8, '', 0, 1),
+(20, 9, 'webmaster', 'New Mod  jQuery Private Message Alert', '2016-05-04 18:34:00', '2022-08-23 19:01:51', '<p><strong>Mod Name:</strong>&nbsp;jQuery Private Message Alert<br />\n<strong>Author:&nbsp;</strong>Lonestar (crazycoder@live.co.uk)<br />\n<strong>Contributor: </strong>CoRpSE<br />\n<strong>Update:</strong>&nbsp;May 4th, 2016 10:34 am<br />\n<strong>Filename(s):</strong>&nbsp;&#39;includes/js/scripts/jquery.private.messages.alert.min.js&#39;&nbsp; &#39;admin/modules/settings/functions.php&#39;&nbsp;<br />\n<strong>Mod Type:</strong>&nbsp;Addon<br />\n<strong>Version:</strong>&nbsp;v1.0<br />\n<strong>Core:</strong>&nbsp;PHP-Nuke Titanium 2.0.9d &lt;&gt; 3.0.1b</p>\n\n<p><br />\nThis is a&nbsp;jQuery Private Message Alert addon.<br />\n<br />\nThis simply runs in the background of your site and alerts you of any new Private Messages with an audio alert and popup window.<br />\n<br />\n<strong>Features:</strong></p>\n\n<ul>\n	<li>You can toggle the script on and off.</li>\n	<li>Can specify the cookie name it uses.</li>\n	<li>You can set cookie to stop if appearing on every page refresh (Default is 5 minutes between alerts)</li>\n	<li>You can set a delay the user must be on the site before being alerted.</li>\n	<li>You can change the color of the background overlay.</li>\n	<li>You can change the color of the redirect button, currently there are 4 colors (Blue, Green, Purple &amp; Red : Default is Blue)</li>\n	<li>You can activate or deactivate the alert sound.<br />\n	&nbsp;</li>\n</ul>\n\n<p><strong>How To Configure:</strong></p>\n\n<ul>\n	<li>Navigate to the link below to configure the plugin.<br />\n	&nbsp;</li>\n</ul>\n\n<p><strong>GotTo:</strong></p>\n\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; https://yoursite.com/admin.php?op=Configure&amp;sub=9</p>', '', 0, 147, 7, 'WebMaster', '', 1, 'english', 0, 0, 0, 15, 3, '', 0, 1),
+(21, 6, 'webmaster', 'New Network Projects Module', '2021-01-01 16:00:00', '2022-08-23 19:02:02', '<p><strong>Module Name:</strong>&nbsp;<a href=\"modules.php?name=Network_Projects\" target=\"_self\">Network Projects</a><br />\n<strong>Author:</strong>&nbsp;Bob Marion (NukeScripts.Net)<br />\n<strong>Contributor:&nbsp;</strong>Ernest Allen Buffington<br />\n<strong>Version:</strong>&nbsp;v11.11.11<br />\n<strong>Core:&nbsp;</strong>PHP-Nuke Titanium v2.0.9d &lt;&gt; 4.0.0b<br />\n<strong>Description:</strong>&nbsp;A module that allows network members to submit a bug&nbsp;report or request a new project or website modification.</p>\n\n<p>Manage multiple complex projects with ease.</p>\n\n<p>Simple to use,&nbsp;powerful&nbsp;when you need it.</p>\n\n<p>All the project management essentials you need.</p>\n\n<p>Create tasks and projects, reports bugs, submit mod requests.</p>\n\n<p>With the new Network Projects Module, everything is in one central location.</p>\n\n<p>Flexible, so you can customize for your workflow.</p>\n\n<p>Advanced features for complex projects.</p>\n\n<p>This is a network module that connects to the our main database server. You will need to acquire a network database password in order to enable this module on your web portal. When or if you have any sort of problem at all, whether it be with a block, module, theme or maybe something core related, this is the place to go for help or to report issues of any nature.</p>\n\n<p>This was originally a project module that was designed for the PHP-Nuke Evolution community, and it seemed to us nobody ever really appreciated it. Bob Marion spent many hours creating this module and the community originally showed little or almost no interest in it at all. Well, we thank you Bob Marion and we praise your efforts to try and better the PHP-Nuke Evolution community. This was a tool that if used the right way would have helped the PHP-Nuke Evolution community grow, and would have helped the development of PHP-Nuke Evolution immensely. Turns out maybe any and all of the development of PHP-Nuke Evolution and or Xtreme was never promoted correctly, and for that we apologize and will try to do better from here on out.</p>\n\n<p>Bob Marion we appreciate you and all your hard work and efforts, Thank you sir and God Bless...&nbsp;&nbsp;</p>\n\n<p>&nbsp;</p>', '', 0, 470, 5, 'WebMaster', '', 0, 'english', 0, 0, 0, 35, 7, '', 0, 1),
+(22, 9, 'webmaster', 'New Mod jQuery Floating Admin Menu', '2016-10-24 17:44:00', '2022-08-23 19:02:12', '<p><strong>Mod Name:</strong>&nbsp;jQuery Floating Admin Menu<br />\n<strong>Author:&nbsp;</strong>Lonestar (crazycoder@live.co.uk) (lonestar-modules.com)<br />\n<strong>Contributor:</strong> CoRpSE (www.headshotdomain.net)<br />\n<strong>Update:</strong>&nbsp;Aug 24th, 2016 09:44 am<br />\n<strong>Filename(s):</strong>&nbsp;&#39;includes/js/scripts/jquery.reimg.image.resizer.js&#39;&nbsp; &#39;includes/css/jquery.floating.admin.css&#39;&nbsp;<br />\n<strong>Mod Type:</strong>&nbsp;Addon<br />\n<strong>Version:</strong>&nbsp;v2.0.0<br />\n<strong>Core:</strong>&nbsp;PHP-Nuke Titanium 2.0.9d &lt;&gt; 3.0.1b<br />\n&nbsp;</p>\n\n<p>This is the floating admin menu that resides on the left hand side of the page and will only appear after the admin logs in.</p>\n\n<p>Lonestar spent a lot of time making this look great. We would like to thank him for his time and efforts that most certainly have helped&nbsp;make Titanium the best CMS software ever. We look forward to the many new great things Lonestar will most certainly be contributing to the community in the future. Thanks Lonestar!</p>', '', 0, 133, 7, 'WebMaster', '', 1, 'english', 0, 0, 0, 5, 1, '', 0, 1),
+(23, 6, 'webmaster', 'New File Repository Module', '2016-05-01 08:12:47', '2022-08-23 19:02:24', '<p><strong>Module Name:</strong>&nbsp;File Repository<br />\n<strong>Author:</strong>&nbsp;Lonestar (crazycoder@live.co.uk)<br />\n<strong>Contributor:</strong> CoRpSE (www.headshotdomain.net)<br />\n<strong>Version:</strong>&nbsp;v1.1.0<br />\n<strong>Core:&nbsp;</strong>PHP-Nuke Titanium v2.0.9d &lt;&gt; 3.0.1b<br />\n<strong>Description:</strong>&nbsp;This takes the place of a very old downloads module. Meet the better new and improved downloads area.</p>\n\n<p>Lonestar would like to send a special thanks to&nbsp;coRpSE&nbsp;for his input and suggested additions/changes to this module and also for the production of the File Repository configuration video which can be found at the HeadShot Domain (www.headshotdomain.net).</p>\n\n<p><strong>Features:</strong></p>\n\n<ul>\n	<li>There are multiple ways to view the downloads, either in a Single Row or Side by Side.</li>\n	<li>Multiple files per download.</li>\n	<li>Multiple Screenshots per download.</li>\n	<li>Colored Category titles.</li>\n	<li>Colored Download titles.</li>\n	<li>Ability to link to a Live Preview of whatever file they are about to download.</li>\n	<li>SCEditor has been added to all text-area&#39;s for easy BBCode formatting.</li>\n	<li>Ability to lock downloads to a certain Group.</li>\n	<li>You can specify the minimum number of posts the user requires before being able to download.</li>\n	<li>Developer Mode: Enables developers to add a new text-area for adding fixes to downloads.</li>\n	<li>Ability to allow those logged in as an admin to bypass the Captcha.</li>\n	<li>A rating system, Allow you&#39;re users to Rate &amp; Comment on a download.</li>\n	<li>You can now specify if you wish to inform the user&#39;s the download has been updated.</li>\n	<li>Download Statistics.</li>\n	<li>Client-side uploading.</li>\n</ul>\n\n<p>&nbsp;</p>\n\n<ul>\n</ul>', '', 0, 185, 5, 'WebMaster', '', 1, 'english', 0, 0, 0, 10, 2, '', 0, 1),
+(24, 6, 'webmaster', 'New Image Repository Module', '2016-04-17 08:46:25', '2022-08-23 19:02:36', '<p><strong>Module Name:</strong>&nbsp;&nbsp;Image Repository<br />\n<strong>Author:</strong>&nbsp;Lonestar (crazycoder@live.co.uk)<br />\n<strong>Contributor:</strong>&nbsp;CoRpSE (www.headshotdomain.net)<br />\n<strong>Version:</strong>&nbsp;v1.1.0<br />\n<strong>Core:&nbsp;</strong>PHP-Nuke Titanium v2.0.9d &lt;&gt; 3.0.1b<br />\n<strong>Description:</strong>&nbsp;Image Repository is as it sounds, An Image Hosting module, It is far superior to the old version Lonestar had created / coded in the past.</p>\n\n<p><strong>Version 1.1.0 Changes:</strong><br />\n<strong>1.</strong> Removed the toggle upload image button, Upload table shows all the time now.<br />\n<strong>2.</strong> Reduced the size of the thumbnails to help with page load times.<br />\n<strong>3.</strong> Added new way of uploading images on the fly in the forums, No more BBCode button, Image Repository has its own table row now.<br />\n<strong>4.</strong> Admin panel has been moved in the main index, Just like in the Gaming Rigs (If you own it, you will know what i mean).<br />\n<strong>5.&nbsp;</strong>Cleaned up a lot of the coding, and carefully marked out what each area does.<br />\n<strong>6.&nbsp;</strong>This version is not encrypted,&nbsp;<br />\n<strong>7.</strong> FAQ, Will be added in the next minor update, Lonestar is working on making this an XML feed, So he can update from his site.<br />\n<br />\n<strong>Future Updates:</strong> Lonestar has many more updates planned for this module. You will just have to wait and see<br />\n<br />\n<strong>Version 1.0.1 Changes:</strong><br />\n<strong>1.</strong> Add Image Repository BBCode button for upload of images from forums<br />\n<strong>2.</strong> No SQL changes were made.</p>', '', 0, 200, 5, 'WebMaster', '', 1, 'english', 0, 0, 0, 15, 3, '', 0, 1),
+(25, 7, 'webmaster', 'New Web Links Module Update', '2021-05-06 18:16:31', '2022-08-23 19:02:46', '<p><strong>Module Name:</strong>&nbsp;<a href=\"modules.php?name=Web_Links\" target=\"_self\">Web Links</a><br />\n<strong>Author:</strong>&nbsp;James Knickelbein - Journey Milwaukee (http://www.journeymilwaukee.com)<br />\n<strong>Contributor:</strong> Ernest Allen Buffington<br />\n<strong>Version:</strong>&nbsp;v1.0.2<br />\n<strong>Core:&nbsp;</strong>PHP-Nuke Titanium v2.0.9d &lt;&gt; 4.0.0b<br />\n<strong>Description:</strong>&nbsp;Web Links/Resources&nbsp;based on Journey Links Hack&nbsp;</p>\n\n<p>I went in and completely sorted through every line of code and got rid of &lt;center&gt; tags, added h1&#39;s, Rewrote a lot of the code, and fixed a few errors that went unseen for years. When writing an Editorial review it would only reflect the admin number and not the admins name, that is fixed now.</p>\n\n<p>Someone in a rush did not set up the reCaptcha correctly for the add link section.</p>\n\n<p>Added Bootstrap icons in various places to change the cosmetics a little.</p>\n\n<p>Junked all the un-needed braces that were clutter.</p>\n\n<p>Removed the old expired search engines that have not existed in years and while I was at it I added Google Groups, Disney and updated the JustLinux Forums search.</p>', '', 0, 320, 5, 'WebMaster', '', 0, 'english', 0, 0, 0, 45, 9, '', 0, 1),
+(26, 7, 'webmaster', 'New NukeSentinel Module Update', '2021-05-10 12:19:26', '2022-08-23 19:02:56', '<p><strong>Module Name:</strong>&nbsp;NukeSentinel<br />\n<strong>Author:</strong>&nbsp;NukeScripts&trade; (http://nukescripts.86it.us)<br />\n<strong>Copyright: </strong>2000-2021<br />\n<strong>Contributors:</strong>&nbsp;ScottyBcoder, Truman Scott Buffington, Ernest Allen Buffington, TheGhost, Bob Marion, ChatServ<br />\n<strong>Version:</strong>&nbsp;v2.6.04<br />\n<strong>Core:&nbsp;</strong>PHP-Nuke Titanium v2.0.9d &lt;&gt; 4.0.0b<br />\n<strong>Description:</strong>&nbsp;Portal security for PHP-Nuke, PHP-Nuke Titanium, PHP-Nuke Evolution and Titanium</p>\n\n<p>&nbsp;</p>\n\n<p>Hello Everyone,</p>\n\n<p>I want to start off by saying that a lot of folks have had their hands in the coding&nbsp;and design layout of this very important portal security module. When you pass the mantle so to speak you expect the person that takes over to use an overly gracious amount of emphasis on the authors, developers, and contributors that made it all possible.&nbsp;</p>\n\n<p>Let me start out by explaining why I&#39;m using my real name as a contributor. I have been around and taken part in the development of just about every piece of code that is a part of PHP-Nuke. Short of off branding my own changes over the years, the truth is the dynamic FRANCIS framework of PHP-Nuke is what made all of it possible. I have been a part of all the developer communities over the last 30 years under different various nicknames or callsigns if you will, and with that being said,&nbsp;I guess you would have a hard time giving me credit unless I started using my real name. PHP-Nuke is open-source and for the most part, belongs to the developer communities that kept it alive, and the folks who are still keeping it alive after 30 years. The reason I am using my real name now is I have noticed a few people stirring the shit pot about people stealing code and saying it isn&#39;t&nbsp;theirs when in fact it truly is. The fact&nbsp;in the matter is that after it is modified it is no longer the original and anything modified must contain the new author&#39;s information. With that being said let&#39;s get class rolling...</p>\n\n<p>If you&#39;re going to have something to say about who is claiming something is theirs make sure you do your homework before you start running your mouth and offending people old enough to be your grandfather while at the same time making yourself look like a complete idiot. Let&#39;s start off with re-branded public and commercial software rights. The GNU general public license allows everyone to distribute and or sell their own version of PHP-Nuke or any software released under the GNU and with any name that they so choose to use. You can legally sell software with a GPL license version 2 or 3 for whatever price you want to charge and interestingly enough we could sell the original software un-modified if we so choose to do so. This can all be pretty confusing to folks that do not have at least a&nbsp;4th year of college reading and comprehension. Let me explain something,&nbsp;free software is referred to as free in terms of freedom and not in terms of the software price. What most people do is charge a distribution fee for different various renditions of software that other people have written the core engines for. Technically speaking anything you modify and change is yours and ipso facto makes you the current author, in fact, the original authors would usually prefer not to have their name attached to any version but the original and that is why as part of the law and why you are required to give a full copy of the original code un-modified with any version that you so choose to sell or distribute. There are exceptions with worldwide distributions such as PHP-Nuke because the original source code is already out there and very well known and there is no real need to emphasize on who is responsible for the ideas or concepts that went into the development of that particular software. However in court, if you did not supply a full copy that is un-modified alongside the original with the original author information, because the law is the law, you would lose any said battles that pertain to any such revenues earned.</p>\n\n<p>Interestingly enough GNU copyrights are only legal if you provide your legal given name or the name of a legally registered business entity. With that being said you can&#39;t say copyright StarMonkey or Fragglenap. It must be your legally given birth name or a registered business entity. You cannot make up an entity name and use it without owning and registering it. A registered domain does not constitute any legal rights to the name you use. You must still register it as a legal trademark or license it as a business entity and this applies to everyone no matter where they are in the world. You may own the domain name and not have the name rights, so if you use a name and do not license it or register it as a trademark anyone can steal it in about 10 minutes and you will be shit out of luck. My suggestion is that if you use a name you better make sure you own it! What can happen is, you make someone angry and said person is quite wealthy, said person decides they don&#39;t like you so they register your domain as a trademark and then they license in your state or community under the said name&nbsp;and then they drag you into court and sue your pants off and leave you broke, naked and destitute with no home and not even a cardboard box to live in. So do yourself a favor and try not to piss people off on the internet and make sure you own any name you use. In other words you better secure your interests before you piss anyone off anywhere. You never know just how vindictive or rich they might be.</p>\n\n<p>I hope this article was helpful and I felt like packaging it with this particular module would be very fitting.</p>\n\n<p>Film at 11</p>\n\n<p>&nbsp;</p>', '', 0, 431, 5, 'WebMaster', '', 0, '', 0, 0, 0, 15, 3, '', 0, 1),
+(27, 6, 'webmaster', 'New Network Disclaimer Module', '2021-05-10 13:49:53', '2022-08-23 19:16:56', '<p><strong>Module Name:</strong>&nbsp;<a href=\"modules.php?name=Network&amp;file=disclaimer\" target=\"_self\">Network Disclaimer</a><br />\n<strong>Author:</strong>&nbsp;Ernest Buffington<br />\n<strong>Contributor:</strong>&nbsp;Shawn Archer, Ernest Allen Buffington<br />\n<strong>Version:</strong>&nbsp;v1.0.0<br />\n<strong>License:&nbsp;</strong>GNU General Public License version 2<br />\n<strong>Core:&nbsp;</strong>PHP-Nuke 6.0.0 &lt;&gt; 6.5.0 | PHP-Nuke Titanium 2.0.9f&nbsp;&lt;&gt;&nbsp;4.0.0b<br />\n<strong>Description:</strong>&nbsp;Based on Website Document Mod v1.0 by&nbsp;Shawn Archer&nbsp;Copyright (c) 2002</p>\n\n<p>&nbsp;</p>\n\n<p>This module contains The 86it Developers Network&#39;s legal disclaimers and documents.</p>\n\n<ul>\n	<li>About Our Network</li>\n	<li>Network Disclaimer Statement</li>\n	<li>Network Privacy Statement</li>\n	<li>Network Terms of Use</li>\n</ul>\n\n<p>&nbsp;</p>\n\n<p>This module has information that must be loaded at the bottom of each portal or website given away by <strong>The 86it Developers Network</strong>.</p>\n\n<p>Some people disable the footer links and load the network module as a menu option on their portal. This is an acceptable way to present the network legal documents as well.</p>\n\n<p>This information must be present at all times and is a part of the network paid subscription agreement. When <strong>The 86it Developer Network</strong> gives you a web portal it may be free for you but Brandon Maintenance Management. LLC pays for your portal and website. This is done to promote programmers and programming all around the world.</p>\n\n<p>These free portals are for beginners and people learning to program on the internet.&nbsp;they are also for folks that want to setup gaming websites or run an online business, These portals have no limitations and come with a cPanel and PHP-FPM with all versions of PHP available.</p>\n\n<p>&nbsp;</p>', '', 0, 303, 5, 'WebMaster', '', 0, '', 0, 0, 0, 35, 7, '', 0, 1),
+(28, 1, 'webmaster', 'We just upgraded cPanel', '2021-05-15 05:58:28', '2022-08-23 19:03:20', '<p>We just upgraded <strong>cPanel</strong> from v94.0.8 to v96.0.7&nbsp;<span style=\"color:#e74c3c\">Fri&nbsp;May&nbsp;14&nbsp;21:53:24&nbsp;2021</span></p>\n\n<p>This message is for the <strong>PHP-Nuke Titanium</strong> admins that have <strong>cPanel</strong> access. We did not want you logging in a freaking out because of all the changes that took place today. If you are an admin you probably have compiler access already but if you do not and would like to have compiler access enabled on your personal 86it portal just use the chat plugin by clicking on the blue circle in the bottom left-hand corner. You can request compiler acess anytime you like. We do not leave compilers accessible 24/7 so you will have 24 hours from the time of request before your compiler goes back offline.</p>\n\n<p>We also upgraded from <strong>CENTOS</strong> v6 to <strong>CENTOS</strong> v7.9&nbsp;<span style=\"color:#e74c3c\">Fri&nbsp;May&nbsp;14&nbsp;21:53:24&nbsp;2021</span></p>\n\n<p>&nbsp;</p>', '', 0, 266, 4, 'WebMaster', '', 0, 'english', 0, 0, 0, 5, 1, '', 0, 1),
+(29, 9, 'webmaster', 'New Who Viewed Forum Mod', '2021-05-17 08:05:18', '2022-08-23 19:03:31', '<p><strong>Mod&nbsp;Name:</strong>&nbsp;Who Viewed Forum Mod<br />\n<strong>Author:</strong>&nbsp;Ernest Buffington<br />\n<strong>Contributors:</strong>&nbsp;We looked, nobody cared enough to keep this info available.<br />\n<strong>Version:</strong>&nbsp;v1.0.0<br />\n<strong>License:&nbsp;</strong>GNU General Public License version 2<br />\n<strong>Core:&nbsp;</strong>PHP-Nuke-Titanium 3.0.0&nbsp;&lt;&gt; 4.0.0b<br />\n<strong>Description:</strong>&nbsp;This shows who has viewed each topic and how many times in the forums area.</p>\n\n<ul>\n	<li>Added Date with bootstrap icon</li>\n	<li>Added Time with bootstrap icon</li>\n	<li>Added back to topic button</li>\n	<li>Added full description link</li>\n	<li>Added profile pic</li>\n	<li>Added animated logged in image</li>\n	<li>Added animated logged out image</li>\n	<li>Fixed currently online it was not working</li>\n	<li>Fixed currently offline it was not working</li>\n	<li>Only admin sees anonymous on the who viewed list</li>\n	<li>If a user does not have where they are from listed,&nbsp;it defaults to The InterWebs</li>\n</ul>\n\n<p><br />\nThis was a mod added to the phpBB Titanium v2.0.23n Forums area.</p>', '', 0, 373, 7, 'WebMaster', '', 0, 'english', 0, 0, 0, 15, 3, '', 0, 1),
+(30, 6, 'webmaster', 'New Network Cemetery Module', '2021-05-18 06:22:23', '2022-08-23 19:03:40', '<p><strong>Module Name:</strong>&nbsp;<a href=\"modules.php?name=Network_Cemetery\" target=\"_self\">Network Cemetery</a><br />\n<strong>Author:</strong>&nbsp;Ernest Buffington<br />\n<strong>Contributors:</strong>&nbsp;George Carlin, Timothy V Trela R.I.P.<br />\n<strong>Version:</strong>&nbsp;v1.0.0<br />\n<strong>License:&nbsp;</strong>GNU General Public License version 2<br />\n<strong>Core:&nbsp;</strong>PHP-Nuke 6.0.0 &lt;&gt; 6.5.0 | PHP-Nuke Titanium 2.0.9f&nbsp;&lt;&gt;&nbsp;4.0.0b<br />\n<strong>Description:</strong>&nbsp;My Personal Virtual Cemetery</p>\n\n<ul>\n	<li>Unlimted Cemetery Categories i.e. Friends, Family, Loved Ones, Enemies or Rockstars</li>\n	<li>Unlimited Virtual Headstones</li>\n	<li>Add Deceased Name</li>\n	<li>Add Headstone Category</li>\n	<li>Add Headstone URL</li>\n	<li>Add Headstone Description</li>\n	<li>Nobody can read your VIrtual Cemetery but you when you&#39;re logged in. (invisible to the public)</li>\n</ul>\n\n<p><br />\nIf you&#39;re 50 or older this will be a handy little tool. If you&#39;re like me almost everyone you ever loved or cared about is dead. This makes it easier to keep track of all the friends and loved ones you have that die. I have lost so many I can&#39;t recall them all in one sitting.</p>\n\n<p>If you&#39;re a serial killer you can keep track of all the people you kill as well.</p>\n\n<p>Enjoy</p>', '', 0, 303, 5, 'WebMaster', '', 0, 'english', 0, 0, 0, 10, 2, '', 0, 1),
+(31, 6, 'webmaster', 'New Members List Module', '2021-05-18 16:29:55', '2022-08-23 19:03:49', '<p><strong>Module Name:</strong>Â <a href=\"modules.php?name=Members_List\" target=\"_self\">Members List</a><br />\n<strong>Author:</strong>Â Ernest Allen Buffington<br />\n<strong>Contributor:Â </strong>Lonestar (http://lonestar-modules.com)<br />\n<strong>Version:</strong>Â v4.0.0<br />\n<strong>License:Â </strong>GNU General Public License version 2<br />\n<strong>Core:Â </strong>PHP-Nuke Titanium v.3.0.1b <> 4.0.0b<br />\n<strong>Description:</strong>Â Website Member List - Search Website Member List.</p>\n\n<p>This module appeared to be incomplete and broken. The status of the users in the user list did not reflect if the user was currently online or offline. The user\'s website icon was missing, the user\'s Facebook icon was missing and the gender icon was missing as well. The members\' list was written with a task and a goal to begin with and that was to automate finding and sending a user message or visiting a user\'s website. We did not add the user\'s email back to the search criteria of the member list as it is not needed. Send them a private message instead and the web portalÂ will sendÂ them an email telling them they have a new message waiting for them.</p>\n\n<p><strong>Added Features:</strong></p>\n\n<ul>\n	<li>The only users visible in the members list are members that are not in Ghost Mode</li>\n	<li>Search Engines and website members have no way of knowing just how many website members really exist (Ghost Mode allows visitors to be 100% invisible)</li>\n	<li>Added global Ghost Mode ability for all users</li>\n	<li>Added the ability for admins to see who is in Ghost Mode</li>\n	<li>Added Ghost Mode - You are now invisible when you hide your online status. It will appear as if you do not exist!</li>\n	<li>Added A Profile Pic</li>\n	<li>Added Private Message Icon</li>\n	<li>Added a Website Icon that only shows up if the member has a website listed on their profile</li>\n	<li>Added a Facebook icon that only shows up if the user has their Facebook account listed on their profile.</li>\n	<li>Added New Gender Icons</li>\n	<li>Fixed users online status in the members list as it was not working</li>\n	<li>Added animated ONLINE image</li>\n	<li>Fixed users offline status in the members list as it was not working</li>\n	<li>Added animated OFFLINE image</li>\n	<li>If the person has marked theirself hidden on their profile, only admins can see them in the member list</li>\n	<li>If a person leaves the Location field blank it defaults to The Interwebs</li>\n</ul>\n\n<p>Â </p>\n\n<p>Â </p>', '', 0, 352, 5, 'WebMaster', '', 0, 'english', 0, 0, 0, 25, 5, '', 0, 1);
 
 CREATE TABLE `nuke_stories_cat` (
-  `catid` int(11) NOT NULL AUTO_INCREMENT,
+  `catid` int(11) NOT NULL,
   `title` varchar(20) NOT NULL DEFAULT '',
-  `counter` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`catid`)
+  `counter` int(11) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
+INSERT INTO `nuke_stories_cat` (`catid`, `title`, `counter`) VALUES
+(1, '86it Updates & News', 427),
+(4, 'CDN Info', 383),
+(5, 'Server Updates', 202),
+(6, 'Module Information', 479),
+(7, 'Module Updates', 436),
+(8, 'Titanium News', 411),
+(9, 'Mods', 456),
+(10, 'Block Information', 471),
+(11, '86it Song of The Day', 1);
 
---
--- Table structure for table `nuke_subscriptions`
---
 
 CREATE TABLE `nuke_subscriptions` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `userid` int(10) NOT NULL DEFAULT '0',
-  `subscription_expire` varchar(50) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`,`userid`)
+  `id` int(10) NOT NULL,
+  `userid` int(10) NOT NULL DEFAULT 0,
+  `subscription_expire` varchar(50) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_themes`
---
 
 CREATE TABLE `nuke_themes` (
   `theme_name` varchar(100) NOT NULL DEFAULT '',
   `groups` varchar(50) NOT NULL DEFAULT '',
-  `permissions` tinyint(2) NOT NULL DEFAULT '1',
+  `permissions` tinyint(2) NOT NULL DEFAULT 1,
   `custom_name` varchar(100) NOT NULL DEFAULT '',
-  `active` tinyint(1) NOT NULL DEFAULT '0',
-  `theme_info` text NOT NULL,
-  PRIMARY KEY (`theme_name`)
+  `active` tinyint(1) NOT NULL DEFAULT 0,
+  `theme_info` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `nuke_themes`
---
-
 INSERT INTO `nuke_themes` (`theme_name`, `groups`, `permissions`, `custom_name`, `active`, `theme_info`) VALUES
-('XtremeV3', '', 1, 'XtremeV3', 1, '1368:::#454545:::#383838:::#383838:::#383838:::#ccc:::#ccc:::Go to Theme Options to Edit Footer Message Line 1:::Go to Theme Options to Edit Footer Message Line 2:::#f5a405:::dark');
+('Xtreme_Core', '', 1, 'Xtreme_Core', 1, '93%:::#8d7b4d:::#645838:::#373121:::#151515:::#ccc:::#ccc:::Go to Theme Options to Edit Footer Message Line 1:::Go to Theme Options to Edit Footer Message Line 2:::#D29A2B:::dark');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_topics`
---
 
 CREATE TABLE `nuke_topics` (
-  `topicid` int(3) NOT NULL AUTO_INCREMENT,
+  `topicid` int(3) NOT NULL,
   `topicname` varchar(20) DEFAULT NULL,
   `topicimage` varchar(100) DEFAULT NULL,
   `topictext` varchar(40) DEFAULT NULL,
-  `counter` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`topicid`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_topics`
---
+  `counter` int(11) NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_topics` (`topicid`, `topicname`, `topicimage`, `topictext`, `counter`) VALUES
-(1, 'evolution', 'nuke.png', 'Nuke-Evolution', 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_users`
---
+(3, 'contentdeliverynet', 'black_template.png', 'CDN - Content Delivery Networks', 225),
+(4, 'the86itTeam', 'black_template.png', 'The 86it Dev Team', 252),
+(1, 'titanium', 'black_template.png', 'PHP-Nuke Titanium News', 533),
+(5, 'modules', 'black_template.png', 'PHP-Nuke Titanium Modules', 285),
+(6, 'blocks', 'black_template.png', 'PHP-Nuke Titanium Blocks', 307),
+(7, 'mods', 'black_template.png', 'PHP-Nuke Titanium Mods', 197),
+(8, 'themes', 'black_template.png', 'PHP-Nuke Titanium Themes', 191),
+(9, 'todo', 'black_template.png', 'PHP-Nuke Titanium ToDo List', 10),
+(10, 'adminpanels', 'black_template.png', 'PHP-Nuke Titanium Admin Panels', 10);
 
 CREATE TABLE `nuke_users` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
   `name` varchar(60) NOT NULL DEFAULT '',
   `username` varchar(25) NOT NULL DEFAULT '',
   `user_email` varchar(255) NOT NULL DEFAULT '',
@@ -6290,122 +4799,106 @@ CREATE TABLE `nuke_users` (
   `user_from` varchar(100) DEFAULT NULL,
   `user_from_flag` varchar(64) DEFAULT NULL,
   `user_interests` varchar(150) NOT NULL DEFAULT '',
-  `user_sig` text,
+  `user_sig` text DEFAULT NULL,
   `user_viewemail` tinyint(2) DEFAULT NULL,
   `user_theme` int(3) DEFAULT NULL,
   `user_facebook` varchar(255) DEFAULT NULL,
   `user_password` varchar(40) NOT NULL DEFAULT '',
-  `storynum` tinyint(4) NOT NULL DEFAULT '10',
+  `storynum` tinyint(4) NOT NULL DEFAULT 10,
   `umode` varchar(10) NOT NULL DEFAULT '',
-  `uorder` tinyint(1) NOT NULL DEFAULT '0',
-  `thold` tinyint(1) NOT NULL DEFAULT '0',
-  `noscore` tinyint(1) NOT NULL DEFAULT '0',
-  `bio` longtext,
-  `ublockon` tinyint(1) NOT NULL DEFAULT '0',
-  `ublock` tinytext,
+  `uorder` tinyint(1) NOT NULL DEFAULT 0,
+  `thold` tinyint(1) NOT NULL DEFAULT 0,
+  `noscore` tinyint(1) NOT NULL DEFAULT 0,
+  `bio` longtext DEFAULT NULL,
+  `ublockon` tinyint(1) NOT NULL DEFAULT 0,
+  `ublock` tinytext DEFAULT NULL,
   `theme` varchar(255) NOT NULL DEFAULT '',
-  `commentmax` int(11) NOT NULL DEFAULT '4096',
-  `counter` int(11) NOT NULL DEFAULT '0',
-  `newsletter` int(1) NOT NULL DEFAULT '0',
-  `user_posts` int(10) NOT NULL DEFAULT '0',
-  `user_attachsig` int(2) NOT NULL DEFAULT '1',
-  `user_rank` int(10) NOT NULL DEFAULT '0',
-  `user_level` int(10) NOT NULL DEFAULT '1',
-  `broadcast` tinyint(1) NOT NULL DEFAULT '1',
-  `popmeson` tinyint(1) NOT NULL DEFAULT '0',
-  `user_active` tinyint(1) DEFAULT '1',
-  `user_session_time` int(11) NOT NULL DEFAULT '0',
-  `user_session_page` smallint(5) NOT NULL DEFAULT '0',
-  `user_lastvisit` int(11) NOT NULL DEFAULT '0',
-  `user_timezone` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `commentmax` int(11) NOT NULL DEFAULT 4096,
+  `counter` int(11) NOT NULL DEFAULT 0,
+  `newsletter` int(1) NOT NULL DEFAULT 0,
+  `user_posts` int(10) NOT NULL DEFAULT 0,
+  `user_attachsig` int(2) NOT NULL DEFAULT 1,
+  `user_rank` int(10) NOT NULL DEFAULT 0,
+  `user_level` int(10) NOT NULL DEFAULT 1,
+  `broadcast` tinyint(1) NOT NULL DEFAULT 1,
+  `popmeson` tinyint(1) NOT NULL DEFAULT 0,
+  `user_active` tinyint(1) DEFAULT 1,
+  `user_session_time` int(11) NOT NULL DEFAULT 0,
+  `user_session_page` smallint(5) NOT NULL DEFAULT 0,
+  `user_lastvisit` int(11) NOT NULL DEFAULT 0,
+  `user_timezone` decimal(5,2) NOT NULL DEFAULT 0.00,
   `user_style` tinyint(4) DEFAULT NULL,
   `user_lang` varchar(255) NOT NULL DEFAULT 'english',
   `user_dateformat` varchar(14) NOT NULL DEFAULT 'D M d, Y g:i a',
-  `user_new_privmsg` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `user_unread_privmsg` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `user_last_privmsg` int(11) NOT NULL DEFAULT '0',
+  `user_new_privmsg` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `user_unread_privmsg` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `user_last_privmsg` int(11) NOT NULL DEFAULT 0,
   `user_emailtime` int(11) DEFAULT NULL,
-  `user_allowhtml` tinyint(1) DEFAULT '1',
-  `user_allowbbcode` tinyint(1) DEFAULT '1',
-  `user_allowsmile` tinyint(1) DEFAULT '1',
-  `user_allowavatar` tinyint(1) NOT NULL DEFAULT '1',
-  `user_allow_pm` tinyint(1) NOT NULL DEFAULT '1',
-  `user_allow_mass_pm` tinyint(1) DEFAULT '4',
-  `user_allow_viewonline` tinyint(1) NOT NULL DEFAULT '1',
-  `user_notify` tinyint(1) NOT NULL DEFAULT '0',
-  `user_notify_pm` tinyint(1) NOT NULL DEFAULT '1',
-  `user_popup_pm` tinyint(1) NOT NULL DEFAULT '1',
-  `user_avatar_type` tinyint(4) NOT NULL DEFAULT '3',
+  `user_allowhtml` tinyint(1) DEFAULT 1,
+  `user_allowbbcode` tinyint(1) DEFAULT 1,
+  `user_allowsmile` tinyint(1) DEFAULT 1,
+  `user_allowavatar` tinyint(1) NOT NULL DEFAULT 1,
+  `user_allow_pm` tinyint(1) NOT NULL DEFAULT 1,
+  `user_allow_mass_pm` tinyint(1) DEFAULT 4,
+  `user_allow_viewonline` tinyint(1) NOT NULL DEFAULT 1,
+  `user_notify` tinyint(1) NOT NULL DEFAULT 0,
+  `user_notify_pm` tinyint(1) NOT NULL DEFAULT 1,
+  `user_popup_pm` tinyint(1) NOT NULL DEFAULT 1,
+  `user_avatar_type` tinyint(4) NOT NULL DEFAULT 3,
   `user_sig_bbcode_uid` varchar(10) DEFAULT NULL,
   `user_actkey` varchar(32) DEFAULT NULL,
   `user_newpasswd` varchar(32) DEFAULT NULL,
-  `points` int(10) DEFAULT '0',
+  `points` int(10) DEFAULT 0,
   `last_ip` varchar(15) NOT NULL DEFAULT '0',
-  `user_wordwrap` smallint(3) NOT NULL DEFAULT '70',
-  `agreedtos` tinyint(1) NOT NULL DEFAULT '0',
-  `user_allowsignature` tinyint(4) NOT NULL DEFAULT '1',
-  `user_report_optout` tinyint(1) NOT NULL DEFAULT '0',
-  `user_show_quickreply` tinyint(1) NOT NULL DEFAULT '1',
-  `user_quickreply_mode` tinyint(1) NOT NULL DEFAULT '1',
+  `user_wordwrap` smallint(3) NOT NULL DEFAULT 70,
+  `agreedtos` tinyint(1) NOT NULL DEFAULT 0,
+  `user_allowsignature` tinyint(4) NOT NULL DEFAULT 1,
+  `user_report_optout` tinyint(1) NOT NULL DEFAULT 0,
+  `user_show_quickreply` tinyint(1) NOT NULL DEFAULT 1,
+  `user_quickreply_mode` tinyint(1) NOT NULL DEFAULT 1,
   `user_color_gc` varchar(6) DEFAULT '',
-  `user_color_gi` text,
-  `user_showavatars` tinyint(1) DEFAULT '1',
-  `user_showsignatures` tinyint(1) DEFAULT '1',
-  `user_time_mode` tinyint(4) NOT NULL DEFAULT '6',
-  `user_dst_time_lag` tinyint(4) NOT NULL DEFAULT '60',
+  `user_color_gi` text DEFAULT NULL,
+  `user_showavatars` tinyint(1) DEFAULT 1,
+  `user_showsignatures` tinyint(1) DEFAULT 1,
+  `user_time_mode` tinyint(4) NOT NULL DEFAULT 6,
+  `user_dst_time_lag` tinyint(4) NOT NULL DEFAULT 60,
   `user_pc_timeOffsets` varchar(55) NOT NULL DEFAULT '0',
-  `user_view_log` tinyint(4) NOT NULL DEFAULT '0',
+  `user_view_log` tinyint(4) NOT NULL DEFAULT 0,
   `user_glance_show` varchar(255) NOT NULL DEFAULT '1',
-  `user_hide_images` tinyint(2) NOT NULL DEFAULT '0',
-  `user_open_quickreply` tinyint(1) NOT NULL DEFAULT '1',
-  `sceditor_in_source` tinyint(1) NOT NULL DEFAULT '0',
+  `user_hide_images` tinyint(2) NOT NULL DEFAULT 0,
+  `user_open_quickreply` tinyint(1) NOT NULL DEFAULT 1,
+  `sceditor_in_source` tinyint(1) NOT NULL DEFAULT 0,
   `xdata_bbcode` varchar(10) DEFAULT NULL,
-  `user_ftr` smallint(1) NOT NULL DEFAULT '0',
-  `user_ftr_time` int(10) NOT NULL DEFAULT '0',
-  `user_rank2` int(11) DEFAULT '-1',
-  `user_rank3` int(11) DEFAULT '-2',
-  `user_rank4` int(11) DEFAULT '-2',
-  `user_rank5` int(11) DEFAULT '-2',
-  `user_gender` tinyint(4) NOT NULL DEFAULT '0',
-  `user_birthday` int(8) NOT NULL DEFAULT '0',
+  `user_ftr` smallint(1) NOT NULL DEFAULT 0,
+  `user_ftr_time` int(10) NOT NULL DEFAULT 0,
+  `user_rank2` int(11) DEFAULT -1,
+  `user_rank3` int(11) DEFAULT -2,
+  `user_rank4` int(11) DEFAULT -2,
+  `user_rank5` int(11) DEFAULT -2,
+  `user_gender` tinyint(4) NOT NULL DEFAULT 0,
+  `user_birthday` int(8) NOT NULL DEFAULT 0,
   `user_birthday2` int(8) DEFAULT NULL,
-  `birthday_display` tinyint(1) NOT NULL DEFAULT '0',
-  `birthday_greeting` tinyint(1) NOT NULL DEFAULT '0',
-  `user_next_birthday` smallint(4) NOT NULL DEFAULT '0',
-  `user_reputation` float NOT NULL DEFAULT '0',
+  `birthday_display` tinyint(1) NOT NULL DEFAULT 0,
+  `birthday_greeting` tinyint(1) NOT NULL DEFAULT 0,
+  `user_next_birthday` smallint(4) NOT NULL DEFAULT 0,
+  `user_reputation` float NOT NULL DEFAULT 0,
   `user_rep_last_time` int(11) DEFAULT NULL,
-  `user_admin_notes` text,
-  `user_allow_arcadepm` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`),
-  KEY `uname` (`username`),
-  KEY `user_session_time` (`user_session_time`),
-  KEY `user_birthday` (`user_birthday`),
-  KEY `user_birthday2` (`user_birthday2`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_users`
---
+  `user_admin_notes` text DEFAULT NULL,
+  `user_allow_arcadepm` tinyint(4) NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_users` (`user_id`, `name`, `username`, `user_email`, `femail`, `user_website`, `user_avatar`, `user_regdate`, `user_occ`, `user_from`, `user_from_flag`, `user_interests`, `user_sig`, `user_viewemail`, `user_theme`, `user_facebook`, `user_password`, `storynum`, `umode`, `uorder`, `thold`, `noscore`, `bio`, `ublockon`, `ublock`, `theme`, `commentmax`, `counter`, `newsletter`, `user_posts`, `user_attachsig`, `user_rank`, `user_level`, `broadcast`, `popmeson`, `user_active`, `user_session_time`, `user_session_page`, `user_lastvisit`, `user_timezone`, `user_style`, `user_lang`, `user_dateformat`, `user_new_privmsg`, `user_unread_privmsg`, `user_last_privmsg`, `user_emailtime`, `user_allowhtml`, `user_allowbbcode`, `user_allowsmile`, `user_allowavatar`, `user_allow_pm`, `user_allow_mass_pm`, `user_allow_viewonline`, `user_notify`, `user_notify_pm`, `user_popup_pm`, `user_avatar_type`, `user_sig_bbcode_uid`, `user_actkey`, `user_newpasswd`, `points`, `last_ip`, `user_wordwrap`, `agreedtos`, `user_allowsignature`, `user_report_optout`, `user_show_quickreply`, `user_quickreply_mode`, `user_color_gc`, `user_color_gi`, `user_showavatars`, `user_showsignatures`, `user_time_mode`, `user_dst_time_lag`, `user_pc_timeOffsets`, `user_view_log`, `user_glance_show`, `user_hide_images`, `user_open_quickreply`, `sceditor_in_source`, `xdata_bbcode`, `user_ftr`, `user_ftr_time`, `user_rank2`, `user_rank3`, `user_rank4`, `user_rank5`, `user_gender`, `user_birthday`, `user_birthday2`, `birthday_display`, `birthday_greeting`, `user_next_birthday`, `user_reputation`, `user_rep_last_time`, `user_admin_notes`, `user_allow_arcadepm`) VALUES
-(1, '', 'Anonymous', '', '', '', 'blank.gif', 'Nov 03, 2018', '', '', NULL, '', '', 0, 0, NULL, '', 10, '', 0, 0, 0, '', 0, '', '', 4096, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, '10.00', NULL, 'english', 'D M d, Y g:i a', 0, 0, 0, NULL, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 3, NULL, NULL, NULL, 0, '0', 70, 0, 0, 0, 0, 0, '', '', 1, 1, 6, 60, '0', 0, '1', 0, 1, 0, '', 0, 0, -1, -2, -2, -2, 0, 0, NULL, 0, 0, 0, 43.2825, 1243272322, '', 1);
-
---
--- Table structure for table `nuke_users_countries`
---
+(1, '', 'Anonymous', '', '', '', 'blank.gif', 'Nov 03, 2018', '', '', NULL, '', '', 0, 0, NULL, '', 10, '', 0, 0, 0, '', 0, '', '', 4096, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, '10.00', NULL, 'english', 'D M d, Y g:i a', 0, 0, 0, NULL, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 3, NULL, NULL, NULL, 0, '0', 70, 0, 0, 0, 0, 0, '', '', 1, 1, 6, 60, '0', 0, '1', 0, 1, 0, '', 0, 0, -1, -2, -2, -2, 0, 0, NULL, 0, 0, 0, 43.2825, 1243272322, '', 1),
+(2, 'Winston Terrance Wolfe', 'webmaster', 'webmaster@www.dev-php-nuke-evolution-xtreme.86it.us', '', 'https://www.www.dev-php-nuke-evolution-xtreme.86it.us', '772511426630521e6c336f.', 'Aug 23, 2022', 'WebMaster', 'Special Forces Officer at USMC', 'usa.png', 'Programming', '', 0, NULL, 'winstonterrance.wolfe.3', 'a0ed1dc594445e7a51ac198fb2585098', 10, '', 0, 0, 0, 'Â Â phone: (813) 846-2865 | mobile: (813) 520-3360<br>\nÂ Â WebMaster @ The 86it Developers Network,<br>\nÂ Â 8010 Woodland Center Blvd #86,<br>\nÂ Â Tampa 33614, USA<br>', 0, NULL, 'Xtreme_Core', 4096, 0, 0, 1, 1, 4, 2, 1, 0, 1, 1661299457, 0, 1661299039, '-5.00', NULL, 'english', 'D M d, Y g:i a', 0, 0, 1661292352, NULL, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, '', '', NULL, 0, '47.206.216.196', 70, 0, 1, 0, 0, 0, '00aa00', '--3----4----1--', 1, 1, 4, 60, '0', 0, '1', 0, 0, 1, NULL, 0, 0, 6, 7, 5, -2, 1, 0, NULL, 0, 0, 0, -0.2, 1661280823, '', 0),
+(3, 'Ernest A Buffington', 'TheGhost', 'ernest.buffington@gmail.com', '', 'https://theghost.86it.us', '210584338363054da37eb30.', 'Aug 23, 2022', 'Data Scientist / Programmer', 'Brandon, Florida', 'usa.png', 'Code', '', 0, NULL, 'ernest.buffington.1', 'a0ed1dc594445e7a51ac198fb2585098', 10, 'nested', 0, 0, 0, '', 0, NULL, '', 4096, 0, 1, -1, 1, 4, 2, 1, 0, 1, 1661299561, 0, 1661297523, '-5.00', NULL, 'english', 'D M d, Y g:i a', 0, 0, 0, NULL, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, '', '', NULL, 0, '47.206.216.196', 70, 0, 1, 0, 0, 1, '00aa00', '----3----4----1--------------------------------------------4----1--------------------------------------------1------3--', 1, 1, 1, 60, '0', 0, '1', 0, 1, 1, NULL, 0, 0, -2, -2, -2, -2, 1, 0, NULL, 0, 0, 0, -0.2, 1661280823, '', 0),
+(4, 'Bob Marion', 'NukeSheriff', 'bob.marion@86it.us', '', 'https://hub.86it.us/index.php?op=ad_network_click&bid=7', '10066464956305665d8aaf0.', 'Aug 23, 2022', 'Programmer', '', 'usa.png', 'PHP-Nuke Titanium', '', 0, NULL, '', 'a0ed1dc594445e7a51ac198fb2585098', 10, 'nested', 0, 0, 0, '', 0, NULL, '', 4096, 0, 1, 0, 1, 6, 2, 1, 0, 1, 1661299843, -10, 1661299360, '-5.00', NULL, 'english', 'D M d, Y g:i a', 0, 0, 1661299691, NULL, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, '', '', NULL, 0, '47.206.216.196', 70, 0, 1, 0, 0, 0, '00b3ff', '--4--', 1, 1, 1, 60, '0', 0, '1', 0, 0, 1, NULL, 0, 0, 5, -2, -2, -2, 1, 0, NULL, 0, 0, 0, 0, NULL, '', 0);
 
 CREATE TABLE `nuke_users_countries` (
-  `id_country` int(11) NOT NULL AUTO_INCREMENT,
+  `id_country` int(11) NOT NULL,
   `name` varchar(64) NOT NULL DEFAULT '',
   `iso_code_2` char(2) NOT NULL DEFAULT '',
-  `iso_code_3` char(3) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id_country`),
-  KEY `IDX_NAME` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=240 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `nuke_users_countries`
---
+  `iso_code_3` char(3) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `nuke_users_countries` (`id_country`, `name`, `iso_code_2`, `iso_code_3`) VALUES
 (1, 'Afghanistan', 'AF', 'AFG'),
@@ -6646,47 +5139,960 @@ INSERT INTO `nuke_users_countries` (`id_country`, `name`, `iso_code_2`, `iso_cod
 (238, 'Zambia', 'ZM', 'ZMB'),
 (239, 'Zimbabwe', 'ZW', 'ZWE');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_users_temp`
---
-
 CREATE TABLE `nuke_users_temp` (
-  `user_id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL,
   `username` varchar(25) NOT NULL DEFAULT '',
   `user_email` varchar(255) NOT NULL DEFAULT '',
   `user_password` varchar(40) NOT NULL DEFAULT '',
   `user_regdate` varchar(20) NOT NULL DEFAULT '',
   `check_num` varchar(50) NOT NULL DEFAULT '',
   `time` varchar(14) NOT NULL DEFAULT '',
-  `realname` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`user_id`)
+  `realname` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_users_who_been`
---
 
 CREATE TABLE `nuke_users_who_been` (
-  `user_ID` int(11) NOT NULL default '0',
-  `username` varchar(25) NOT NULL default '',
-  `last_visit` int(15) default NULL,
-  PRIMARY KEY  (`user_ID`)
+  `user_ID` int(11) NOT NULL DEFAULT 0,
+  `username` varchar(25) NOT NULL DEFAULT '',
+  `last_visit` int(15) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nuke_welcome_pm`
---
 
 CREATE TABLE `nuke_welcome_pm` (
   `subject` varchar(30) NOT NULL DEFAULT '',
-  `msg` text NOT NULL,
-  PRIMARY KEY (`subject`)
+  `msg` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
+
+ALTER TABLE `network_bookmarks`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+ALTER TABLE `network_bookmarks_cat`
+  ADD PRIMARY KEY (`category_id`),
+  ADD KEY `user_id` (`user_id`);
+
+ALTER TABLE `nuke_admin_fc`
+  ADD PRIMARY KEY (`fc_attempts`);
+
+ALTER TABLE `nuke_authors`
+  ADD PRIMARY KEY (`aid`);
+
+ALTER TABLE `nuke_autonews`
+  ADD PRIMARY KEY (`anid`),
+  ADD UNIQUE KEY `anid` (`anid`);
+
+ALTER TABLE `nuke_banner`
+  ADD PRIMARY KEY (`bid`),
+  ADD KEY `cid` (`cid`);
+
+ALTER TABLE `nuke_banner_clients`
+  ADD PRIMARY KEY (`cid`);
+
+ALTER TABLE `nuke_banner_plans`
+  ADD PRIMARY KEY (`pid`);
+
+ALTER TABLE `nuke_banner_positions`
+  ADD PRIMARY KEY (`apid`),
+  ADD KEY `position_number` (`position_number`);
+
+ALTER TABLE `nuke_bbadvanced_username_color`
+  ADD PRIMARY KEY (`group_id`);
+
+ALTER TABLE `nuke_bbarcade`
+  ADD PRIMARY KEY (`arcade_name`);
+
+ALTER TABLE `nuke_bbarcade_categories`
+  ADD KEY `arcade_catid` (`arcade_catid`);
+
+ALTER TABLE `nuke_bbattachments`
+  ADD KEY `attach_id_post_id` (`attach_id`,`post_id`),
+  ADD KEY `attach_id_privmsgs_id` (`attach_id`,`privmsgs_id`),
+  ADD KEY `post_id` (`post_id`),
+  ADD KEY `privmsgs_id` (`privmsgs_id`);
+
+ALTER TABLE `nuke_bbattachments_config`
+  ADD PRIMARY KEY (`config_name`);
+
+ALTER TABLE `nuke_bbattachments_desc`
+  ADD PRIMARY KEY (`attach_id`),
+  ADD KEY `filetime` (`filetime`),
+  ADD KEY `physical_filename` (`physical_filename`(10)),
+  ADD KEY `filesize` (`filesize`);
+
+ALTER TABLE `nuke_bbattach_quota`
+  ADD KEY `quota_type` (`quota_type`);
+
+ALTER TABLE `nuke_bbauth_access`
+  ADD KEY `group_id` (`group_id`),
+  ADD KEY `forum_id` (`forum_id`);
+
+ALTER TABLE `nuke_bbauth_arcade_access`
+  ADD KEY `group_id` (`group_id`),
+  ADD KEY `arcade_catid` (`arcade_catid`);
+
+ALTER TABLE `nuke_bbbanlist`
+  ADD PRIMARY KEY (`ban_id`),
+  ADD KEY `ban_ip_user_id` (`ban_ip`,`ban_userid`);
+
+ALTER TABLE `nuke_bbcategories`
+  ADD PRIMARY KEY (`cat_id`),
+  ADD KEY `cat_order` (`cat_order`);
+
+ALTER TABLE `nuke_bbconfig`
+  ADD PRIMARY KEY (`config_name`);
+
+ALTER TABLE `nuke_bbdisallow`
+  ADD PRIMARY KEY (`disallow_id`);
+
+ALTER TABLE `nuke_bbextensions`
+  ADD PRIMARY KEY (`ext_id`);
+
+ALTER TABLE `nuke_bbextension_groups`
+  ADD PRIMARY KEY (`group_id`);
+
+ALTER TABLE `nuke_bbflags`
+  ADD PRIMARY KEY (`flag_id`);
+
+ALTER TABLE `nuke_bbforbidden_extensions`
+  ADD PRIMARY KEY (`ext_id`);
+
+ALTER TABLE `nuke_bbforums`
+  ADD PRIMARY KEY (`forum_id`),
+  ADD KEY `forums_order` (`forum_order`),
+  ADD KEY `cat_id` (`cat_id`),
+  ADD KEY `forum_last_post_id` (`forum_last_post_id`);
+
+ALTER TABLE `nuke_bbforum_prune`
+  ADD PRIMARY KEY (`prune_id`),
+  ADD KEY `forum_id` (`forum_id`);
+
+ALTER TABLE `nuke_bbgames`
+  ADD KEY `game_id` (`game_id`);
+
+ALTER TABLE `nuke_bbgroups`
+  ADD PRIMARY KEY (`group_id`),
+  ADD KEY `group_single_user` (`group_single_user`);
+
+ALTER TABLE `nuke_bbinline_ads`
+  ADD PRIMARY KEY (`ad_id`);
+
+ALTER TABLE `nuke_bblogs`
+  ADD PRIMARY KEY (`log_id`);
+
+ALTER TABLE `nuke_bblogs_config`
+  ADD PRIMARY KEY (`config_name`);
+
+ALTER TABLE `nuke_bbposts`
+  ADD PRIMARY KEY (`post_id`),
+  ADD KEY `forum_id` (`forum_id`),
+  ADD KEY `topic_id` (`topic_id`),
+  ADD KEY `poster_id` (`poster_id`),
+  ADD KEY `post_time` (`post_time`),
+  ADD KEY `post_icon` (`post_icon`);
+
+ALTER TABLE `nuke_bbposts_text`
+  ADD PRIMARY KEY (`post_id`);
+
+ALTER TABLE `nuke_bbpost_reports`
+  ADD PRIMARY KEY (`report_id`);
+
+ALTER TABLE `nuke_bbprivmsgs`
+  ADD PRIMARY KEY (`privmsgs_id`),
+  ADD KEY `privmsgs_from_userid` (`privmsgs_from_userid`),
+  ADD KEY `privmsgs_to_userid` (`privmsgs_to_userid`);
+
+ALTER TABLE `nuke_bbprivmsgs_archive`
+  ADD PRIMARY KEY (`privmsgs_id`),
+  ADD KEY `privmsgs_from_userid` (`privmsgs_from_userid`),
+  ADD KEY `privmsgs_to_userid` (`privmsgs_to_userid`);
+
+ALTER TABLE `nuke_bbprivmsgs_text`
+  ADD PRIMARY KEY (`privmsgs_text_id`);
+
+ALTER TABLE `nuke_bbquicksearch`
+  ADD PRIMARY KEY (`search_id`);
+
+ALTER TABLE `nuke_bbquota_limits`
+  ADD PRIMARY KEY (`quota_limit_id`);
+
+ALTER TABLE `nuke_bbranks`
+  ADD PRIMARY KEY (`rank_id`);
+
+ALTER TABLE `nuke_bbreputation`
+  ADD KEY `user_id` (`user_id`);
+
+ALTER TABLE `nuke_bbscores`
+  ADD KEY `game_id` (`game_id`),
+  ADD KEY `user_id` (`user_id`);
+
+ALTER TABLE `nuke_bbsearch_rebuild`
+  ADD PRIMARY KEY (`rebuild_session_id`),
+  ADD KEY `end_post_id` (`end_post_id`);
+
+ALTER TABLE `nuke_bbsearch_results`
+  ADD PRIMARY KEY (`search_id`),
+  ADD KEY `session_id` (`session_id`);
+
+ALTER TABLE `nuke_bbsearch_wordlist`
+  ADD PRIMARY KEY (`word_text`),
+  ADD KEY `word_id` (`word_id`);
+
+ALTER TABLE `nuke_bbsearch_wordmatch`
+  ADD KEY `post_id` (`post_id`),
+  ADD KEY `word_id` (`word_id`);
+
+ALTER TABLE `nuke_bbsessions`
+  ADD PRIMARY KEY (`session_id`),
+  ADD KEY `session_user_id` (`session_user_id`),
+  ADD KEY `session_id_ip_user_id` (`session_id`,`session_ip`,`session_user_id`);
+
+ALTER TABLE `nuke_bbsessions_keys`
+  ADD PRIMARY KEY (`key_id`,`user_id`),
+  ADD KEY `last_login` (`last_login`);
+
+ALTER TABLE `nuke_bbsmilies`
+  ADD PRIMARY KEY (`smilies_id`);
+
+ALTER TABLE `nuke_bbstats_config`
+  ADD PRIMARY KEY (`config_name`);
+
+ALTER TABLE `nuke_bbstats_modules`
+  ADD PRIMARY KEY (`module_id`);
+
+ALTER TABLE `nuke_bbstats_module_admin_panel`
+  ADD PRIMARY KEY (`module_id`);
+
+ALTER TABLE `nuke_bbstats_module_cache`
+  ADD PRIMARY KEY (`module_id`);
+
+ALTER TABLE `nuke_bbstats_module_group_auth`
+  ADD PRIMARY KEY (`module_id`);
+
+ALTER TABLE `nuke_bbstats_module_info`
+  ADD PRIMARY KEY (`module_id`);
+
+ALTER TABLE `nuke_bbstats_smilies_index`
+  ADD PRIMARY KEY (`code`);
+
+ALTER TABLE `nuke_bbstats_smilies_info`
+  ADD PRIMARY KEY (`last_post_id`);
+
+ALTER TABLE `nuke_bbthemes`
+  ADD PRIMARY KEY (`themes_id`);
+
+ALTER TABLE `nuke_bbthemes_name`
+  ADD PRIMARY KEY (`themes_id`);
+
+ALTER TABLE `nuke_bbtopics`
+  ADD PRIMARY KEY (`topic_id`),
+  ADD KEY `forum_id` (`forum_id`),
+  ADD KEY `topic_moved_id` (`topic_moved_id`),
+  ADD KEY `topic_status` (`topic_status`),
+  ADD KEY `topic_type` (`topic_type`);
+
+ALTER TABLE `nuke_bbtopics_watch`
+  ADD KEY `topic_id` (`topic_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `notify_status` (`notify_status`);
+
+ALTER TABLE `nuke_bbtopic_moved`
+  ADD PRIMARY KEY (`moved_id`);
+
+ALTER TABLE `nuke_bbuser_group`
+  ADD KEY `group_id` (`group_id`),
+  ADD KEY `user_id` (`user_id`);
+
+ALTER TABLE `nuke_bbvote_desc`
+  ADD PRIMARY KEY (`vote_id`),
+  ADD KEY `topic_id` (`topic_id`);
+
+ALTER TABLE `nuke_bbvote_results`
+  ADD KEY `vote_option_id` (`vote_option_id`),
+  ADD KEY `vote_id` (`vote_id`);
+
+ALTER TABLE `nuke_bbvote_voters`
+  ADD KEY `vote_id` (`vote_id`),
+  ADD KEY `vote_user_id` (`vote_user_id`),
+  ADD KEY `vote_user_ip` (`vote_user_ip`),
+  ADD KEY `vote_cast` (`vote_cast`);
+
+ALTER TABLE `nuke_bbwords`
+  ADD PRIMARY KEY (`word_id`);
+
+ALTER TABLE `nuke_bbxdata_fields`
+  ADD PRIMARY KEY (`field_id`),
+  ADD UNIQUE KEY `code_name` (`code_name`);
+
+ALTER TABLE `nuke_blocks`
+  ADD PRIMARY KEY (`bid`),
+  ADD KEY `title` (`title`);
+
+ALTER TABLE `nuke_cnbya_config`
+  ADD UNIQUE KEY `config_name` (`config_name`);
+
+ALTER TABLE `nuke_cnbya_field`
+  ADD PRIMARY KEY (`fid`);
+
+ALTER TABLE `nuke_cnbya_value`
+  ADD PRIMARY KEY (`vid`);
+
+ALTER TABLE `nuke_cnbya_value_temp`
+  ADD PRIMARY KEY (`vid`);
+
+ALTER TABLE `nuke_comments`
+  ADD PRIMARY KEY (`tid`),
+  ADD KEY `pid` (`pid`),
+  ADD KEY `sid` (`sid`);
+
+ALTER TABLE `nuke_confirm`
+  ADD PRIMARY KEY (`session_id`,`confirm_id`);
+
+ALTER TABLE `nuke_counter`
+  ADD KEY `var` (`var`);
+
+ALTER TABLE `nuke_donators`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_donators_config`
+  ADD PRIMARY KEY (`config_name`);
+
+ALTER TABLE `nuke_ecalendar`
+  ADD PRIMARY KEY (`eid`);
+
+ALTER TABLE `nuke_evolution`
+  ADD PRIMARY KEY (`evo_field`);
+
+ALTER TABLE `nuke_evo_userinfo_addons`
+  ADD PRIMARY KEY (`name`);
+
+ALTER TABLE `nuke_faqanswer`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_cat` (`id_cat`);
+
+ALTER TABLE `nuke_faqcategories`
+  ADD PRIMARY KEY (`id_cat`);
+
+ALTER TABLE `nuke_file_repository_categories`
+  ADD PRIMARY KEY (`cid`);
+
+ALTER TABLE `nuke_file_repository_comments`
+  ADD PRIMARY KEY (`cid`);
+
+ALTER TABLE `nuke_file_repository_files`
+  ADD PRIMARY KEY (`fid`);
+
+ALTER TABLE `nuke_file_repository_items`
+  ADD PRIMARY KEY (`did`),
+  ADD KEY `cid` (`cid`),
+  ADD KEY `title` (`title`);
+
+ALTER TABLE `nuke_file_repository_screenshots`
+  ADD PRIMARY KEY (`pid`),
+  ADD KEY `did` (`did`);
+
+ALTER TABLE `nuke_file_repository_settings`
+  ADD PRIMARY KEY (`config_name`);
+
+ALTER TABLE `nuke_file_repository_themes`
+  ADD PRIMARY KEY (`theme_name`);
+
+ALTER TABLE `nuke_headlines`
+  ADD PRIMARY KEY (`hid`);
+
+ALTER TABLE `nuke_hnl_categories`
+  ADD PRIMARY KEY (`cid`);
+
+ALTER TABLE `nuke_hnl_cfg`
+  ADD PRIMARY KEY (`cfg_nm`);
+
+ALTER TABLE `nuke_hnl_newsletters`
+  ADD PRIMARY KEY (`nid`),
+  ADD KEY `cid` (`cid`);
+
+ALTER TABLE `nuke_honeypot`
+  ADD UNIQUE KEY `id` (`id`);
+
+ALTER TABLE `nuke_image_repository_settings`
+  ADD PRIMARY KEY (`config_name`);
+
+ALTER TABLE `nuke_image_repository_uploads`
+  ADD PRIMARY KEY (`pid`);
+
+ALTER TABLE `nuke_image_repository_users`
+  ADD PRIMARY KEY (`uid`);
+
+ALTER TABLE `nuke_jmap`
+  ADD PRIMARY KEY (`name`);
+
+ALTER TABLE `nuke_links_categories`
+  ADD PRIMARY KEY (`cid`);
+
+ALTER TABLE `nuke_links_editorials`
+  ADD PRIMARY KEY (`linkid`);
+
+ALTER TABLE `nuke_links_links`
+  ADD PRIMARY KEY (`lid`),
+  ADD KEY `cid` (`cid`),
+  ADD KEY `sid` (`sid`);
+
+ALTER TABLE `nuke_links_modrequest`
+  ADD PRIMARY KEY (`requestid`);
+
+ALTER TABLE `nuke_links_newlink`
+  ADD PRIMARY KEY (`lid`),
+  ADD KEY `cid` (`cid`),
+  ADD KEY `sid` (`sid`);
+
+ALTER TABLE `nuke_links_votedata`
+  ADD PRIMARY KEY (`ratingdbid`);
+
+ALTER TABLE `nuke_link_us`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_main`
+  ADD KEY `main_module` (`main_module`);
+
+ALTER TABLE `nuke_menu`
+  ADD PRIMARY KEY (`groupmenu`);
+
+ALTER TABLE `nuke_menu_categories`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_message`
+  ADD PRIMARY KEY (`mid`),
+  ADD UNIQUE KEY `mid` (`mid`);
+
+ALTER TABLE `nuke_meta`
+  ADD PRIMARY KEY (`meta_name`);
+
+ALTER TABLE `nuke_modules`
+  ADD PRIMARY KEY (`mid`),
+  ADD UNIQUE KEY `mid` (`mid`),
+  ADD KEY `title` (`title`),
+  ADD KEY `custom_title` (`custom_title`);
+
+ALTER TABLE `nuke_modules_cat`
+  ADD PRIMARY KEY (`cid`),
+  ADD UNIQUE KEY `cid` (`cid`);
+
+ALTER TABLE `nuke_modules_links`
+  ADD PRIMARY KEY (`lid`),
+  ADD UNIQUE KEY `lid` (`lid`);
+
+ALTER TABLE `nuke_mostonline`
+  ADD PRIMARY KEY (`total`);
+
+ALTER TABLE `nuke_nsncb_blocks`
+  ADD PRIMARY KEY (`rid`),
+  ADD UNIQUE KEY `rid` (`rid`);
+
+ALTER TABLE `nuke_nsncb_config`
+  ADD PRIMARY KEY (`cgid`),
+  ADD UNIQUE KEY `cfgid` (`cgid`);
+
+ALTER TABLE `nuke_nsnne_config`
+  ADD UNIQUE KEY `config_name` (`config_name`);
+
+ALTER TABLE `nuke_nsnsp_config`
+  ADD PRIMARY KEY (`config_name`);
+
+ALTER TABLE `nuke_nsnsp_sites`
+  ADD PRIMARY KEY (`site_id`);
+
+ALTER TABLE `nuke_nsnst_admins`
+  ADD PRIMARY KEY (`aid`),
+  ADD KEY `password_md5` (`password_md5`);
+
+ALTER TABLE `nuke_nsnst_blocked_ips`
+  ADD PRIMARY KEY (`ip_addr`),
+  ADD KEY `ip_long` (`ip_long`);
+
+ALTER TABLE `nuke_nsnst_blocked_ranges`
+  ADD KEY `code` (`ip_lo`,`ip_hi`,`c2c`);
+
+ALTER TABLE `nuke_nsnst_blockers`
+  ADD PRIMARY KEY (`blocker`);
+
+ALTER TABLE `nuke_nsnst_cidrs`
+  ADD PRIMARY KEY (`cidr`);
+
+ALTER TABLE `nuke_nsnst_config`
+  ADD PRIMARY KEY (`config_name`);
+
+ALTER TABLE `nuke_nsnst_countries`
+  ADD KEY `c2c` (`c2c`);
+
+ALTER TABLE `nuke_nsnst_excluded_ranges`
+  ADD KEY `code` (`ip_lo`,`ip_hi`,`c2c`);
+
+ALTER TABLE `nuke_nsnst_harvesters`
+  ADD PRIMARY KEY (`harvester`),
+  ADD KEY `hid` (`hid`);
+
+ALTER TABLE `nuke_nsnst_protected_ranges`
+  ADD KEY `code` (`ip_lo`,`ip_hi`,`c2c`);
+
+ALTER TABLE `nuke_nsnst_referers`
+  ADD PRIMARY KEY (`referer`),
+  ADD KEY `rid` (`rid`);
+
+ALTER TABLE `nuke_nsnst_tracked_ips`
+  ADD PRIMARY KEY (`tid`),
+  ADD KEY `maintracking` (`ip_addr`,`ip_long`),
+  ADD KEY `ip_addr` (`ip_addr`),
+  ADD KEY `ip_long` (`ip_long`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `username` (`username`),
+  ADD KEY `user_agent` (`user_agent`(255)),
+  ADD KEY `refered_from` (`refered_from`(255)),
+  ADD KEY `date` (`date`),
+  ADD KEY `page` (`page`(255)),
+  ADD KEY `c2c` (`c2c`);
+
+ALTER TABLE `nuke_pages`
+  ADD PRIMARY KEY (`pid`),
+  ADD KEY `cid` (`cid`);
+
+ALTER TABLE `nuke_pages_categories`
+  ADD PRIMARY KEY (`cid`);
+
+ALTER TABLE `nuke_pollcomments`
+  ADD PRIMARY KEY (`tid`),
+  ADD KEY `pid` (`pid`),
+  ADD KEY `pollID` (`pollID`);
+
+ALTER TABLE `nuke_poll_desc`
+  ADD PRIMARY KEY (`pollID`);
+
+ALTER TABLE `nuke_queue`
+  ADD PRIMARY KEY (`qid`),
+  ADD KEY `uid` (`uid`),
+  ADD KEY `uname` (`uname`);
+
+ALTER TABLE `nuke_quotes`
+  ADD PRIMARY KEY (`qid`);
+
+ALTER TABLE `nuke_referer`
+  ADD PRIMARY KEY (`url`),
+  ADD KEY `lasttime` (`lasttime`);
+
+ALTER TABLE `nuke_related`
+  ADD PRIMARY KEY (`rid`),
+  ADD KEY `tid` (`tid`);
+
+ALTER TABLE `nuke_reviews`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_reviews_add`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_reviews_comments`
+  ADD PRIMARY KEY (`cid`),
+  ADD KEY `rid` (`rid`),
+  ADD KEY `userid` (`userid`);
+
+ALTER TABLE `nuke_reviews_main`
+  ADD KEY `title` (`title`);
+
+ALTER TABLE `nuke_security_agents`
+  ADD PRIMARY KEY (`agent_name`);
+
+ALTER TABLE `nuke_session`
+  ADD PRIMARY KEY (`uname`),
+  ADD KEY `time` (`time`),
+  ADD KEY `guest` (`guest`);
+
+ALTER TABLE `nuke_shoutbox_censor`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_shoutbox_conf`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_shoutbox_date`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_shoutbox_emoticons`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_shoutbox_ipblock`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_shoutbox_manage_count`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_shoutbox_nameblock`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_shoutbox_shouts`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_shoutbox_sticky`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_shoutbox_themes`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_shoutbox_theme_images`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_shoutbox_version`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_sommaire`
+  ADD PRIMARY KEY (`groupmenu`);
+
+ALTER TABLE `nuke_sommaire_categories`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `nuke_stories`
+  ADD PRIMARY KEY (`sid`),
+  ADD KEY `catid` (`catid`),
+  ADD KEY `counter` (`counter`),
+  ADD KEY `topic` (`topic`);
+
+ALTER TABLE `nuke_stories_cat`
+  ADD PRIMARY KEY (`catid`);
+
+ALTER TABLE `nuke_subscriptions`
+  ADD PRIMARY KEY (`id`,`userid`);
+
+ALTER TABLE `nuke_themes`
+  ADD PRIMARY KEY (`theme_name`);
+
+ALTER TABLE `nuke_topics`
+  ADD PRIMARY KEY (`topicid`);
+
+ALTER TABLE `nuke_users`
+  ADD PRIMARY KEY (`user_id`),
+  ADD KEY `uname` (`username`),
+  ADD KEY `user_session_time` (`user_session_time`),
+  ADD KEY `user_birthday` (`user_birthday`),
+  ADD KEY `user_birthday2` (`user_birthday2`);
+
+ALTER TABLE `nuke_users_countries`
+  ADD PRIMARY KEY (`id_country`),
+  ADD KEY `IDX_NAME` (`name`);
+
+ALTER TABLE `nuke_users_temp`
+  ADD PRIMARY KEY (`user_id`);
+
+ALTER TABLE `nuke_users_who_been`
+  ADD PRIMARY KEY (`user_ID`);
+
+ALTER TABLE `nuke_welcome_pm`
+  ADD PRIMARY KEY (`subject`);
+
+
+ALTER TABLE `network_bookmarks`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `network_bookmarks_cat`
+  MODIFY `category_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_autonews`
+  MODIFY `anid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_banner`
+  MODIFY `bid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `nuke_banner_clients`
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `nuke_banner_plans`
+  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_banner_positions`
+  MODIFY `apid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+ALTER TABLE `nuke_bbadvanced_username_color`
+  MODIFY `group_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+ALTER TABLE `nuke_bbarcade_categories`
+  MODIFY `arcade_catid` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `nuke_bbattachments_desc`
+  MODIFY `attach_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+ALTER TABLE `nuke_bbbanlist`
+  MODIFY `ban_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_bbcategories`
+  MODIFY `cat_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+ALTER TABLE `nuke_bbdisallow`
+  MODIFY `disallow_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_bbextensions`
+  MODIFY `ext_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+ALTER TABLE `nuke_bbextension_groups`
+  MODIFY `group_id` mediumint(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+ALTER TABLE `nuke_bbforbidden_extensions`
+  MODIFY `ext_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+ALTER TABLE `nuke_bbforums`
+  MODIFY `forum_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+ALTER TABLE `nuke_bbforum_prune`
+  MODIFY `prune_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_bbgames`
+  MODIFY `game_id` mediumint(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `nuke_bbgroups`
+  MODIFY `group_id` mediumint(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+ALTER TABLE `nuke_bbinline_ads`
+  MODIFY `ad_id` tinyint(5) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_bblogs`
+  MODIFY `log_id` mediumint(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+
+ALTER TABLE `nuke_bbposts`
+  MODIFY `post_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+ALTER TABLE `nuke_bbpost_reports`
+  MODIFY `report_id` mediumint(8) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_bbprivmsgs`
+  MODIFY `privmsgs_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+ALTER TABLE `nuke_bbprivmsgs_archive`
+  MODIFY `privmsgs_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_bbquicksearch`
+  MODIFY `search_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `nuke_bbquota_limits`
+  MODIFY `quota_limit_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+ALTER TABLE `nuke_bbranks`
+  MODIFY `rank_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+ALTER TABLE `nuke_bbsearch_rebuild`
+  MODIFY `rebuild_session_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_bbsearch_wordlist`
+  MODIFY `word_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1556;
+
+ALTER TABLE `nuke_bbsmilies`
+  MODIFY `smilies_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+ALTER TABLE `nuke_bbstats_modules`
+  MODIFY `module_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+ALTER TABLE `nuke_bbthemes`
+  MODIFY `themes_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `nuke_bbtopics`
+  MODIFY `topic_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+ALTER TABLE `nuke_bbtopic_moved`
+  MODIFY `moved_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_bbvote_desc`
+  MODIFY `vote_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_bbwords`
+  MODIFY `word_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `nuke_blocks`
+  MODIFY `bid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+ALTER TABLE `nuke_cnbya_field`
+  MODIFY `fid` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_cnbya_value`
+  MODIFY `vid` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_cnbya_value_temp`
+  MODIFY `vid` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_comments`
+  MODIFY `tid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+ALTER TABLE `nuke_donators`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_ecalendar`
+  MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_faqanswer`
+  MODIFY `id` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `nuke_faqcategories`
+  MODIFY `id_cat` tinyint(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `nuke_file_repository_categories`
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_file_repository_comments`
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_file_repository_files`
+  MODIFY `fid` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_file_repository_items`
+  MODIFY `did` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_file_repository_screenshots`
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_headlines`
+  MODIFY `hid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+ALTER TABLE `nuke_hnl_categories`
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+ALTER TABLE `nuke_hnl_newsletters`
+  MODIFY `nid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `nuke_honeypot`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+ALTER TABLE `nuke_image_repository_uploads`
+  MODIFY `pid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+ALTER TABLE `nuke_image_repository_users`
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+ALTER TABLE `nuke_links_categories`
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+ALTER TABLE `nuke_links_links`
+  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+ALTER TABLE `nuke_links_modrequest`
+  MODIFY `requestid` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_links_newlink`
+  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `nuke_links_votedata`
+  MODIFY `ratingdbid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+ALTER TABLE `nuke_link_us`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+ALTER TABLE `nuke_menu_categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1146;
+
+ALTER TABLE `nuke_message`
+  MODIFY `mid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `nuke_modules`
+  MODIFY `mid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14713;
+
+ALTER TABLE `nuke_modules_cat`
+  MODIFY `cid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+ALTER TABLE `nuke_modules_links`
+  MODIFY `lid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `nuke_nsnsp_sites`
+  MODIFY `site_id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_nsnst_harvesters`
+  MODIFY `hid` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
+
+ALTER TABLE `nuke_nsnst_referers`
+  MODIFY `rid` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=366;
+
+ALTER TABLE `nuke_nsnst_tracked_ips`
+  MODIFY `tid` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_pages`
+  MODIFY `pid` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_pages_categories`
+  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_pollcomments`
+  MODIFY `tid` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_poll_desc`
+  MODIFY `pollID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `nuke_queue`
+  MODIFY `qid` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_quotes`
+  MODIFY `qid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `nuke_related`
+  MODIFY `rid` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_reviews`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_reviews_add`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_reviews_comments`
+  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_shoutbox_censor`
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
+
+ALTER TABLE `nuke_shoutbox_emoticons`
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+ALTER TABLE `nuke_shoutbox_ipblock`
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_shoutbox_manage_count`
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `nuke_shoutbox_nameblock`
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_shoutbox_shouts`
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+ALTER TABLE `nuke_shoutbox_sticky`
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_shoutbox_themes`
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `nuke_shoutbox_theme_images`
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_sommaire_categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+ALTER TABLE `nuke_stories`
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+ALTER TABLE `nuke_stories_cat`
+  MODIFY `catid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+ALTER TABLE `nuke_subscriptions`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `nuke_topics`
+  MODIFY `topicid` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+ALTER TABLE `nuke_users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+ALTER TABLE `nuke_users_countries`
+  MODIFY `id_country` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=240;
+
+ALTER TABLE `nuke_users_temp`
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `network_cemetery`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+ALTER TABLE `network_cemetery_cat`
+  ADD PRIMARY KEY (`category_id`),
+  ADD KEY `user_id` (`user_id`);
+
+ALTER TABLE `network_cemetery`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+ALTER TABLE `network_cemetery_cat`
+  MODIFY `category_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+COMMIT;

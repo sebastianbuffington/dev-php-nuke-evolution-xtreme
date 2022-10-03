@@ -53,7 +53,7 @@
 //Note due to all the windows.onload use womAdd('function_name()'); instead
 
 if (realpath(__FILE__) == realpath($_SERVER['SCRIPT_FILENAME'])) {
-    exit('Access Denied');
+  exit('Access Denied');
 }
 
 include_once(NUKE_INCLUDE_DIR.'styles.php');
@@ -100,7 +100,11 @@ echo "function titaniumAPI() {\n";                   // Testing Graph API after 
 echo "console.log('Welcome!  Fetching your information.... ');\n";
 echo "FB.api('/me', function(response) {\n";
 echo "console.log('Successful login for: ' + response.name);\n";
-echo "document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';\n";
+    // this error comes with the following
+    // Uncaught TypeError: Cannot set property 'innerHTML' of null
+    // echo "document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';\n";
+
+
 echo "});\n";
 echo "}\n";
 ##################################################################################################################
@@ -538,9 +542,9 @@ echo "\n\n<!--
    :      :   : :  : :: ::    :: :: :    :   : :   : :  :   :: : :       :     
                                                                                 -->\n";
 # Easter Egg Hunt added by who I'm not sure but it's cute
-#addJSToBody(NUKE_JQUERY_SCRIPTS_DIR.'Evo.EE.js','file');
-#addJSToBody(NUKE_JQUERY_SCRIPTS_DIR.'Evo.EE.CMD.js','file');
-echo "\n<!-- Validate DeeZ Nuts -->\n\n\n";
+# addJSToBody(NUKE_JQUERY_SCRIPTS_DIR.'Evo.EE.js','file');
+# addJSToBody(NUKE_JQUERY_SCRIPTS_DIR.'Evo.EE.CMD.js','file');
+echo "\n<!-- Ernest Allen Buffington aka TheGhost -->\n\n\n";
 
 global $analytics;
 

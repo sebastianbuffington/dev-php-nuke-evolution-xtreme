@@ -1,8 +1,7 @@
 <?php
-/*=======================================================================
- Nuke-Evolution Basic: Enhanced PHP-Nuke Web Portal System
+/*======================================================================= 
+  PHP-Nuke Titanium | Nuke-Evolution Xtreme : PHP-Nuke Web Portal System
  =======================================================================*/
-
 /***************************************************************************
  *                               constants.php
  *                            -------------------
@@ -13,7 +12,6 @@
  *   Id: constants.php,v 1.47.2.5 2004/11/18 17:49:42 acydburn Exp
  *
  ***************************************************************************/
-
 /***************************************************************************
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -22,7 +20,6 @@
  *   ('at your option) any later version.
  *
  ***************************************************************************/
-
 /*****[CHANGES]**********************************************************
 -=[Mod]=-
       Recent Topics                            v1.2.4       06/11/2005
@@ -49,6 +46,13 @@ if (!defined('IN_PHPBB') && !defined('NUKE_EVO'))
 {
     die('Hacking attempt');
 }
+
+# Network Support
+#character set define XHTML1.0
+define("_CHARSET","utf-8");
+define("_LANG_DIRECTION","ltr");
+define("_LANGCODE","en");
+define("_MIME", "text/html"); 
 
 // Debug Level
 //define('DEBUG', 1); // Debugging on

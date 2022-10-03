@@ -1,7 +1,8 @@
 <?php
-/*=======================================================================
- Nuke-Evolution Basic: Enhanced PHP-Nuke Web Portal System
+/*======================================================================= 
+  PHP-Nuke Titanium | Nuke-Evolution Xtreme : PHP-Nuke Web Portal System
  =======================================================================*/
+
 
 /************************************************************************/
 /* PHP-NUKE: Web Portal System                                          */
@@ -359,7 +360,29 @@ if(is_mod_admin($module_name)) {
  ******************************************************/
             $topic_icon = intval($topic_icon);
             $writes = intval($writes);
-            $result = $db->sql_query("INSERT INTO ".$prefix."_stories VALUES (NULL, '$catid', '$aid', '$title', now(), '$hometext', '$bodytext', '0', '0', '$topic', '$aid', '', '$ihome', '$planguage', '$acomm', '0', '0', '0', '0', '', '$topic_icon', '$writes')");
+            $result = $db->sql_query("INSERT INTO ".$prefix."_stories VALUES (NULL, 
+			                                                              '$catid', 
+																		    '$aid', 
+																		  '$title', 
+																		     NULL,
+																			 NULL, 
+																	   '$hometext', 
+																	   '$bodytext', 
+																	           '0', 
+																			   '0', 
+																		  '$topic', 
+																		    '$aid', 
+																			    '', 
+																		  '$ihome', 
+																	  '$planguage', 
+																	      '$acomm', 
+																		       '0', 
+																			   '0', 
+																			   '0', 
+																			   '0', 
+																			    '', 
+																	 '$topic_icon', 
+																	     '$writes')");
 /*****[END]********************************************
  [ Mod:    Display Topic Icon                  v1.0.0 ]
  [ Mod:    Display Writes                      v1.0.0 ]

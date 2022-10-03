@@ -1,7 +1,8 @@
 <?php
-/*=======================================================================
- Nuke-Evolution Basic: Enhanced PHP-Nuke Web Portal System
+/*======================================================================= 
+  PHP-Nuke Titanium | Nuke-Evolution Xtreme : PHP-Nuke Web Portal System
  =======================================================================*/
+
 
 /***************************************************************************
  *                                index.php
@@ -612,7 +613,8 @@ if( ( $total_categories = count($category_rows) ) )
                                                     $poster_avatar = resize_avatar($forum_data[$j]['user_avatar']);
                                                     break;
                                                 case USER_AVATAR_GALLERY:
-                                                    $poster_avatar = $board_config['avatar_gallery_path'] . '/' . (($forum_data[$j]['user_avatar'] == 'blank.gif' || $forum_data[$j]['user_avatar'] == 'gallery/blank.gif') ? 'blank.png' : $forum_data[$j]['user_avatar']);
+                                                    $poster_avatar = $board_config['avatar_gallery_path'] . '/' . (($forum_data[$j]['user_avatar'] 
+													== 'blank.gif' || $forum_data[$j]['user_avatar'] == 'gallery/blank.gif') ? 'blank.png' : $forum_data[$j]['user_avatar']);
                                                     break;
                                             }                                  
 /*****[END]********************************************

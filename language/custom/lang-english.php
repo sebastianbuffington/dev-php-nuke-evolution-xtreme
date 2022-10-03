@@ -1,7 +1,8 @@
 <?php
-/*=======================================================================
- Nuke-Evolution Basic: Enhanced PHP-Nuke Web Portal System
+/*======================================================================= 
+  PHP-Nuke Titanium | Nuke-Evolution Xtreme : PHP-Nuke Web Portal System
  =======================================================================*/
+
 
 /*****[CHANGES]**********************************************************
 -=[Base]=-
@@ -84,7 +85,7 @@ $customlang['floating_admin']['modules']        = 'Modules';
 $customlang['floating_admin']['modblock']       = 'Module Block';
 $customlang['floating_admin']['preferences']    = 'Preferences';
 $customlang['floating_admin']['themes']         = 'Themes';
-$customlang['floating_admin']['news']           = 'News';
+$customlang['floating_admin']['blog']           = 'Blog';
 $customlang['floating_admin']['users']          = 'Users Configuration';
 $customlang['floating_admin']['whois']          = 'Who is Online';
 $customlang['floating_admin']['weblinks']       = 'Web Links';
@@ -323,5 +324,4 @@ define("_THEMES_QUNINSTALLED", "Uninstalled");
 define("_THEMES", "Themes");
 define("_THEMES_DEFAULT", "Default Theme");
 define("_THEMES_BACKUP", "Backup");
-
 ?>

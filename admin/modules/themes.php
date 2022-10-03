@@ -1,6 +1,6 @@
 <?php
-/*=======================================================================
- Nuke-Evolution Basic: Enhanced PHP-Nuke Web Portal System
+/*======================================================================= 
+  PHP-Nuke Titanium | Nuke-Evolution Xtreme : PHP-Nuke Web Portal System
  =======================================================================*/
 
 /************************************************************************
@@ -20,47 +20,48 @@
 -=[Base]=-
       Nuke Patched                             v3.1.0       06/26/2005
  ************************************************************************/
-
-if (!defined('ADMIN_FILE')){
-    die ("Illegal File Access");
-}
+if (!defined('ADMIN_FILE')) die ("Illegal File Access");
 
 global $prefix, $db;
+
 require_once(NUKE_CLASSES_DIR.'class.paginator.php');
 
-function theme_header(){
+function theme_header()
+{
     global $admin_file, $admlang;
 	
     OpenTable();
 	
 	echo "<div align=\"center\">\n";
-    echo "    <a href=\"$admin_file.php?op=themes\">" . _THEMES_HEADER . "</a>\n";
+    echo "    <a href=\"$admin_file.php?op=themes\">"._THEMES_HEADER."</a>\n";
     echo "    <br /><br />\n";
     echo "    <table border='0' width='70%'>\n";
     echo "      <tr>\n";
-    echo "        <td>" . get_evo_icon('evo-sprite ok') . "</td>\n";
-    echo "        <td><i>" . _THEMES_DEFAULT . "</i></td>\n";
-    echo "        <td>" . get_default() . "</td>\n";
+    echo "        <td>".get_evo_icon('evo-sprite ok')."</td>\n";
+    echo "        <td><i>"._THEMES_DEFAULT."</i></td>\n";
+    echo "        <td>".get_default()."</td>\n";
     echo "      </tr>\n";
     echo "      <tr>\n";
-    echo "        <td>" . get_evo_icon('evo-sprite ok') . "</td>\n";
-    echo "        <td><i>" . _THEMES_NUMTHEMES . "</i></td><td>" . count(get_themes('all')) . "</td>\n";
+    echo "        <td>".get_evo_icon('evo-sprite ok')."</td>\n";
+    echo "        <td><i>"._THEMES_NUMTHEMES."</i></td><td>".count(get_themes('all'))."</td>\n";
     echo "      </tr>\n";
     echo "      <tr>\n";
-    echo "        <td>" . get_evo_icon('evo-sprite ok') . "</td>\n";
-    echo "        <td><i>" . _THEMES_NUMUNINSTALLED . "</i></td><td>" . count(get_themes('uninstalled')) . "</td>\n";
+    echo "        <td>".get_evo_icon('evo-sprite ok')."</td>\n";
+    echo "        <td><i>"._THEMES_NUMUNINSTALLED."</i></td><td>".count(get_themes('uninstalled'))."</td>\n";
     echo "      </tr>\n";
     echo "      <tr>\n";
-    echo "        <td>" . get_evo_icon('evo-sprite ok') . "</td>\n";
-    echo "        <td><i>" . _THEMES_MOSTPOPULAR . "</i></td><td>" . ThemeMostPopular() . "</td>\n";
+    echo "        <td>".get_evo_icon('evo-sprite ok')."</td>\n";
+    echo "        <td><i>"._THEMES_MOSTPOPULAR."</i></td><td>".ThemeMostPopular()."</td>\n";
 	echo "      </tr>\n";
 	echo "    </table>\n";
 	echo "    <br />\n";
-	echo "    [ <a href=\"$admin_file.php?op=theme_users\">" . _THEMES_USER_OPTIONS . "</a> | <a href=\"$admin_file.php?op=theme_options\">" . _THEMES_OPTIONS . "</a> | <a href=\"$admin_file.php\">" . $admlang['global']['header_return'] . "</a> ]\n";
+	
+	echo "    [ <a href=\"$admin_file.php?op=themes\">Themes Main</a> | <a href=\"$admin_file.php?op=theme_users\">"._THEMES_USER_OPTIONS."</a> | <a 
+	href=\"$admin_file.php?op=theme_options\">"._THEMES_OPTIONS."</a> | <a href=\"$admin_file.php\">". $admlang['global']['header_return']."</a> ]\n";
+	
 	echo "</div>\n";
 		
     CloseTable();
-    echo "<br />\n";
 }
 
 function ThemeError($error_message){
@@ -122,7 +123,8 @@ function InstallTheme(){
 	}
 }
 
-function downloadTheme($theme){
+function downloadTheme($theme)
+{
 	global $admin_file, $aid, $db, $prefix, $module_name, $userinfo, $admin, $directory_mode;
 	
 	function RandomNumber($length=10){
